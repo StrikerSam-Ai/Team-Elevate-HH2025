@@ -25,10 +25,10 @@ Briefly describe the real-world use case and the value it provides.
 ## 🧠 Team & Approach
 
 ### Team Name:  
-`Your team name here`
+ELEVATE
 
 ### Team Members:  
-- Name 1 (GitHub / LinkedIn / Role)  
+- Ganesh (GitHub / LinkedIn / Role)  
 - Name 2  
 - Name 3  
 *(Add links if you want)*

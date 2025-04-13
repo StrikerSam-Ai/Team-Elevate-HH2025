@@ -28,9 +28,10 @@ Briefly describe the real-world use case and the value it provides.
 ELEVATE
 
 ### Team Members:  
-- GANESH (GitHub / LinkedIn / Role)  
-- Name 2  
-- Name 3  
+- SHASWAT (GitHub / LinkedIn / Role)  
+- GANESH
+- SHRISTI
+- MEHULI  
 *(Add links if you want)*
 
 ### Your Approach:  

@@ -1,8 +1,8 @@
-from django.db import models
-
-# Create your models here.
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
+from datetime import date
+from django.core.validators import RegexValidator
+from django.core.exceptions import ValidationError
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -23,8 +23,8 @@ class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(unique=True)
     birth_date = models.DateField(null=True)
-    phone = models.CharField(max_length=20, blank=True)
-    city = models.CharField(max_length=100, blank=True)
+    phone = models.CharField(max_length=20, blank=True, validators=[RegexValidator(r'^\+?1?\d{9,15}$', 'Enter a valid phone number.')])
+    city = models.CharField(max_length=100, blank=True, validators=[RegexValidator(r'^[a-zA-Z\s]*$', 'Enter a valid city name.')])
     
     @property
     def age(self):
@@ -40,3 +40,7 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+
+def validate_birth_date(value):
+    if value > date.today():
+        raise ValidationError("Birth date cannot be in the future.")

@@ -25,12 +25,13 @@ Briefly describe the real-world use case and the value it provides.
 ## 🧠 Team & Approach
 
 ### Team Name:  
-`Your team name here`
+ELEVATE
 
 ### Team Members:  
-- Name 1 (GitHub / LinkedIn / Role)  
-- Name 2  
-- Name 3  
+- SHASHWAT (GitHub / LinkedIn / Role)  
+- GANESH
+- SRISHTI
+- MEHULI  
 *(Add links if you want)*
 
 ### Your Approach:  
@@ -50,11 +51,11 @@ Briefly describe the real-world use case and the value it provides.
 - Hosting:
 
 ### Sponsor Technologies Used (if any):
-- [ ] **Groq:** _How you used Groq_  
+- [x] **Groq:** _How you used Groq_  
 - [ ] **Monad:** _Your blockchain implementation_  
 - [ ] **Fluvio:** _Real-time data handling_  
-- [ ] **Base:** _AgentKit / OnchainKit / Smart Wallet usage_  
-- [ ] **Screenpipe:** _Screen-based analytics or workflows_  
+- [x] **Base:** _AgentKit / OnchainKit / Smart Wallet usage_  
+- [x] **Screenpipe:** _Screen-based analytics or workflows_  
 - [ ] **Stellar:** _Payments, identity, or token usage_
 *(Mark with ✅ if completed)*
 ---

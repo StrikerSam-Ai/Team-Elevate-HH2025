@@ -55,10 +55,16 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates',
+            BASE_DIR / 'companions' / 'templates',
+            BASE_DIR / 'core' / 'templates',
+            BASE_DIR / 'templates' / 'registration',
+        ],  # Points to project-level, app-level, and auth templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -114,13 +120,18 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 
+STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 

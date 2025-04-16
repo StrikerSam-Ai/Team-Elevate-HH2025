@@ -24,6 +24,14 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     birth_date = models.DateField(null=True)
     phone = models.CharField(max_length=20, blank=True)
+    city = models.CharField(max_length=100, blank=True)
+    
+    @property
+    def age(self):
+        if self.birth_date:
+            today = date.today()
+            return today.year - self.birth_date.year - ((today.month, today.day) < (self.birth_date.month, self.birth_date.day))
+        return None
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

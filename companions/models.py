@@ -22,6 +22,7 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(unique=True)
+    name = models.CharField(max_length=150, blank=True)  # New field for user's name
     birth_date = models.DateField(null=True)
     phone = models.CharField(max_length=20, blank=True, validators=[RegexValidator(r'^\+?1?\d{9,15}$', 'Enter a valid phone number.')])
     city = models.CharField(max_length=100, blank=True, validators=[RegexValidator(r'^[a-zA-Z\s]*$', 'Enter a valid city name.')])

@@ -87,14 +87,10 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'seniorcompanion',
-        'USER': 'djangouser',
-        'PASSWORD': 'newpassword123!',  # Must match what you set above
-        'HOST': 'localhost',
-        'PORT':'5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
         }
-    }
+}
 
 
 # Password validation
@@ -126,18 +122,14 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'core/static',
-]
+STATICFILES_DIRS = [BASE_DIR / 'core' / 'static']
+STATIC_ROOT_DIR = BASE_DIR / 'staticfiles'
 
-STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 

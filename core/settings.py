@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
     'companions',
 ]
 
@@ -55,10 +57,19 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates',
+            BASE_DIR / 'companions' / 'templates',
+            BASE_DIR / 'core' / 'templates',
+            BASE_DIR / 'templates' / 'registration',
+            BASE_DIR / 'companions' / 'templates' / 'profiles',  # Add profiles template directory
+            BASE_DIR / 'templates' / 'profiles',  # Alternative profiles location
+            BASE_DIR / 'companions' / 'templates' / 'accounts',  # For user account templates
+        ],  # Points to project-level, app-level, and auth templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -66,6 +77,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
@@ -80,9 +92,9 @@ DATABASES = {
         'USER': 'djangouser',
         'PASSWORD': 'newpassword123!',  # Must match what you set above
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT':'5432',
+        }
     }
-}
 
 
 # Password validation
@@ -114,13 +126,18 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'core/static',
+]
 
+STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 

@@ -1,0 +1,508 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Login Page */
+
+.container {
+    width: 100%;
+    max-width: 600px;  
+    padding: 60px 30px;  
+}
+
+.form-wrapper {
+    background-color: white;
+    padding: 60px 50px;  
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #000000;
+    margin: 0 0 50px 0;  
+    font-size: 36px;  
+}
+
+.form-group {
+    margin-bottom: 35px; 
+}
+
+input {
+    width: 100%;
+    padding: 18px; 
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+input:focus {
+    outline: none;
+    border-color: #85ff02;
+    box-shadow: 0 0 0 2px rgba(0, 255, 68, 0.2);
+}
+
+button {
+    width: 100%;
+    padding: 18px; 
+    margin-top: 15px;  
+    background-color: #1fbb27;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #85ff02;
+}
+
+input::placeholder {
+    color: #999;
+}
+
+input[type="date"] {
+    color: #666;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+input:invalid:focus {
+    animation: shake 0.3s;
+    border-color: #00ff08;
+}
+
+
+/* Home Page */
+
+.home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    min-height: 100vh;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logo {
+    background-color: #d3d3d3;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    margin-right: 2rem;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    font-size: 1.1rem;
+  }
+  
+  .nav-links a:hover {
+    color: #007bff;
+  }
+  
+  .main-content {
+    padding: 2rem;
+  }
+  
+  .hero-section {
+    background-color: #f0f0f0;
+    padding: 3rem 2rem;
+    margin: 2rem 0;
+    border-radius: 8px;
+    position: relative;
+  }
+  
+  .hero-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+  
+  .welcome-points {
+    list-style: none;
+    padding: 0;
+    max-width: 70%;
+  }
+  
+  .welcome-points li {
+    margin-bottom: 1.2rem;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: #444;
+  }
+  
+  .testimonials {
+    margin: 3rem 0;
+  }
+  
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .testimonial-card {
+    background-color: #f0f0f0;
+    padding: 2rem;
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+  }
+  
+  .testimonial-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .testimonial-card p {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #555;
+  }
+  
+  .author {
+    color: #666;
+    font-style: italic;
+    font-size: 0.9rem;
+  }
+  
+  .feedback-message {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+    margin-top: 3rem;
+    font-size: 1.1rem;
+  }
+  
+  /* Add this to your index.css or App.css for better overall styling
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #f8f9fa;
+  } */
+
+  /* Dashboard */
+
+  .dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .navbar {
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    padding: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .logo {
+    background-color: #d3d3d3;
+    padding: 0.5rem 1rem;
+    margin-right: 2rem;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .nav-links a.active {
+    color: #007bff;
+  }
+  
+  .welcome-section {
+    background-color: #f0f0f0;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+  }
+  
+  .welcome-section h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .daily-tasks {
+    background-color: #f0f0f0;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+  }
+  
+  .section-header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .tasks-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .tasks-list {
+    flex-grow: 1;
+  }
+  
+  .task-item {
+    margin-bottom: 1rem;
+  }
+  
+  .task-item label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .medicine-section {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+  }
+  
+  .medicine-info, .reminder-section {
+    background-color: #f0f0f0;
+    padding: 2rem;
+    border-radius: 8px;
+  }
+  
+  .medicine-details {
+    margin: 1rem 0;
+  }
+  
+  .medicine-details p {
+    margin: 0.5rem 0;
+  }
+  
+  .medicine-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .reminders-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+  }
+  
+  .reminders-list li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .add-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .remove-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .add-button:hover, .remove-button:hover {
+    opacity: 0.9;
+  }
+  
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+  }
+
+  /* community */
+  .community-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .navbar {
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    padding: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .logo {
+    background-color: #d3d3d3;
+    padding: 0.5rem 1rem;
+    margin-right: 2rem;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .nav-links a.active {
+    color: #007bff;
+  }
+  
+  .community-header {
+    background-color: #f0f0f0;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+  }
+  
+  .community-header h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .community-intro p {
+    margin: 0.5rem 0;
+  }
+  
+  .people-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .person-card {
+    background-color: #f0f0f0;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .avatar {
+    width: 80px;
+    height: 80px;
+    background-color: #ddd;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+  }
+  
+  .avatar-small {
+    width: 40px;
+    height: 40px;
+    background-color: #ddd;
+    border-radius: 50%;
+  }
+  
+  .connections-section {
+    background-color: #f0f0f0;
+    padding: 2rem;
+    border-radius: 8px;
+  }
+  
+  .connections-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .connections-stats {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .request-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  
+  .request-buttons {
+    margin-left: auto;
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .connect-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .connect-btn.connected {
+    background-color: #2E7D32;
+  }
+  
+  .remove-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .video-call-btn {
+    background-color: #FFC107;
+    color: black;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+  
+  .connect-btn:hover,
+  .remove-btn:hover,
+  .video-call-btn:hover {
+    opacity: 0.9;
+  }

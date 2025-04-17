@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import CustomUser
 from django.views.decorators.http import require_http_methods
@@ -10,8 +10,15 @@ import json
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 
-def home(request):
+def login_view(request):
+    """Render the login page."""
     return render(request, 'html/login.html')
+
+def home(request):
+    """Render the home page for logged-in users."""
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return render(request, 'html/index.html')  # Make sure to create this template
 
 @csrf_exempt
 @require_http_methods(["GET", "POST"])
@@ -30,11 +37,10 @@ def register_user(request):
         if not email or not password:
             return JsonResponse({"error": "Email and password are required"}, status=400)
 
-        # Assuming your CustomUser model has a field to store the user's name.
         user = CustomUser.objects.create_user(
             email=email,
             password=password,
-            name=name,       # Save the name if applicable.
+            name=name,       # Ensure your model has the 'name' field defined
             birth_date=birth_date,
             phone=phone,
             city=city
@@ -57,11 +63,8 @@ def login_user(request):
 
         user = authenticate(request, email=email, password=password)
         if user is not None:
-            refresh = RefreshToken.for_user(user)
-            return JsonResponse({
-                "access": str(refresh.access_token),
-                "refresh": str(refresh)
-            }, status=200)
+            login(request, user)  # Establish a session login
+            return JsonResponse({"message": "Login successful"}, status=200)
         else:
             return JsonResponse({"error": "Invalid credentials"}, status=401)
     except Exception as e:
@@ -127,3 +130,14 @@ def test_view(request):
 @login_required
 def profile_view(request):
     return render(request, 'html/profile.html')
+
+from django.http import HttpResponse
+from django.views.static import serve
+
+def serve_static(request, path, document_root=None):
+    return serve(request, path, document_root=document_root)
+
+def logout_view(request):
+    """Log out the user and redirect to the login page."""
+    logout(request)
+    return redirect('login')

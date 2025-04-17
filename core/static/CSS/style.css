@@ -1,97 +1,188 @@
+/* Global styles */
+:root {
+  --primary-color: #1fbb27;
+  --secondary-color: #f0f0f0;
+  --text-color: #333;
+  --light-text: #666;
+  --border-color: #ddd;
+  --error-color: #ff3860;
+  --success-color: #23d160;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f2f5;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: #f9f9f9;
 }
 
+/* Container styles */
 .container {
-    width: 100%;
-    max-width: 600px;  
-    padding: 60px 30px;  
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
 }
 
+/* Form styles */
 .form-wrapper {
-    background-color: white;
-    padding: 60px 50px;  
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 500px;
 }
 
-h2 {
-    text-align: center;
-    color: #000000;
-    margin: 0 0 50px 0;  
-    font-size: 36px;  
+.form-wrapper h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
 }
+
 .form-group {
-    margin-bottom: 35px; /* Increased spacing between form sections */
+  margin-bottom: 1.2rem;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: #333;
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
 }
 
-.form-group:last-child {
-    margin-bottom: 0;
-}
-
-input {
-    width: 100%;
-    padding: 18px; 
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: border-color 0.3s ease;
-    box-sizing: border-box;
-}
-
-input:focus {
-    outline: none;
-    border-color: #85ff02;
-    box-shadow: 0 0 0 2px rgba(0, 255, 68, 0.2);
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(31, 187, 39, 0.2);
 }
 
 button {
-    width: 100%;
-    padding: 18px; 
-    margin-top: 15px;  
-    background-color: #1fbb27;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  width: 100%;
+  padding: 12px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #85ff02;
+  background-color: #18a020;
 }
 
-input::placeholder {
-    color: #999;
+/* Navigation styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-input[type="date"] {
-    color: #666;
+.logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: var(--primary-color);
 }
 
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
 }
 
-input:invalid:focus {
-    animation: shake 0.3s;
-    border-color: #ff0000;
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.nav-links a:hover, .nav-links a.active {
+  color: var(--primary-color);
+}
+
+/* Home page specific styles */
+.hero-section {
+  background-color: var(--secondary-color);
+  padding: 3rem 2rem;
+  margin: 2rem 0;
+  border-radius: 8px;
+}
+
+.hero-section h1 {
+  margin-bottom: 1.5rem;
+  font-size: 2.2rem;
+}
+
+.welcome-points {
+  list-style: none;
+}
+
+.welcome-points li {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: flex-start;
+}
+
+.welcome-points li::before {
+  content: "👉";
+  margin-right: 10px;
+}
+
+/* Profile page styles */
+.profile-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 800px;
+}
+
+.profile-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.profile-form div {
+  margin-bottom: 1.2rem;
+}
+
+.profile-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+/* Helper classes */
+.text-center {
+  text-align: center;
+}
+
+.mt-2 {
+  margin-top: 1rem;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.register-link a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
 }

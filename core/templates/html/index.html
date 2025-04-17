@@ -28,6 +28,24 @@
       </ul>
     </section>
 
+    <section class="features-section">
+      <h2 class="text-center">What You Can Do Here</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>Connect with Others</h3>
+          <p>Find and meet people in your community with similar interests.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Health Reminders</h3>
+          <p>Never miss your medications or important health appointments.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Local Events</h3>
+          <p>Discover events happening near you that match your interests.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- Testimonials Section -->
     <section class="testimonials">
       <div class="testimonial-grid">
@@ -122,6 +140,30 @@
     font-size: 1.1rem;
     line-height: 1.5;
     color: #444;
+  }
+  
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .feature-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .features-section h2 {
+    margin: 2rem 0 1rem;
+    color: var(--primary-color);
   }
   
   .testimonials {

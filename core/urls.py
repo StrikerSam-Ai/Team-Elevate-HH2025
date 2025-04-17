@@ -17,6 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+<<<<<<< HEAD
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
  # Map root URL to app URLs
 urlpatterns = [
@@ -27,3 +28,13 @@ urlpatterns = [
     path('', include('companions.urls')),
 ]
 
+=======
+from django.conf import settings
+from django.views.static import serve 
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('companions.urls')),
+    path('static/<path:path>', serve, {'document_root': settings.STATIC_ROOT_DIR}),
+]
+>>>>>>> 400b421c6146e256ac674f3832dbd7278a106b7b

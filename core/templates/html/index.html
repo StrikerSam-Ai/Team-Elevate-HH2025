@@ -1,0 +1,170 @@
+{% extends 'html/base.html' %}
+{% load static %}
+
+{% block title %}Home | Elevate{% endblock %}
+
+{% block content %}
+<div class="home-container">
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo">Logo</div>
+    <div class="nav-links">
+      <a href="/home/" class="active">Home</a>
+      <a href="/event-finder/">Event Finder</a>
+      <a href="/community/">Community</a>
+      <a href="/profile/">My Profile</a>
+      <a href="/logout/">Logout</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <section class="hero-section">
+      <h1>Welcome, {{ user.name|default:user.email }}</h1>
+      <ul class="welcome-points">
+        <li>👋 Welcome to your personal companion for a happier, healthier life!</li>
+        <li>Discover events, set reminders, chat with friends, and get what you need — all in one place.</li>
+        <li>Here to make life easier, safer, and more social — just for you.</li>
+      </ul>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <p>"I live alone now… sometimes days pass without hearing another voice.
+              The silence is loud, and it makes me feel invisible.
+              I miss the warmth of company, even if it's just a short conversation."</p>
+          <span class="author">- Hemanta</span>
+        </div>
+        <div class="testimonial-card">
+          <p>"Since joining this platform, I've connected with three people in my neighborhood. 
+             We now have a weekly card game. It's become the highlight of my week!"</p>
+          <span class="author">- Lakshmi</span>
+        </div>
+        <div class="testimonial-card">
+          <p>"The medicine reminders have been a lifesaver for me. I used to forget my pills 
+             all the time, but now I'm on track with my health."</p>
+          <span class="author">- Rajesh</span>
+        </div>
+      </div>
+      <p class="feedback-message">"We're always learning. Your feedback helps us get better."</p>
+    </section>
+  </main>
+</div>
+
+<style>
+  .home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    min-height: 100vh;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logo {
+    background-color: #d3d3d3;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    margin-right: 2rem;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    font-size: 1.1rem;
+  }
+  
+  .nav-links a:hover, .nav-links a.active {
+    color: #1fbb27;
+  }
+  
+  .main-content {
+    padding: 2rem;
+  }
+  
+  .hero-section {
+    background-color: #f0f0f0;
+    padding: 3rem 2rem;
+    margin: 2rem 0;
+    border-radius: 8px;
+    position: relative;
+  }
+  
+  .hero-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+  
+  .welcome-points {
+    list-style: none;
+    padding: 0;
+    max-width: 70%;
+  }
+  
+  .welcome-points li {
+    margin-bottom: 1.2rem;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: #444;
+  }
+  
+  .testimonials {
+    margin: 3rem 0;
+  }
+  
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .testimonial-card {
+    background-color: #f0f0f0;
+    padding: 2rem;
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+  }
+  
+  .testimonial-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .testimonial-card p {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #555;
+  }
+  
+  .author {
+    color: #666;
+    font-style: italic;
+    font-size: 0.9rem;
+  }
+  
+  .feedback-message {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+    margin-top: 3rem;
+    font-size: 1.1rem;
+  }
+</style>
+{% endblock %}

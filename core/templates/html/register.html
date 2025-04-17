@@ -70,7 +70,7 @@
             const result = await response.json();
 
             if (response.ok) {
-                window.location.href = '/';
+                window.location.href = '/home/';  // Redirect to home after registration
             } else {
                 alert('Error: ' + JSON.stringify(result));
             }

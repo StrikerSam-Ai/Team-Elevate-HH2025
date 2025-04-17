@@ -1,3 +1,4 @@
+html -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -6,6 +7,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    .register-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .register-link a {
+      color: #1fbb27;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .register-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -20,6 +35,9 @@
         </div>
         <button type="submit">Login</button>
       </form>
+      <div class="register-link">
+        <p>Don't have an account? <a href="/register/">Create Account</a></p>
+      </div>
     </div>
   </div>
 
@@ -39,7 +57,7 @@
         const result = await res.json();
         
         if (res.ok) {
-            window.location.href = '/profile/'; // Redirect to profile page
+            window.location.href = '/home/'; // Redirect to home page after login
         } else {
             alert('Error: ' + JSON.stringify(result));
         }

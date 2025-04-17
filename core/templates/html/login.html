@@ -1,11 +1,10 @@
-html -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <title>Login | Elevate</title>
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <style>
     .register-link {
@@ -25,8 +24,9 @@ html -->
 <body>
   <div class="container">
     <div class="form-wrapper">
-      <h2>Login</h2>
+      <h2>Login to Elevate</h2>
       <form id="login-form">
+        {% csrf_token %}
         <div class="form-group">
           <input type="email" placeholder="Email" name="email" required />
         </div>
@@ -45,21 +45,32 @@ html -->
     document.getElementById('login-form').addEventListener('submit', async function(e) {
         e.preventDefault();
     
+        // Get CSRF token
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData.entries());
     
-        const res = await fetch('/login/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
+        try {
+            const res = await fetch('/login/', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify(data)
+            });
 
-        const result = await res.json();
-        
-        if (res.ok) {
-            window.location.href = '/home/'; // Redirect to home page after login
-        } else {
-            alert('Error: ' + JSON.stringify(result));
+            const result = await res.json();
+            
+            if (res.ok) {
+                window.location.href = '/home/';
+            } else {
+                alert('Error: ' + (result.error || 'Login failed'));
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            alert('An error occurred during login. Please try again.');
         }
     });
   </script>

@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Community</title>
+    <link rel="stylesheet" href="{% static 'css/community.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Create Community</h1>
+        <a href="{% url 'community_list' %}" class="btn">Back to List</a>
+    </header>
+    <main>
+        <form method="post" class="community-form">
+            {% csrf_token %}
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+            <button type="submit" class="btn">Create</button>
+        </form>
+    </main>
+</body>
+</html>

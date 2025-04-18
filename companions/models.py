@@ -45,3 +45,20 @@ class CustomUser(AbstractUser):
 def validate_birth_date(value):
     if value > date.today():
         raise ValidationError("Birth date cannot be in the future.")
+
+class Community(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class CommunityMembership(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    community = models.ForeignKey(Community, on_delete=models.CASCADE)
+    joined_at = models.DateTimeField(auto_now_add=True)
+
+class Message(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    community = models.ForeignKey(Community, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)

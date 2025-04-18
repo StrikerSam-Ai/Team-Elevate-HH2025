@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './style.css';
 
 const Community = () => {
@@ -34,16 +34,23 @@ const Community = () => {
     }));
   };
 
+  // Add this function after your other state and handlers
+  const handleGroupClick = (groupId) => {
+    navigate(`/groups/${groupId}`);
+  };
+
+  const navigate = useNavigate();
+
   return (
     <div className="community-container">
       {/* Navigation Bar */}
       <nav className="navbar">
         <div className="logo">Logo</div>
         <div className="nav-links">
+          <Link to="/">Home</Link>
           <Link to="/dashboard">Dashboard</Link>
-          <Link to="/event-finder">Event Finder</Link>
           <Link to="/community" className="active">Community</Link>
-          <Link to="/about">About Us</Link>
+          <Link to="/events">Events</Link>
         </div>
       </nav>
 
@@ -102,7 +109,75 @@ const Community = () => {
           ))}
         </div>
 
-        <button className="video-call-btn">Video Call</button>
+        {/* <button className="video-call-btn">Video Call</button> */}
+      </section>
+
+      {/* Groups Section */}
+      <section className="groups-container">
+        {/* Find Groups Section */}
+        <div className="find-groups">
+          <><h2>Find your groups</h2><div className="groups-grid">
+            {[
+              {
+                id: 1,
+                name: 'Morning Walkers',
+                members: 45,
+                category: 'Health',
+                description: 'Join fellow early birds for daily morning walks and health discussions.'
+              },
+              {
+                id: 2,
+                name: 'Book Club',
+                members: 28,
+                category: 'Reading',
+                description: 'Weekly book discussions and reading recommendations for literature lovers.'
+              },
+              {
+                id: 3,
+                name: 'Gardening Club',
+                members: 32,
+                category: 'Hobby',
+                description: 'Share gardening tips and grow your green thumb with other plant enthusiasts.'
+              }
+            ].map(group => (
+              <div key={group.id} className="group-card">
+                <div className="group-image"></div>
+                <h3>{group.name}</h3>
+                <p className="group-members">{group.members} members</p>
+                <p className="group-category">Category: {group.category}</p>
+                <p className="group-description">{group.description}</p>
+                <button className="join-btn">Join Group</button>
+              </div>
+            ))}
+          </div></>
+        </div>
+
+        {/* Your Groups Section */}
+        <div className="your-groups">
+          <><h2>Your groups</h2><div className="group-list">
+            {[
+              { id: 1, name: 'Yoga Group', members: 25, lastActive: '2 hours ago' },
+              { id: 2, name: 'Chess Club', members: 15, lastActive: '1 day ago' }
+            ].map(group => (
+              <div key={group.id} className="group-item">
+                <div className="group-item-image"></div>
+                <div className="group-item-info">
+                  <h3>{group.name}</h3>
+                  <p>{group.members} members</p>
+                  <p>Last active: {group.lastActive}</p>
+                </div>
+                <div className="group-item-actions">
+                  <button
+                    className="view-group-btn"
+                    onClick={() => handleGroupClick(group.id)} // Now this will work
+                  >
+                    View Group
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div></>
+        </div>
       </section>
     </div>
   );

@@ -175,3 +175,71 @@ def community_detail(request, community_id):
             return redirect('community_detail', community_id=community_id)
     except ObjectDoesNotExist:
         return JsonResponse({"error": "Community not found"}, status=404)
+    
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+import json
+import requests
+import os
+
+@csrf_exempt
+def TextGenerationView(request):
+    if request.method == "POST":
+        try:
+            # Parse JSON data
+            try:
+                data = json.loads(request.body)
+            except json.JSONDecodeError:
+                return JsonResponse({"error": "Invalid JSON"}, status=400)
+                
+            prompt = data.get("prompt", "")
+            language = data.get("language", "english")
+
+            # Debug print
+            print(f"Received request - Prompt: {prompt}, Language: {language}")
+
+            # Call Groq API
+            headers = {
+                "Authorization": f"Bearer {os.getenv('GROQ_API_KEY')}",
+                "Content-Type": "application/json",
+            }
+            
+            payload = {
+                "model": "llama3-70b-8192",
+                "messages": [
+                    {"role": "system", "content": f"You are a helpful assistant who replies in {language}."},
+                    {"role": "user", "content": prompt}
+                ],
+                "temperature": 0.7
+            }
+
+            response = requests.post(
+                "https://api.groq.com/openai/v1/chat/completions",
+                headers=headers,
+                json=payload
+            )
+
+            # Debug print
+            print(f"Groq API response: {response.status_code}")
+
+            if response.status_code == 200:
+                content = response.json()["choices"][0]["message"]["content"]
+                return JsonResponse({"response": content})
+            else:
+                return JsonResponse(
+                    {"error": f"Groq API error: {response.text}"},
+                    status=response.status_code
+                )
+
+        except Exception as e:
+            print(f"Server error: {str(e)}")  # Debug print
+            return JsonResponse(
+                {"error": f"Server error: {str(e)}"},
+                status=500
+            )
+    return JsonResponse({"error": "Method not allowed"}, status=405)
+    
+def homeView(request):
+    return render(request, 'chatb.html')

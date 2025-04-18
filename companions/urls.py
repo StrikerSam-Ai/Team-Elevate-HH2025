@@ -8,6 +8,10 @@ urlpatterns = [
     path('register/', views.register_user, name='register-user'),
     path('profile/', views.profile, name='profile'),
     path('profile/update/', views.profile_update, name='profile_update'),
+    path('', homeView, name="home-view"),
+    path('api/generate-text/', views.TextGenerationView, name='generate_text'),
+    # Add this to handle OPTIONS requests properly:
+    path('api/generate-text', views.TextGenerationView, name='generate_text_no_slash'), 
 <<<<<<< HEAD
     path('community/', views.community_list, name='community_list'),
     path('community/join/<int:community_id>/', views.join_community, name='join_community'),

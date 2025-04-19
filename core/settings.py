@@ -11,9 +11,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent  # New way using pathlib
 
 
 # Quick-start development settings - unsuitable for production
@@ -37,12 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',  # Add this line
     'companions',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Whitenoise for static files
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # CORS middleware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -56,15 +60,10 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'templates',
-            BASE_DIR / 'companions' / 'templates',
-            BASE_DIR / 'core' / 'templates',
-            BASE_DIR / 'templates' / 'registration',
-            BASE_DIR / 'companions' / 'templates' / 'profiles',  # Add profiles template directory
-            BASE_DIR / 'templates' / 'profiles',  # Alternative profiles location
-            BASE_DIR / 'companions' / 'templates' / 'accounts',  # For user account templates
-        ],  # Points to project-level, app-level, and auth templates
-        'APP_DIRS': True,
+            os.path.join(BASE_DIR, 'frontend', 'build'),  # React build directory
+            os.path.join(BASE_DIR, 'templates'),
+        ],
+        'APP_DIRS': True,  # Allows Django to find templates inside app directories
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -128,9 +127,26 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
+# Static files
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'core' / 'static']
-STATIC_ROOT_DIR = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'frontend', 'build', 'static'),  # React static files
+    os.path.join(BASE_DIR, 'static'),
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Add this for Django to serve React frontend
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000', # Assuming your frontend runs here
+    'http://127.0.0.1:3000',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+]
+CORS_ALLOW_ALL_ORIGINS = DEBUG  # Allow all origins in development
+
+# Whitenoise for static files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -138,3 +154,10 @@ STATIC_ROOT_DIR = BASE_DIR / 'staticfiles'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'companions.CustomUser'
+
+# Custom login URL setup:
+LOGIN_URL = 'companions:login_page'
+LOGIN_REDIRECT_URL = 'companions:home'
+LOGOUT_REDIRECT_URL = 'companions:home'
+
+# ... rest of settings ...

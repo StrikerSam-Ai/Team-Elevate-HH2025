@@ -1,0 +1,20 @@
+<!-- templates/html/react_app.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevate | Senior Companion</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- This helps with CSRF token for React -->
+    <script>
+        window.CSRF_TOKEN = "{{ csrf_token }}";
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+    <!-- These will be replaced with your built React app in production -->
+    <!-- In development, React will be served from the React dev server -->
+</body>
+</html>

@@ -1,117 +1,154 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth import authenticate, login, logout
-from rest_framework_simplejwt.tokens import RefreshToken
-from .models import CustomUser
-from django.views.decorators.http import require_http_methods
-from django.core.exceptions import ObjectDoesNotExist
-import json
+from django.http import JsonResponse, HttpResponse
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import update_session_auth_hash
+from django.views.decorators.http import require_http_methods, require_POST
+from django.middleware.csrf import get_token
+from django.views.generic import TemplateView
+from .models import CustomUser
+import logging
+import json
+
+logger = logging.getLogger(__name__)
+
+# --- Authentication and Home Views ---
 
 def login_view(request):
-    """Render the login page."""
+    """Display the login page."""
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('companions:home')
     return render(request, 'html/login.html')
 
-@login_required
-def home(request):
-    """Render the home page for logged-in users."""
-    return render(request, 'html/index.html')  # Make sure to create this template
+@csrf_exempt
+@require_http_methods(["POST"])
+def login_user(request):
+    """Handle login API request."""
+    data = json.loads(request.body)
+    email = data.get('email')
+    password = data.get('password')
+    logger.debug(f"Attempting login with email: {email}")
+    user = authenticate(request, email=email, password=password)
+    if user is not None:
+        login(request, user)
+        logger.debug("Login successful")
+        return JsonResponse({
+            'success': True,
+            'redirect': '/home/'
+        })
+    logger.debug("Login failed: Invalid credentials")
+    return JsonResponse({
+        'success': False,
+        'error': 'Invalid credentials'
+    }, status=400)
 
 @csrf_exempt
 @require_http_methods(["GET", "POST"])
 def register_user(request):
     """Handle user registration."""
-    if request.method == 'GET':
-        if request.user.is_authenticated:
-            return redirect('home')
-        return render(request, 'html/register.html')
-    
-    try:
-        data = json.loads(request.body)
-        email = data.get('email')
-        password = data.get('password')
-        name = data.get('name')
-        birth_date = data.get('birth_date')
-        phone = data.get('phone')
-        city = data.get('city')
-
-        if not email or not password:
-            return JsonResponse({"error": "Email and password are required"}, status=400)
-
-        # Check if user already exists
-        if CustomUser.objects.filter(email=email).exists():
-            return JsonResponse({"error": "User with this email already exists"}, status=400)
-
-        # Create new user - fields should match your CustomUser model
-        # If your model doesn't have a name field, remove it from here
-        user = CustomUser.objects.create_user(
-            email=email,
-            password=password,
-            birth_date=birth_date,
-            phone=phone,
-            city=city
-        )
-        
-        # Auto login after registration
-        login(request, user)
-        return JsonResponse({"message": "User registered successfully"}, status=201)
-    except Exception as e:
-        return JsonResponse({"error": str(e)}, status=400)
-
-@csrf_exempt
-@require_http_methods(["POST"])
-def login_user(request):
-    """API endpoint for user login."""
-    try:
-        data = json.loads(request.body)
-        email = data.get('email')
-        password = data.get('password')
-
-        if not email or not password:
-            return JsonResponse({"error": "Email and password are required"}, status=400)
-
-        user = authenticate(request, email=email, password=password)
-        if user is not None:
-            login(request, user)  # Establish a session login
-            return JsonResponse({"message": "Login successful"}, status=200)
-        else:
-            return JsonResponse({"error": "Invalid credentials"}, status=401)
-    except Exception as e:
-        return JsonResponse({"error": str(e)}, status=400)
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            # Create user with provided data
+            user = CustomUser.objects.create_user(
+                email=data.get('email'),
+                password=data.get('password'),
+                name=data.get('name'),
+                birth_date=data.get('birth_date'),
+                phone=data.get('phone'),
+                city=data.get('city')
+            )
+            login(request, user)
+            return JsonResponse({
+                'success': True,
+                'redirect': '/home/'
+            })
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'error': str(e)
+            }, status=400)
+    return render(request, 'html/register.html')
 
 @login_required
-def profile(request):
+def logout_view(request):
+    """Log out the user."""
+    logout(request)
+    return JsonResponse({
+        'success': True,
+        'redirect': '/login/'
+    })
+
+@login_required
+def home_view(request):
+    """Display the home page."""
+    return render(request, 'html/home.html')
+
+# --- Profile Views ---
+
+@login_required
+def profile_view(request):
     """Render the user profile page."""
     return render(request, 'html/profile.html')
 
 @login_required
-def profile_update(request):
-    """Handle profile updates."""
-    if request.method == 'POST':
-        user = request.user
-        user.email = request.POST.get('email', user.email)
-        
-        # Handle optional fields
-        birth_date = request.POST.get('birth_date')
-        if birth_date:
-            user.birth_date = birth_date
-            
-        user.phone = request.POST.get('phone', user.phone)
-        user.city = request.POST.get('city', user.city)
-        
-        # Update password only if provided
-        password = request.POST.get('password')
-        if password:
-            user.set_password(password)
-            
-        user.save()
-        return redirect('profile')
-    
-    return redirect('profile')
+@require_POST
+def profile_update_view(request):
+    """Handle the profile update form submission."""
+    user = request.user
+    # Example: update first and last name
+    user.first_name = request.POST.get('first_name', user.first_name)
+    user.last_name = request.POST.get('last_name', user.last_name)
+    user.save()
+    return redirect('companions:profile')
+
+@login_required
+def profile_api(request):
+    """API endpoint for profile data."""
+    # Return profile data as JSON
+    data = {
+        'username': request.user.username,
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+    }
+    return JsonResponse(data)
+
+# --- Other Views ---
+
+def get_csrf_token(request):
+    """Get a CSRF token for AJAX requests."""
+    token = get_token(request)
+    return JsonResponse({'csrfToken': token})
+
+@ensure_csrf_cookie
+def react_app_view(request):
+    """Serve the React application."""
+    return render(request, 'html/react_app.html')
+
+def community_view(request):
+    """Display the community page."""
+    return HttpResponse("This is the community page.")
+
+@login_required
+def dashboard_view(request):
+    """Render the dashboard page."""
+    return render(request, 'html/dashboard.html')
+
+def settings_view(request):
+    """Render the settings page."""
+    return HttpResponse("This is the settings page.")
+
+@require_http_methods(["GET"])
+def check_auth(request):
+    """Return JSON indicating whether the user is authenticated."""
+    if request.user.is_authenticated:
+        return JsonResponse({
+            'authenticated': True,
+            'email': getattr(request.user, 'email', ''),
+            'name': request.user.first_name or request.user.username,
+            'id': request.user.id
+        })
+    return JsonResponse({'authenticated': False})
 
 @require_http_methods(["GET"])
 def test_view(request):
@@ -120,17 +157,11 @@ def test_view(request):
     else:
         return JsonResponse({"error": "Authentication required"}, status=401)
 
-@login_required
-def profile_view(request):
-    return render(request, 'html/profile.html')
-
-from django.http import HttpResponse
 from django.views.static import serve
 
 def serve_static(request, path, document_root=None):
     return serve(request, path, document_root=document_root)
 
-def logout_view(request):
-    """Log out the user and redirect to the login page."""
-    logout(request)
-    return redirect('login')
+# Add this class-based view for serving React
+class ReactAppView(TemplateView):
+    template_name = "frontend/build/index.html"

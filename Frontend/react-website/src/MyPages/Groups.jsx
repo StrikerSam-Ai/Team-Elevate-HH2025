@@ -19,6 +19,7 @@ const Groups = () => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
+    
   };
 
   const handleSendMessage = (e) => {

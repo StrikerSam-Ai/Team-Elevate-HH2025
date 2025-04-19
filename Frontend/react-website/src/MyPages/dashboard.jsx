@@ -114,7 +114,7 @@ const Dashboard = () => {
         <button className="chat-toggle-button" onClick={() => setShowChat(!showChat)}>
           Chat
         </button>
-        {showChat && <Chatbot />}
+        {showChat && <Chatbot onClose={() => setShowChat(false)} />}
       </div>
     </div>
   );

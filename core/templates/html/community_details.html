@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ community.name }}</title>
+    <link rel="stylesheet" href="{% static 'css/community.css' %}">
+</head>
+<body>
+    <header>
+        <h1>{{ community.name }}</h1>
+        <a href="{% url 'community_list' %}" class="btn">Back to List</a>
+    </header>
+    <main>
+        <div class="community-info">
+            <p>{{ community.description }}</p>
+            <p>Created by: {{ community.created_by.name }}</p>
+        </div>
+        <form method="post" class="message-form">
+            {% csrf_token %}
+            <label for="message">Message:</label>
+            <input type="text" id="message" name="message">
+            <button type="submit" class="btn">Send</button>
+        </form>
+        <div class="message-container">
+            {% for message in community.message_set.all %}
+                <div class="message-card">
+                    <p><strong>{{ message.user.name }}:</strong> {{ message.content }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+</html>

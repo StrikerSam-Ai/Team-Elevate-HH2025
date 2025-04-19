@@ -11,7 +11,7 @@
     <div class="container">
         <div class="form-wrapper">
             <h2>Create Account</h2>
-            <form id="register-form" action="{% url 'register-user' %}" method="post">
+            <form id="register-form" action="/register/" method="post">  <!-- Ensured correct action URL -->
                 {% csrf_token %}
                 <div class="form-group">
                     <input type="text" placeholder="Name" name="name" required />
@@ -58,7 +58,7 @@
             const formData = new FormData(this);
             const data = Object.fromEntries(formData.entries());
 
-            const response = await fetch(this.action, {
+            const response = await fetch(this.action, { // this.action will now correctly resolve to /register/
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

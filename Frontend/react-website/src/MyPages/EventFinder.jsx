@@ -18,7 +18,7 @@ const EventFinder = () => {
           </div>
           <div className="image-placeholder">
             {/* Add your image here */}
-          </div>c:\hackhazards\react-website\src\MyPages\Groups.jsx
+          </div>
         </div>
       </section>
 

@@ -1,6 +1,18 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './style.css';
+import Footer from './Footer'; 
+import CommunityImg from './CommunityImg.jpg';  
+import SureshImg from './Suresh.jpg';
+import GeetaImg from './Geeta.jpg';    
+import NamitaImg from './Namita.jpg';  
+import JayaImg from './Jaya.jpg';      
+import KamalaImg from './Kamala.jpg';  
+import MorningWalkerImg from './MorningWalker.jpg';
+import BookImg from './Book.jpg';
+import GardeningImg from './Gardening.jpg';
+import ChessImg from './Chess.jpg';
+import YogaImg from './Yoga.jpg';
 
 const Community = () => {
   const [connections, setConnections] = useState({
@@ -56,9 +68,14 @@ const Community = () => {
 
       {/* Community Header */}
       <section className="community-header">
-        <h1>COMMUNITY</h1>
-        <div className="community-intro">
-          <p>“Welcome to your community space! Connect with fellow users, see who's following you, and manage your friend requests — all in one place.”</p>
+        <div className="community-content">
+          <h1>COMMUNITY</h1>
+          <div className="community-intro">
+            <p>"Welcome to your community space! Connect with fellow users, see who's following you, and manage your friend requests — all in one place."</p>
+          </div>
+        </div>
+        <div className="community-image">
+          <img src={CommunityImg} alt="Community members interacting" />
         </div>
       </section>
 
@@ -66,7 +83,11 @@ const Community = () => {
       <section className="people-grid">
         {people.map(person => (
           <div key={person.id} className="person-card">
-            <div className="avatar"></div>
+            <div className="avatar">
+              {person.name === 'Suresh' && <img src={SureshImg} alt="Suresh" className="avatar-img" />}
+              {person.name === 'Geeta' && <img src={GeetaImg} alt="Geeta" className="avatar-img" />}
+              {person.name === 'Namita' && <img src={NamitaImg} alt="Namita" className="avatar-img" />}
+            </div>
             <h3>{person.name}</h3>
             <p>Place: {person.place}</p>
             <p>age: {person.age}</p>
@@ -89,7 +110,10 @@ const Community = () => {
           <h3>New Request</h3>
           {connections.requests.map(request => (
             <div key={request.id} className="request-item">
-              <div className="avatar-small"></div>
+              <div className="avatar-small">
+                {request.name === 'Jaya' && <img src={JayaImg} alt="Jaya" className="avatar-img" />}
+                {request.name === 'Kamala' && <img src={KamalaImg} alt="Kamala" className="avatar-img" />}
+              </div>
               <span>{request.name}</span>
               <div className="request-buttons">
                 <button 
@@ -123,25 +147,30 @@ const Community = () => {
                 name: 'Morning Walkers',
                 members: 45,
                 category: 'Health',
-                description: 'Join fellow early birds for daily morning walks and health discussions.'
+                description: 'Join fellow early birds for daily morning walks and health discussions.',
+                image: MorningWalkerImg
               },
               {
                 id: 2,
                 name: 'Book Club',
                 members: 28,
                 category: 'Reading',
-                description: 'Weekly book discussions and reading recommendations for literature lovers.'
+                description: 'Weekly book discussions and reading recommendations for literature lovers.',
+                image: BookImg
               },
               {
                 id: 3,
                 name: 'Gardening Club',
                 members: 32,
                 category: 'Hobby',
-                description: 'Share gardening tips and grow your green thumb with other plant enthusiasts.'
+                description: 'Share gardening tips and grow your green thumb with other plant enthusiasts.',
+                image: GardeningImg
               }
             ].map(group => (
               <div key={group.id} className="group-card">
-                <div className="group-image"></div>
+                <div className="group-image">
+                  <img src={group.image} alt={group.name} className="group-img" />
+                </div>
                 <h3>{group.name}</h3>
                 <p className="group-members">{group.members} members</p>
                 <p className="group-category">Category: {group.category}</p>
@@ -156,11 +185,13 @@ const Community = () => {
         <div className="your-groups">
           <><h2>Your groups</h2><div className="group-list">
             {[
-              { id: 1, name: 'Yoga Group', members: 25, lastActive: '2 hours ago' },
-              { id: 2, name: 'Chess Club', members: 15, lastActive: '1 day ago' }
+              { id: 1, name: 'Yoga Group', members: 25, lastActive: '2 hours ago', image: YogaImg },
+              { id: 2, name: 'Chess Club', members: 15, lastActive: '1 day ago', image: ChessImg }
             ].map(group => (
               <div key={group.id} className="group-item">
-                <div className="group-item-image"></div>
+                <div className="group-item-image">
+                  <img src={group.image} alt={group.name} className="group-item-img" />
+                </div>
                 <div className="group-item-info">
                   <h3>{group.name}</h3>
                   <p>{group.members} members</p>
@@ -169,7 +200,7 @@ const Community = () => {
                 <div className="group-item-actions">
                   <button
                     className="view-group-btn"
-                    onClick={() => handleGroupClick(group.id)} // Now this will work
+                    onClick={() => handleGroupClick(group.id)}
                   >
                     View Group
                   </button>
@@ -179,6 +210,8 @@ const Community = () => {
           </div></>
         </div>
       </section>
+      {/* Add Footer at the end of the container */}
+      <Footer />
     </div>
   );
 };

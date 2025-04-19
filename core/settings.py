@@ -9,7 +9,14 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+import os
+from dotenv import load_dotenv
 
+# Load the .env file
+load_dotenv()
+
+# Access your Groq API Key
+GROQ_API_KEY = os.getenv('GROQ_API_KEY')
 from pathlib import Path
 import os
 
@@ -38,13 +45,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
     'corsheaders',  # Add this line
+=======
+    'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
+    'channels',
+    'corsheaders'
+>>>>>>> 80d9ef0d5dab9ef00ce5fe8b19b03a87ca4e474d
     'companions',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+<<<<<<< HEAD
     'whitenoise.middleware.WhiteNoiseMiddleware',  # Whitenoise for static files
+=======
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+>>>>>>> 80d9ef0d5dab9ef00ce5fe8b19b03a87ca4e474d
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',  # CORS middleware
     'django.middleware.common.CommonMiddleware',
@@ -89,8 +108,8 @@ DATABASES = {
         'USER': 'djangouser',
         'PASSWORD': 'newpassword123!',  # Must match what you set above
         'HOST': 'localhost',
-        'PORT': '5432',
-    }
+        'PORT':'5432',
+        }
 }
 
 
@@ -124,6 +143,10 @@ USE_I18N = True
 
 USE_TZ = True
 
+APPEND_SLASH = True
+
+CORS_ALLOW_ALL_ORIGINS = True 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
@@ -155,9 +178,24 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'companions.CustomUser'
 
+<<<<<<< HEAD
 # Custom login URL setup:
 LOGIN_URL = 'companions:login_page'
 LOGIN_REDIRECT_URL = 'companions:home'
 LOGOUT_REDIRECT_URL = 'companions:home'
 
 # ... rest of settings ...
+=======
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://localhost",  # Add your frontend origin
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://localhost",
+]
+>>>>>>> 80d9ef0d5dab9ef00ce5fe8b19b03a87ca4e474d

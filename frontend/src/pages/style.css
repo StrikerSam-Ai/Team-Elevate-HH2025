@@ -1,127 +1,127 @@
-/* Base styles for dashboard and home pages */
-.home-container, .dashboard-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
-}
-
-.navbar {
+.not-found-container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.logo {
-  font-weight: bold;
-  font-size: 1.5rem;
-}
-
-.nav-links {
-  display: flex;
-  gap: 2rem;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-}
-
-.nav-links a:hover, .nav-links a.active {
-  color: #1fbb27;
-}
-
-.main-content {
+  justify-content: center;
+  min-height: 100vh;
   padding: 2rem;
+  text-align: center;
 }
 
-/* Add these styles for the Profile component */
+.not-found-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.not-found-container p {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.not-found-container .home-link {
+  padding: 0.75rem 1.5rem;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.not-found-container .home-link:hover {
+  background-color: #0056b3;
+}
 
 .profile-container {
   max-width: 800px;
   margin: 2rem auto;
   padding: 2rem;
-  background-color: #fff;
+  background: white;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .profile-container h1 {
+  text-align: center;
   margin-bottom: 2rem;
   color: #333;
-  text-align: center;
 }
 
-.profile-details {
-  line-height: 1.8;
+.profile-form .form-group,
+.profile-info .info-group {
+  margin-bottom: 1.5rem;
 }
 
-.profile-details p {
-  margin-bottom: 1rem;
+.profile-form label,
+.profile-info label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #666;
 }
 
-.bio-text {
-  white-space: pre-line;
-  background-color: #f9f9f9;
-  padding: 1rem;
+.profile-form input,
+.profile-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  margin-top: 0.5rem;
+  font-size: 1rem;
 }
 
-.message {
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border-radius: 4px;
-  background-color: #d4edda;
-  color: #155724;
-  text-align: center;
+.profile-form textarea {
+  min-height: 100px;
+  resize: vertical;
 }
 
 .button-group {
   display: flex;
   gap: 1rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
+.save-button,
 .edit-button {
-  background-color: #4CAF50;
+  padding: 0.75rem 1.5rem;
+  background-color: #007bff;
   color: white;
   border: none;
-  padding: 0.75rem 1.5rem;
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
-  margin-top: 1.5rem;
 }
 
 .cancel-button {
-  background-color: #f8f9fa;
-  color: #333;
-  border: 1px solid #ddd;
   padding: 0.75rem 1.5rem;
+  background-color: #6c757d;
+  color: white;
+  border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
 }
 
-.edit-button:hover {
-  background-color: #45a049;
-}
-
-.cancel-button:hover {
-  background-color: #e2e6ea;
-}
-
-textarea {
-  width: 100%;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid #ddd;
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 1rem;
+  margin-bottom: 1rem;
   border-radius: 4px;
-  resize: vertical;
-  font-family: inherit;
+  text-align: center;
+}
+
+.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
 }

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Create an axios instance with default configs
 const instance = axios.create({
-  baseURL: '/',
+  baseURL: 'http://localhost:8000/api',  // Point to Django API server
   headers: {
     'Content-Type': 'application/json',
   },

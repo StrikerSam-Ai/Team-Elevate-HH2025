@@ -1,8 +1,8 @@
 // frontend/src/pages/Register.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from '../utils/axios';
-import './Login.css'; // We can reuse the login styles
+import { useAuth } from '../contexts/AuthContext';
+import './Login.css';
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -13,6 +13,7 @@ function Register() {
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { register } = useAuth();
 
   const handleChange = (e) => {
     setFormData({
@@ -25,31 +26,20 @@ function Register() {
     e.preventDefault();
     setError('');
     
-    // Basic validation
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       return;
     }
 
     try {
-      // First get a CSRF token
-      const tokenResponse = await axios.get('/get-csrf-token/');
-      const csrfToken = tokenResponse.data.csrfToken;
-      
-      const response = await axios.post('/register/', {
+      const success = await register({
         name: formData.name,
         email: formData.email,
         password: formData.password
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrfToken
-        },
-        withCredentials: true
       });
       
-      if (response.status === 201) {
-        navigate('/login');
+      if (success) {
+        navigate('/dashboard');
       } else {
         setError('Registration failed. Please try again.');
       }

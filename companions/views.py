@@ -71,6 +71,8 @@ def register_user(request):
             }, status=400)
     return render(request, 'html/register.html')
 
+@ensure_csrf_cookie
+@require_http_methods(["POST"])
 @login_required
 def logout_view(request):
     """Log out the user."""

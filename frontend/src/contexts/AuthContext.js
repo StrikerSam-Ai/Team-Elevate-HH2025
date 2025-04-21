@@ -7,14 +7,13 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Check auth status when component mounts
   useEffect(() => {
     checkAuthStatus();
   }, []);
 
   const checkAuthStatus = async () => {
     try {
-      const response = await axios.get('/api/check-auth/');
+      const response = await axios.get('/check-auth/');
       if (response.status === 200 && response.data.authenticated) {
         setUser(response.data);
       } else {
@@ -30,16 +29,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      // Get CSRF token first
-      const tokenResponse = await axios.get('/get-csrf-token/');
-      const csrfToken = tokenResponse.data.csrfToken;
-      
-      // Make login request with CSRF token
       const response = await axios.post('/login/', 
-        { email, password },
-        { 
-          headers: { 'X-CSRFToken': csrfToken }
-        }
+        { email, password }
       );
 
       if (response.status === 200) {
@@ -55,9 +46,12 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.get('/logout/');
-      setUser(null);
-      return true;
+      const response = await axios.post('/logout/');
+      if (response.status === 200) {
+        setUser(null);
+        return true;
+      }
+      return false;
     } catch (error) {
       console.error("Logout failed:", error);
       return false;
@@ -66,16 +60,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      // Get CSRF token first
-      const tokenResponse = await axios.get('/get-csrf-token/');
-      const csrfToken = tokenResponse.data.csrfToken;
-      
-      const response = await axios.post('/register/', 
-        userData,
-        { 
-          headers: { 'X-CSRFToken': csrfToken }
-        }
-      );
+      const response = await axios.post('/register/', userData);
       
       if (response.status === 201) {
         await checkAuthStatus();  // Refresh user state after registration

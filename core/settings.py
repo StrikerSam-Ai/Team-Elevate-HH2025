@@ -11,30 +11,28 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from dotenv import load_dotenv
+from pathlib import Path
+from datetime import timedelta
 
 # Load the .env file
 load_dotenv()
 
 # Access your Groq API Key
 GROQ_API_KEY = os.getenv('GROQ_API_KEY')
-from pathlib import Path
-import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent  # New way using pathlib
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-n2651=di7*&8!gnj359su7c528pw_kz+$&jqw@^ds4!o_t!%dm'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your-secret-key-here')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True  # Force DEBUG to True in development
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
 
@@ -45,27 +43,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
-    'corsheaders',  # Add this line
-=======
     'rest_framework',
-    'rest_framework_simplejwt.token_blacklist',
-    'channels',
-    'corsheaders'
->>>>>>> 80d9ef0d5dab9ef00ce5fe8b19b03a87ca4e474d
-    'companions',
+    'rest_framework_simplejwt',
+    'corsheaders',
+    'companions.apps.CompanionsConfig',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-<<<<<<< HEAD
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Whitenoise for static files
-=======
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
->>>>>>> 80d9ef0d5dab9ef00ce5fe8b19b03a87ca4e474d
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',  # CORS middleware
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -94,9 +81,7 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = 'core.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -111,7 +96,6 @@ DATABASES = {
         'PORT':'5432',
         }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -130,7 +114,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
@@ -158,6 +141,9 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Add this for Django to serve React frontend
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
@@ -165,6 +151,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:3000',
     'http://localhost:8000',
     'http://127.0.0.1:8000',
+    'http://localhost',
 ]
 CORS_ALLOW_ALL_ORIGINS = DEBUG  # Allow all origins in development
 
@@ -178,24 +165,49 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'companions.CustomUser'
 
-<<<<<<< HEAD
 # Custom login URL setup:
 LOGIN_URL = 'companions:login_page'
 LOGIN_REDIRECT_URL = 'companions:home'
 LOGOUT_REDIRECT_URL = 'companions:home'
 
-# ... rest of settings ...
-=======
+# CORS and CSRF settings
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-    "http://localhost",  # Add your frontend origin
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+    'http://localhost',
 ]
+CORS_ALLOW_ALL_ORIGINS = DEBUG  # Allow all origins in development
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-    "http://localhost",
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+    'http://localhost:3000',
+    'http://localhost',
 ]
->>>>>>> 80d9ef0d5dab9ef00ce5fe8b19b03a87ca4e474d
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
+
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')

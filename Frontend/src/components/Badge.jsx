@@ -1,37 +1,22 @@
 import React from 'react';
-import { formatNumber } from '../utils';
 
-const Badge = ({ 
-  children, 
-  count, 
-  variant = 'primary',
+const Badge = ({
+  children,
+  variant = 'default',
   size = 'medium',
-  dot = false,
-  max = 99,
-  className = '' 
+  className = ''
 }) => {
-  const badgeClass = [
+  const badgeClasses = [
     'badge',
     `badge-${variant}`,
     `badge-${size}`,
-    dot ? 'badge-dot' : '',
     className
   ].filter(Boolean).join(' ');
 
-  const renderCount = () => {
-    if (dot) return null;
-    if (!count) return children;
-    const formattedCount = count > max ? `${max}+` : formatNumber(count);
-    return formattedCount;
-  };
-
   return (
-    <div className="badge-wrapper">
+    <span className={badgeClasses}>
       {children}
-      <span className={badgeClass}>
-        {renderCount()}
-      </span>
-    </div>
+    </span>
   );
 };
 

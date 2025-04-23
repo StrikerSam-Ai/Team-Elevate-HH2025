@@ -1,0 +1,55 @@
+.card {
+  background: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.card-title-section {
+  flex: 1;
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.card-title {
+  color: var(--text-color);
+  margin-bottom: 0.25rem;
+}
+
+.card-subtitle {
+  color: var(--light-text);
+  font-size: 0.875rem;
+}
+
+.card-content {
+  color: var(--text-color);
+}
+
+.verification-badge {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.card-hoverable {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.card-hoverable:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}

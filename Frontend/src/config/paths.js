@@ -7,5 +7,6 @@ export const PATHS = {
   EVENTS: '/events',
   GROUPS: '/groups',
   GROUP_DETAIL: (id) => `/groups/${id}`,
-  PROFILE: '/profile'
+  PROFILE: '/profile',
+  JOURNAL: '/journal'
 };

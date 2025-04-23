@@ -34,3 +34,20 @@ export const authAPI = {
     return axios.get('/api/check-auth/');
   }
 };
+
+function logout() {
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+    fetch('/api/logout/', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrftoken,
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.href = '/login/';
+        }
+    });
+}

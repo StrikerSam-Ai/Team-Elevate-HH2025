@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import axios from '../api/axios';  // Use the configured axios instance
+import axios from '../api/axios';
 
 const AuthContext = createContext();
 
@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   const checkAuthStatus = async () => {
     try {
       const response = await axios.get('/check-auth/');
-      if (response.status === 200 && response.data.authenticated) {
+      if (response.data.authenticated) {
         setUser(response.data);
       } else {
         setUser(null);
@@ -29,32 +29,16 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('/login/', 
-        { email, password }
-      );
-
-      if (response.status === 200) {
-        await checkAuthStatus();  // Refresh user state after login
+      const response = await axios.post('/login/', { email, password });
+      
+      if (response.data.success) {
+        setUser(response.data.user);
         return true;
       }
       return false;
     } catch (error) {
       console.error("Login failed:", error);
-      return false;
-    }
-  };
-
-  const logout = async () => {
-    try {
-      const response = await axios.post('/logout/');
-      if (response.status === 200) {
-        setUser(null);
-        return true;
-      }
-      return false;
-    } catch (error) {
-      console.error("Logout failed:", error);
-      return false;
+      throw error;
     }
   };
 
@@ -62,13 +46,24 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await axios.post('/register/', userData);
       
-      if (response.status === 201) {
-        await checkAuthStatus();  // Refresh user state after registration
+      if (response.data.success) {
+        setUser(response.data.user);
         return true;
       }
       return false;
     } catch (error) {
       console.error("Registration failed:", error);
+      throw error;
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await axios.post('/logout/');
+      setUser(null);
+      return true;
+    } catch (error) {
+      console.error("Logout failed:", error);
       return false;
     }
   };
@@ -79,7 +74,6 @@ export const AuthProvider = ({ children }) => {
     login,
     logout,
     register,
-    checkAuthStatus,
     isAuthenticated: !!user
   };
 
@@ -90,4 +84,10 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};

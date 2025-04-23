@@ -67,12 +67,29 @@
                 body: JSON.stringify(data)
             });
 
-            const result = await response.json();
-
-            if (response.ok) {
-                window.location.href = '/home/';  // Redirect to home after registration
-            } else {
-                alert('Error: ' + JSON.stringify(result));
+            try {
+                const result = await response.json();
+                if (response.ok) {
+                    // Show success message before redirecting
+                    const successMessage = document.createElement('div');
+                    successMessage.className = 'success-message';
+                    successMessage.textContent = 'Registration successful! Redirecting...';
+                    this.insertBefore(successMessage, this.firstChild);
+                    
+                    setTimeout(() => {
+                        window.location.href = '/home/';
+                    }, 1500);
+                } else {
+                    // Show specific error messages if available
+                    const errorMessage = result.error || 'Registration failed. Please try again.';
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'error-message';
+                    errorDiv.textContent = errorMessage;
+                    this.insertBefore(errorDiv, this.firstChild);
+                }
+            } catch (error) {
+                console.error('Error processing response:', error);
+                alert('An unexpected error occurred. Please try again.');
             }
         });
     </script>

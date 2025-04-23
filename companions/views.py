@@ -25,51 +25,77 @@ def login_view(request):
 @require_http_methods(["POST"])
 def login_user(request):
     """Handle login API request."""
-    data = json.loads(request.body)
-    email = data.get('email')
-    password = data.get('password')
-    logger.debug(f"Attempting login with email: {email}")
-    user = authenticate(request, email=email, password=password)
-    if user is not None:
-        login(request, user)
-        logger.debug("Login successful")
-        return JsonResponse({
-            'success': True,
-            'redirect': '/home/'
-        })
-    logger.debug("Login failed: Invalid credentials")
-    return JsonResponse({
-        'success': False,
-        'error': 'Invalid credentials'
-    }, status=400)
-
-@csrf_exempt
-@require_http_methods(["GET", "POST"])
-def register_user(request):
-    """Handle user registration."""
-    if request.method == "POST":
-        try:
-            data = json.loads(request.body)
-            # Create user with provided data
-            user = CustomUser.objects.create_user(
-                email=data.get('email'),
-                password=data.get('password'),
-                name=data.get('name'),
-                birth_date=data.get('birth_date'),
-                phone=data.get('phone'),
-                city=data.get('city')
-            )
+    try:
+        data = json.loads(request.body)
+        email = data.get('email')
+        password = data.get('password')
+        user = authenticate(request, email=email, password=password)
+        
+        if user is not None:
             login(request, user)
             return JsonResponse({
                 'success': True,
-                'redirect': '/home/'
+                'user': {
+                    'email': user.email,
+                    'name': user.name,
+                    'id': user.id
+                }
             })
-        except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': 'Invalid credentials'
+        }, status=401)
+    except json.JSONDecodeError:
+        return JsonResponse({
+            'success': False,
+            'error': 'Invalid request format'
+        }, status=400)
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=500)
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def register_user(request):
+    """Handle user registration."""
+    try:
+        data = json.loads(request.body)
+        if CustomUser.objects.filter(email=data.get('email')).exists():
             return JsonResponse({
                 'success': False,
-                'error': str(e)
+                'error': 'Email already registered'
             }, status=400)
-    return render(request, 'html/register.html')
+            
+        user = CustomUser.objects.create_user(
+            email=data.get('email'),
+            password=data.get('password'),
+            name=data.get('name'),
+            birth_date=data.get('birth_date', None),
+            phone=data.get('phone', ''),
+            city=data.get('city', '')
+        )
+        
+        login(request, user)
+        return JsonResponse({
+            'success': True,
+            'user': {
+                'email': user.email,
+                'name': user.name,
+                'id': user.id
+            }
+        })
+    except json.JSONDecodeError:
+        return JsonResponse({
+            'success': False,
+            'error': 'Invalid request format'
+        }, status=400)
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=500)
 
 @ensure_csrf_cookie
 @require_http_methods(["POST"])
@@ -285,3 +311,8 @@ def homeView(request):
     
 class ReactAppView(TemplateView):
     template_name = 'html/react_app.html'
+
+@ensure_csrf_cookie
+def logout_view(request):
+    # Your logout logic here
+    pass

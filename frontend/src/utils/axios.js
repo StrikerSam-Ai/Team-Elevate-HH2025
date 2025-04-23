@@ -1,13 +1,11 @@
-// frontend/src/utils/axios.js
 import axios from 'axios';
 
-// Create an axios instance with default configs
 const instance = axios.create({
-  baseURL: '/',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  withCredentials: true
+    baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8000',
+    withCredentials: true,
+    headers: {
+        'Content-Type': 'application/json'
+    }
 });
 
 // Add request interceptor for CSRF token
@@ -21,5 +19,30 @@ instance.interceptors.request.use(function (config) {
   
   return config;
 });
+
+// Add a response interceptor to handle token refresh
+instance.interceptors.response.use(
+    response => response,
+    async error => {
+        const originalRequest = error.config;
+        
+        // If the error is 401 and we haven't already tried to refresh
+        if (error.response.status === 401 && !originalRequest._retry) {
+            originalRequest._retry = true;
+            
+            try {
+                // Try to refresh the token
+                await instance.post('/api/token/refresh/');
+                // Retry the original request
+                return instance(originalRequest);
+            } catch (refreshError) {
+                // If refresh fails, redirect to login
+                window.location.href = '/login';
+                return Promise.reject(refreshError);
+            }
+        }
+        return Promise.reject(error);
+    }
+);
 
 export default instance;

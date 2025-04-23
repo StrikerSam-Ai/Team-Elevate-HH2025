@@ -20,6 +20,20 @@ instance.interceptors.request.use(function (config) {
   }
   
   return config;
+}, function (error) {
+  return Promise.reject(error);
 });
+
+// Add response interceptor to handle authentication errors
+instance.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response && error.response.status === 401) {
+      // Redirect to login page on authentication errors
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default instance;

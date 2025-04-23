@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import './Login.css';
 
@@ -7,23 +7,22 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
     
     try {
-      const success = await login(email, password);
-      if (success) {
-        navigate('/dashboard');
-      } else {
-        setError('Login failed. Please check your credentials.');
-      }
+      await login(email, password);
+      navigate('/dashboard');
     } catch (error) {
-      console.error('Login error:', error);
-      setError('An error occurred during login.');
+      setError(error.response?.data?.error || 'Failed to log in');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -42,6 +41,7 @@ function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              disabled={loading}
             />
           </div>
           
@@ -53,14 +53,17 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              disabled={loading}
             />
           </div>
           
-          <button type="submit" className="submit-button">Login</button>
+          <button type="submit" className="submit-button" disabled={loading}>
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
         </form>
         
         <div className="register-link">
-          <p>Don't have an account? <a href="/register">Register</a></p>
+          <p>Don't have an account? <Link to="/register">Register</Link></p>
         </div>
       </div>
     </div>

@@ -1,0 +1,64 @@
+.entry-memo {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--gray-200);
+}
+
+.tags-section {
+  margin-bottom: 1rem;
+}
+
+.tags-input-container {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.tag-input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid var(--gray-300);
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.add-tag-btn {
+  padding: 0.25rem;
+  color: var(--primary-color);
+}
+
+.tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--primary-color-light);
+  color: var(--primary-color-dark);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+}
+
+.remove-tag-btn {
+  padding: 0.125rem;
+  color: var(--primary-color-dark);
+  opacity: 0.7;
+}
+
+.remove-tag-btn:hover {
+  opacity: 1;
+}
+
+.memo-notes {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--gray-300);
+  border-radius: 4px;
+  font-size: 0.875rem;
+  resize: vertical;
+}

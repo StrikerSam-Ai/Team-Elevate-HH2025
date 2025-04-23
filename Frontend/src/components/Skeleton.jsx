@@ -1,45 +1,46 @@
 import React from 'react';
 
-const Skeleton = ({
-  width,
-  height,
-  variant = 'rectangular',
-  className = '',
-  ...props
-}) => {
-  const skeletonClass = [
-    'skeleton',
-    `skeleton-${variant}`,
-    'skeleton-animation',
-    className
-  ].filter(Boolean).join(' ');
-
-  const style = {
-    width,
-    height,
-    ...props.style
+const Skeleton = ({ variant = 'text', count = 1, className = '' }) => {
+  const renderSkeleton = () => {
+    switch (variant) {
+      case 'journal-entry':
+        return (
+          <div className="skeleton-journal-entry">
+            <div className="skeleton-header">
+              <div className="skeleton-line w-60" />
+              <div className="skeleton-badge" />
+            </div>
+            <div className="skeleton-content">
+              <div className="skeleton-line w-100" />
+              <div className="skeleton-line w-90" />
+              <div className="skeleton-line w-80" />
+            </div>
+            <div className="skeleton-media">
+              <div className="skeleton-image" />
+              <div className="skeleton-image" />
+            </div>
+            <div className="skeleton-tags">
+              <div className="skeleton-tag" />
+              <div className="skeleton-tag" />
+              <div className="skeleton-tag" />
+            </div>
+          </div>
+        );
+      case 'text':
+      default:
+        return <div className="skeleton-line" />;
+    }
   };
 
   return (
-    <div 
-      className={skeletonClass}
-      style={style}
-      {...props}
-    />
+    <div className={`skeleton ${className}`}>
+      {Array(count).fill(0).map((_, index) => (
+        <div key={index} className="skeleton-item">
+          {renderSkeleton()}
+        </div>
+      ))}
+    </div>
   );
 };
-
-// Preset variations
-Skeleton.Text = (props) => (
-  <Skeleton variant="text" height="1em" {...props} />
-);
-
-Skeleton.Circle = (props) => (
-  <Skeleton variant="circle" {...props} />
-);
-
-Skeleton.Avatar = (props) => (
-  <Skeleton variant="circle" width="40px" height="40px" {...props} />
-);
 
 export default Skeleton;

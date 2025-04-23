@@ -53,3 +53,32 @@ export const matchesField = (field, fieldName) => ({
   validate: (value, formData) => value === formData[field],
   message: `Must match ${fieldName}`
 });
+
+export const fileSize = (maxSize) => ({
+  validate: (file) => !file || file.size <= maxSize,
+  message: `File size must not exceed ${maxSize / (1024 * 1024)}MB`
+});
+
+export const fileType = (types) => ({
+  validate: (file) => !file || types.some(type => file.type.startsWith(type)),
+  message: `File must be one of: ${types.join(', ')}`
+});
+
+export const journalEntry = {
+  content: {
+    validate: (value) => value.trim().length >= 2,
+    message: 'Entry must be at least 2 characters long'
+  },
+  media: {
+    validate: (files) => {
+      if (!files || !files.length) return true;
+      const maxSize = 10 * 1024 * 1024; // 10MB
+      const allowedTypes = ['image/', 'video/'];
+      return files.every(file => 
+        file.size <= maxSize && 
+        allowedTypes.some(type => file.type.startsWith(type))
+      );
+    },
+    message: 'Each file must be under 10MB and be an image or video'
+  }
+};

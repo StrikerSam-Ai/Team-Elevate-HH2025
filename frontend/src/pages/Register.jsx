@@ -1,6 +1,6 @@
 // frontend/src/pages/Register.jsx
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import './Login.css';
 
@@ -9,9 +9,13 @@ function Register() {
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    birth_date: '',
+    phone: '',
+    city: ''
   });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { register } = useAuth();
 
@@ -25,27 +29,37 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    
+    setLoading(true);
+
+    // Validate form
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
+      setLoading(false);
+      return;
+    }
+
+    if (formData.password.length < 8) {
+      setError('Password must be at least 8 characters long');
+      setLoading(false);
       return;
     }
 
     try {
-      const success = await register({
+      const userData = {
         name: formData.name,
         email: formData.email,
-        password: formData.password
-      });
-      
-      if (success) {
-        navigate('/dashboard');
-      } else {
-        setError('Registration failed. Please try again.');
-      }
+        password: formData.password,
+        birth_date: formData.birth_date || null,
+        phone: formData.phone || '',
+        city: formData.city || ''
+      };
+
+      await register(userData);
+      navigate('/dashboard');
     } catch (error) {
-      console.error('Registration error:', error);
-      setError('An error occurred during registration.');
+      setError(error.response?.data?.error || 'Registration failed');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -65,6 +79,7 @@ function Register() {
               value={formData.name}
               onChange={handleChange}
               required
+              disabled={loading}
             />
           </div>
 
@@ -77,6 +92,7 @@ function Register() {
               value={formData.email}
               onChange={handleChange}
               required
+              disabled={loading}
             />
           </div>
           
@@ -89,6 +105,7 @@ function Register() {
               value={formData.password}
               onChange={handleChange}
               required
+              disabled={loading}
             />
           </div>
 
@@ -101,14 +118,53 @@ function Register() {
               value={formData.confirmPassword}
               onChange={handleChange}
               required
+              disabled={loading}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="birth_date">Birth Date:</label>
+            <input
+              type="date"
+              id="birth_date"
+              name="birth_date"
+              value={formData.birth_date}
+              onChange={handleChange}
+              disabled={loading}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="phone">Phone:</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              disabled={loading}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="city">City:</label>
+            <input
+              type="text"
+              id="city"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              disabled={loading}
             />
           </div>
           
-          <button type="submit" className="submit-button">Register</button>
+          <button type="submit" className="submit-button" disabled={loading}>
+            {loading ? 'Registering...' : 'Register'}
+          </button>
         </form>
         
         <div className="register-link">
-          <p>Already have an account? <a href="/login">Login</a></p>
+          <p>Already have an account? <Link to="/login">Login</Link></p>
         </div>
       </div>
     </div>

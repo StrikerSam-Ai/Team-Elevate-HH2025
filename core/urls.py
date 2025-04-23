@@ -16,29 +16,16 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
-from django.shortcuts import redirect
-
-def dev_redirect(request):
-    return redirect('http://localhost:3000')
+from companions.views import ReactAppView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('companions.urls')),  # All API endpoints are in companions
-]
-
-if settings.DEBUG:
-    urlpatterns += [
-        path('', dev_redirect, name='dev-redirect'),
-        path('<path:path>', dev_redirect, name='dev-redirect-any'),
-    ]
-else:
-    urlpatterns += [
-        path('', TemplateView.as_view(template_name='index.html')),
-        path('<path:path>', TemplateView.as_view(template_name='index.html')),
-    ]
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('api/', include('companions.urls')),  # All API routes under /api/
+    # Serve React frontend for all other routes
+    re_path(r'^$', ReactAppView.as_view(), name='react-app'),
+    re_path(r'^(?!api/)(?!admin/).*$', ReactAppView.as_view(), name='react-app-routes'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

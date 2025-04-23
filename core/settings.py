@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Handle static files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'core.middleware.AuthenticationMiddleware',  # Our custom middleware
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -66,10 +68,11 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
+            os.path.join(BASE_DIR, 'core', 'templates'),  # Core templates directory first
             os.path.join(BASE_DIR, 'frontend', 'build'),  # React build directory
             os.path.join(BASE_DIR, 'templates'),
         ],
-        'APP_DIRS': True,  # Allows Django to find templates inside app directories
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -128,18 +131,21 @@ USE_TZ = True
 
 APPEND_SLASH = True
 
-CORS_ALLOW_ALL_ORIGINS = True 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-# Static files
+# Static files configuration
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend', 'build', 'static'),  # React static files
     os.path.join(BASE_DIR, 'static'),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# React Integration
+REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend')
+REACT_BUILD_DIR = os.path.join(REACT_APP_DIR, 'build')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -153,7 +159,6 @@ CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:8000',
     'http://localhost',
 ]
-CORS_ALLOW_ALL_ORIGINS = DEBUG  # Allow all origins in development
 
 # Whitenoise for static files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -170,22 +175,44 @@ LOGIN_URL = 'companions:login_page'
 LOGIN_REDIRECT_URL = 'companions:home'
 LOGOUT_REDIRECT_URL = 'companions:home'
 
-# CORS and CSRF settings
+# CORS and Security Settings
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
     'http://localhost:8000',
     'http://127.0.0.1:8000',
-    'http://localhost',
 ]
-CORS_ALLOW_ALL_ORIGINS = DEBUG  # Allow all origins in development
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+# Only enable this in development
+CORS_ALLOW_ALL_ORIGINS = DEBUG
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
     'http://localhost:3000',
-    'http://localhost',
+    'http://127.0.0.1:3000',
 ]
 
 REST_FRAMEWORK = {

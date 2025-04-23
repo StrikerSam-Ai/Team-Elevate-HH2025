@@ -24,5 +24,10 @@ export const API_ENDPOINTS = {
   COMMUNITY: {
     POSTS: `${API_BASE_URL}/api/community/posts`,
     COMMENTS: (postId) => `${API_BASE_URL}/api/community/posts/${postId}/comments`
+  },
+  JOURNAL: {
+    ENTRIES: `${API_BASE_URL}/api/journal/entries`,
+    ENTRY: (id) => `${API_BASE_URL}/api/journal/entries/${id}`,
+    VERIFY: (hash) => `${API_BASE_URL}/api/journal/verify/${hash}`
   }
 };

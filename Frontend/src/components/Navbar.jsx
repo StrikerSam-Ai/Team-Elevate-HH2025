@@ -34,6 +34,12 @@ const Navbar = () => {
               Events
             </Link>
             <Link 
+              to="/journal" 
+              className={location.pathname === '/journal' ? 'active' : ''}
+            >
+              Journal
+            </Link>
+            <Link 
               to="/profile" 
               className={location.pathname === '/profile' ? 'active' : ''}
             >

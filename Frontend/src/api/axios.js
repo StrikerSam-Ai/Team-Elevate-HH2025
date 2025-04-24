@@ -1,35 +1,34 @@
 // frontend/src/utils/axios.js
 import axios from 'axios';
+import { API_BASE_URL } from '../config/api';
 
-// Create an axios instance with default configs
 const instance = axios.create({
-  baseURL: 'http://localhost:8000/api',  // Point to Django API server
+  baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true
 });
 
-// Add request interceptor for CSRF token
-instance.interceptors.request.use(function (config) {
-  // Get CSRF token from the window object (set in the Django template)
-  const csrfToken = window.CSRF_TOKEN;
-  
-  if (csrfToken) {
-    config.headers['X-CSRFToken'] = csrfToken;
+// Add auth token to requests
+instance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
-  
-  return config;
-}, function (error) {
-  return Promise.reject(error);
-});
+);
 
-// Add response interceptor to handle authentication errors
+// Handle response errors
 instance.interceptors.response.use(
-  response => response,
-  error => {
-    if (error.response && error.response.status === 401) {
-      // Redirect to login page on authentication errors
+  (response) => response,
+  async (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
       window.location.href = '/login';
     }
     return Promise.reject(error);

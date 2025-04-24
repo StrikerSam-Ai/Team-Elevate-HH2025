@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community List</title>
+    <link rel="stylesheet" href="{% static 'css/community.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Community List</h1>
+        <a href="{% url 'create_community' %}" class="btn">Create Community</a>
+    </header>
+    <main>
+        <div class="community-container">
+            {% for community in communities %}
+                <div class="community-card">
+                    <h2>{{ community.name }}</h2>
+                    <p>{{ community.description }}</p>
+                    <a href="{% url 'community_detail' community.id %}" class="btn">View</a>
+                    <button onclick="joinCommunity({{ community.id }})" class="btn">Join</button>
+                </div>
+            {% empty %}
+                <p>No communities available. Create one!</p>
+            {% endfor %}
+        </div>
+    </main>
+    <script>
+        function joinCommunity(communityId) {
+            fetch(`/join_community/${communityId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message));
+        }
+    </script>
+</body>
+</html>

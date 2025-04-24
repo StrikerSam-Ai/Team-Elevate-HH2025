@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="form-wrapper">
+            <h2>Create Account</h2>
+            <form id="register-form" action="/register/" method="post">  <!-- Ensured correct action URL -->
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" placeholder="Name" name="name" required />
+                    <input type="email" placeholder="Email" name="email" required />
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password" name="password" required />
+                </div>
+                <div class="form-group">
+                    <input type="date" placeholder="Birth Date" name="birth_date" />
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Phone Number" name="phone" />
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="City" name="city" />
+                </div>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Get CSRF token from cookie
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+
+        document.getElementById('register-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            const response = await fetch(this.action, { // this.action will now correctly resolve to /register/
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify(data)
+            });
+
+            try {
+                const result = await response.json();
+                if (response.ok) {
+                    // Show success message before redirecting
+                    const successMessage = document.createElement('div');
+                    successMessage.className = 'success-message';
+                    successMessage.textContent = 'Registration successful! Redirecting...';
+                    this.insertBefore(successMessage, this.firstChild);
+                    
+                    setTimeout(() => {
+                        window.location.href = '/home/';
+                    }, 1500);
+                } else {
+                    // Show specific error messages if available
+                    const errorMessage = result.error || 'Registration failed. Please try again.';
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'error-message';
+                    errorDiv.textContent = errorMessage;
+                    this.insertBefore(errorDiv, this.firstChild);
+                }
+            } catch (error) {
+                console.error('Error processing response:', error);
+                alert('An unexpected error occurred. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

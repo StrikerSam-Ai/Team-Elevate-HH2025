@@ -1,0 +1,42 @@
+{% extends 'html/base.html' %}
+{% load static %}
+
+{% block title %}My Profile | Elevate{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="profile-header">
+        <h2>My Profile</h2>
+        <p>Manage your personal information</p>
+    </div>
+    
+    <form method="post" action="{% url 'profile_update' %}" class="profile-form">
+        {% csrf_token %}
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ user.email }}" required>
+        </div>
+        <div>
+            <label for="birth_date">Birth Date:</label>
+            <input type="date" id="birth_date" name="birth_date" value="{{ user.birth_date|date:'Y-m-d' }}">
+        </div>
+        <div>
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone" value="{{ user.phone }}">
+        </div>
+        <div>
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" value="{{ user.city }}">
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Leave blank if you don't want to change your password">
+        </div>
+        <button type="submit">Update Profile</button>
+    </form>
+    
+    <div class="profile-stats mt-2">
+        <p>Age: {{ user.age }} years old</p>
+    </div>
+</div>
+{% endblock %}

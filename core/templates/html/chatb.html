@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f6ff;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+        }
+
+        .chat-container {
+            width: 400px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .chat-header {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .chat-box {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+        }
+
+        .user-message, .bot-message {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        .user-message {
+            background-color: #dfe6fd;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .bot-message {
+            background-color: #c4ecff;
+            margin-right: auto;
+        }
+
+        .media-message {
+            margin: 10px 0;
+            max-width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .media-message img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .media-caption {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .chat-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        select, input[type="text"], input[type="file"], button {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .upload-button {
+            background-color: #6c757d;
+        }
+
+        .upload-button:hover {
+            background-color: #5a6268;
+        }
+
+        .voice-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .mic-button {
+            background-color: #007bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mic-button:hover {
+            background-color: #0056b3;
+        }
+
+        .mic-button.listening {
+            background-color: #dc3545;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .status-indicator {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .error-status {
+            color: red;
+        }
+
+        #mediaUpload {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="chat-container">
+    <div class="chat-header">Chat with Groq AI</div>
+    <select id="languageSelect">
+        <option value="hindi">Hindi</option>
+        <option value="english">English</option>
+        <option value="bengali">Bengali</option>
+        <option value="tamil">Tamil</option>
+        <option value="telugu">Telugu</option>
+        <option value="kannada">Kannada</option>
+        <option value="malayalam">Malayalam</option>
+        <option value="marathi">Marathi</option>
+        <option value="gujarati">Gujarati</option>
+        <option value="punjabi">Punjabi</option>
+
+    </select>
+    <div id="chatBox" class="chat-box"></div>
+    <div class="chat-form">
+        <input type="text" id="userInput" placeholder="Type a message..." />
+        <div class="action-buttons">
+            <div class="voice-buttons">
+                <button onclick="sendMessage()">Send</button>
+                <button id="micButton" class="mic-button" onclick="toggleVoiceInput()">
+                    <span>🎤 Speak</span>
+                </button>
+            </div>
+            <button class="upload-button" onclick="document.getElementById('mediaUpload').click()">
+                📁 Upload
+            </button>
+            <input type="file" id="mediaUpload" accept="image/*">
+        </div>
+        <div id="statusIndicator" class="status-indicator"></div>
+    </div>
+</div>
+
+<script>
+    const chatBox = document.getElementById("chatBox");
+    const micButton = document.getElementById("micButton");
+    const statusIndicator = document.getElementById("statusIndicator");
+    const userInput = document.getElementById("userInput");
+    const mediaUpload = document.getElementById("mediaUpload");
+    let recognition = null;
+    let isListening = false;
+
+    // Language code mapping for speech recognition and synthesis
+    const languageCodes = {
+    english: "en-US",
+    hindi: "hi-IN",
+    bengali: "bn-IN",
+    tamil: "ta-IN",
+    telugu: "te-IN",
+    kannada: "kn-IN",
+    malayalam: "ml-IN",
+    marathi: "mr-IN",
+    gujarati: "gu-IN",
+    punjabi: "pa-IN"
+};
+
+
+    function appendMessage(sender, message) {
+        const msgDiv = document.createElement("div");
+        msgDiv.className = sender === "user" ? "user-message" : "bot-message";
+        msgDiv.innerHTML = `<strong>${sender === "user" ? "You" : "Bot"}:</strong> ${message}`;
+        chatBox.appendChild(msgDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function updateStatus(message, isError = false) {
+        statusIndicator.textContent = message;
+        statusIndicator.className = isError ? "status-indicator error-status" : "status-indicator";
+        if (!isError) {
+            setTimeout(() => {
+                statusIndicator.textContent = "";
+                statusIndicator.className = "status-indicator";
+            }, 3000);
+        }
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    async function sendMessage(text = null) {
+        const language = document.getElementById("languageSelect").value;
+        const message = text || userInput.value.trim();
+
+        if (!message) return;
+
+        appendMessage("user", message);
+        userInput.value = "";
+        updateStatus("Thinking...");
+
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/generate-text/", {
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCookie("csrftoken") || "",
+                },
+                credentials: "include",
+                body: JSON.stringify({ 
+                    prompt: message, 
+                    language: language 
+                }),
+            });
+
+            console.log("Response status:", response.status);
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log("Response data:", data);
+
+            if (data.response) {
+                appendMessage("bot", data.response);
+                speak(data.response, language);
+            } else {
+                throw new Error("No response received from server");
+            }
+
+        } catch (error) {
+            console.error("API Error:", error);
+            appendMessage("bot", `Error: ${error.message}`);
+            updateStatus(`Failed: ${error.message}`, true);
+        }
+    }
+
+    function toggleVoiceInput() {
+        if (isListening) {
+            stopVoiceInput();
+        } else {
+            startVoiceInput();
+        }
+    }
+
+    function startVoiceInput() {
+        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+            updateStatus("Speech recognition not supported in this browser", true);
+            return;
+        }
+
+        const language = document.getElementById("languageSelect").value;
+        const langCode = languageCodes[language] || "en-US";
+        
+        recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = langCode;
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        recognition.onstart = function() {
+            isListening = true;
+            micButton.classList.add("listening");
+            updateStatus("Listening... Speak now");
+        };
+
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            sendMessage(transcript);
+        };
+
+        recognition.onerror = function(event) {
+            console.error("Voice recognition error:", event.error);
+            let errorMessage = "Error recognizing speech";
+            if (event.error === 'not-allowed') {
+                errorMessage = "Microphone access denied. Please check permissions.";
+            }
+            updateStatus(errorMessage, true);
+            stopVoiceInput();
+        };
+
+        recognition.onend = function() {
+            if (isListening) {
+                recognition.start();
+            }
+        };
+
+        try {
+            recognition.start();
+        } catch (error) {
+            updateStatus("Failed to start voice input", true);
+            console.error("Recognition start error:", error);
+        }
+    }
+
+    function stopVoiceInput() {
+        if (recognition) {
+            recognition.stop();
+        }
+        isListening = false;
+        micButton.classList.remove("listening");
+        updateStatus("");
+    }
+
+    function speak(text, language) {
+        if (!text || !('speechSynthesis' in window)) return;
+        
+        const langCode = languageCodes[language] || "en-US";
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = langCode;
+        utterance.rate = 0.9;
+        utterance.pitch = 1.0;
+        
+        utterance.onstart = () => updateStatus("Speaking...");
+        utterance.onend = () => updateStatus("");
+        utterance.onerror = (event) => {
+            console.error("Speech synthesis error:", event);
+            updateStatus("Error speaking response", true);
+        };
+        
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utterance);
+    }
+
+    // Media upload handling
+    mediaUpload.addEventListener('change', handleMediaUpload);
+
+    async function handleMediaUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        // Check if it's an image
+        if (!file.type.match('image.*')) {
+            updateStatus("Please upload an image file", true);
+            return;
+        }
+
+        // Display the image in chat
+        displayMediaMessage(file);
+
+        // Ask Groq to describe the image (based on filename since we can't send the actual image)
+        const language = document.getElementById("languageSelect").value;
+        const prompt = `The user has uploaded an image named "${file.name}". Since you can't view images directly, please generate a creative description of what this image might contain based on its filename.`;
+
+        try {
+            updateStatus("Analyzing image...");
+            const response = await fetch("http://127.0.0.1:8000/api/generate-text/", {
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCookie("csrftoken") || "",
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    prompt: prompt,
+                    language: language
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to analyze image: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            if (data.response) {
+                appendMessage("bot", data.response);
+                speak(data.response, language);
+            } else {
+                throw new Error("No description returned from server");
+            }
+        } catch (error) {
+            console.error("Image analysis error:", error);
+            appendMessage("bot", `Error analyzing image: ${error.message}`);
+            updateStatus("Image analysis failed", true);
+        } finally {
+            mediaUpload.value = ""; // Reset file input
+        }
+    }
+
+    function displayMediaMessage(file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const mediaDiv = document.createElement("div");
+            mediaDiv.className = "media-message";
+            mediaDiv.innerHTML = `
+                <img src="${e.target.result}" alt="Uploaded Image" />
+                <div class="media-caption"><strong>You uploaded:</strong> ${file.name}</div>
+            `;
+            chatBox.appendChild(mediaDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        };
+        reader.readAsDataURL(file);
+    }
+</script>
+</body>
+</html>

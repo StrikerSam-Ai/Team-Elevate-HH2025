@@ -2,7 +2,11 @@
 
 .selector {
     display: flex;
+<<<<<<< HEAD
+    flex-grow: 1;
+=======
     flex: 1;
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     gap: 0 10px;
 }
 
@@ -14,20 +18,31 @@
 }
 
 .selector-available, .selector-chosen {
+<<<<<<< HEAD
+    text-align: center;
+=======
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     display: flex;
     flex-direction: column;
     flex: 1 1;
 }
 
+<<<<<<< HEAD
+.selector-available h2, .selector-chosen h2 {
+=======
 .selector-available-title, .selector-chosen-title {
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     border: 1px solid var(--border-color);
     border-radius: 4px 4px 0 0;
 }
 
+<<<<<<< HEAD
+=======
 .selector .helptext {
     font-size: 0.6875rem;
 }
 
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
 .selector-chosen .list-footer-display {
     border: 1px solid var(--border-color);
     border-top: none;
@@ -43,6 +58,16 @@
     color: var(--breadcrumbs-fg);
 }
 
+<<<<<<< HEAD
+.selector-chosen h2 {
+    background: var(--secondary);
+    color: var(--header-link-color);
+}
+
+.selector .selector-available h2 {
+    background: var(--darkened-bg);
+    color: var(--body-quiet-color);
+=======
 .selector-chosen-title {
     background: var(--secondary);
     color: var(--header-link-color);
@@ -62,6 +87,7 @@
 
 .aligned .selector-available-title label {
     width: 100%;
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
 }
 
 .selector .selector-filter {
@@ -73,7 +99,10 @@
     margin: 0;
     text-align: left;
     display: flex;
+<<<<<<< HEAD
+=======
     gap: 8px;
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
 }
 
 .selector .selector-filter label,
@@ -92,9 +121,20 @@
     flex-grow: 1;
 }
 
+<<<<<<< HEAD
+.selector .selector-available input,
+.selector .selector-chosen input {
+    margin-left: 8px;
+}
+
+.selector ul.selector-chooser {
+    align-self: center;
+    width: 22px;
+=======
 .selector ul.selector-chooser {
     align-self: center;
     width: 30px;
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     background-color: var(--selected-bg);
     border-radius: 10px;
     margin: 0;
@@ -124,13 +164,27 @@
 }
 
 .selector-add, .selector-remove {
+<<<<<<< HEAD
+    width: 16px;
+    height: 16px;
+=======
     width: 24px;
     height: 24px;
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     display: block;
     text-indent: -3000px;
     overflow: hidden;
     cursor: default;
     opacity: 0.55;
+<<<<<<< HEAD
+}
+
+.active.selector-add, .active.selector-remove {
+    opacity: 1;
+}
+
+.active.selector-add:hover, .active.selector-remove:hover {
+=======
     border: none;
 }
 
@@ -139,10 +193,29 @@
 }
 
 :enabled.selector-add:hover, :enabled.selector-remove:hover {
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     cursor: pointer;
 }
 
 .selector-add {
+<<<<<<< HEAD
+    background: url(../img/selector-icons.svg) 0 -96px no-repeat;
+}
+
+.active.selector-add:focus, .active.selector-add:hover {
+    background-position: 0 -112px;
+}
+
+.selector-remove {
+    background: url(../img/selector-icons.svg) 0 -64px no-repeat;
+}
+
+.active.selector-remove:focus, .active.selector-remove:hover {
+    background-position: 0 -80px;
+}
+
+a.selector-chooseall, a.selector-clearall {
+=======
     background: url(../img/selector-icons.svg) 0 -144px no-repeat;
     background-size: 24px auto;
 }
@@ -161,6 +234,7 @@
 }
 
 .selector-chooseall, .selector-clearall {
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     display: inline-block;
     height: 16px;
     text-align: left;
@@ -171,6 +245,24 @@
     color: var(--body-quiet-color);
     text-decoration: none;
     opacity: 0.55;
+<<<<<<< HEAD
+}
+
+a.active.selector-chooseall:focus, a.active.selector-clearall:focus,
+a.active.selector-chooseall:hover, a.active.selector-clearall:hover {
+    color: var(--link-fg);
+}
+
+a.active.selector-chooseall, a.active.selector-clearall {
+    opacity: 1;
+}
+
+a.active.selector-chooseall:hover, a.active.selector-clearall:hover {
+    cursor: pointer;
+}
+
+a.selector-chooseall {
+=======
     border: none;
 }
 
@@ -188,22 +280,35 @@
 }
 
 .selector-chooseall {
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     padding: 0 18px 0 0;
     background: url(../img/selector-icons.svg) right -160px no-repeat;
     cursor: default;
 }
 
+<<<<<<< HEAD
+a.active.selector-chooseall:focus, a.active.selector-chooseall:hover {
+    background-position: 100% -176px;
+}
+
+a.selector-clearall {
+=======
 :enabled.selector-chooseall:focus, :enabled.selector-chooseall:hover {
     background-position: 100% -176px;
 }
 
 .selector-clearall {
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     padding: 0 0 0 18px;
     background: url(../img/selector-icons.svg) 0 -128px no-repeat;
     cursor: default;
 }
 
+<<<<<<< HEAD
+a.active.selector-clearall:focus, a.active.selector-clearall:hover {
+=======
 :enabled.selector-clearall:focus, :enabled.selector-clearall:hover {
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     background-position: 0 -144px;
 }
 
@@ -233,9 +338,14 @@
 }
 
 .stacked ul.selector-chooser {
+<<<<<<< HEAD
+    height: 22px;
+    width: 50px;
+=======
     display: flex;
     height: 30px;
     width: 64px;
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     margin: 0 0 10px 40%;
     background-color: #eee;
     border-radius: 10px;
@@ -252,6 +362,19 @@
 }
 
 .stacked .selector-add {
+<<<<<<< HEAD
+    background: url(../img/selector-icons.svg) 0 -32px no-repeat;
+    cursor: default;
+}
+
+.stacked .active.selector-add {
+    background-position: 0 -32px;
+    cursor: pointer;
+}
+
+.stacked .active.selector-add:focus, .stacked .active.selector-add:hover {
+    background-position: 0 -48px;
+=======
     background: url(../img/selector-icons.svg) 0 -48px no-repeat;
     background-size: 24px auto;
     cursor: default;
@@ -264,22 +387,35 @@
 
 .stacked :enabled.selector-add:focus, .stacked :enabled.selector-add:hover {
     background-position: 0 -72px;
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     cursor: pointer;
 }
 
 .stacked .selector-remove {
     background: url(../img/selector-icons.svg) 0 0 no-repeat;
+<<<<<<< HEAD
+    cursor: default;
+}
+
+.stacked .active.selector-remove {
+=======
     background-size: 24px auto;
     cursor: default;
 }
 
 .stacked :enabled.selector-remove {
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     background-position: 0 0px;
     cursor: pointer;
 }
 
+<<<<<<< HEAD
+.stacked .active.selector-remove:focus, .stacked .active.selector-remove:hover {
+    background-position: 0 -16px;
+=======
 .stacked :enabled.selector-remove:focus, .stacked :enabled.selector-remove:hover {
     background-position: 0 -24px;
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     cursor: pointer;
 }
 
@@ -335,30 +471,49 @@ table p.datetime {
     position: relative;
     display: inline-block;
     vertical-align: middle;
+<<<<<<< HEAD
+    height: 16px;
+    width: 16px;
+=======
     height: 24px;
     width: 24px;
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     overflow: hidden;
 }
 
 .datetimeshortcuts .clock-icon {
     background: url(../img/icon-clock.svg) 0 0 no-repeat;
+<<<<<<< HEAD
+=======
     background-size: 24px auto;
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
 }
 
 .datetimeshortcuts a:focus .clock-icon,
 .datetimeshortcuts a:hover .clock-icon {
+<<<<<<< HEAD
+    background-position: 0 -16px;
+=======
     background-position: 0 -24px;
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
 }
 
 .datetimeshortcuts .date-icon {
     background: url(../img/icon-calendar.svg) 0 0 no-repeat;
+<<<<<<< HEAD
+=======
     background-size: 24px auto;
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     top: -1px;
 }
 
 .datetimeshortcuts a:focus .date-icon,
 .datetimeshortcuts a:hover .date-icon {
+<<<<<<< HEAD
+    background-position: 0 -16px;
+=======
     background-position: 0 -24px;
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
 }
 
 .timezonewarning {
@@ -577,10 +732,16 @@ ul.timelist, .timelist li {
     float: right;
     text-indent: -9999px;
     background: url(../img/inline-delete.svg) 0 0 no-repeat;
+<<<<<<< HEAD
+    width: 16px;
+    height: 16px;
+    border: 0px none;
+=======
     width: 1.5rem;
     height: 1.5rem;
     border: 0px none;
     margin-bottom: .25rem;
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
 }
 
 .inline-deletelink:focus, .inline-deletelink:hover {

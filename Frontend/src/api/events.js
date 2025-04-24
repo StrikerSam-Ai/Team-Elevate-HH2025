@@ -1,41 +1,45 @@
 import axios from '../utils/axios';
+import { PATHS } from '../config/paths';
 
 export const eventsAPI = {
-  async getEvents() {
-    return axios.get('/api/events/');
+  async getEvents(filters = {}) {
+    const params = new URLSearchParams(filters);
+    const response = await axios.get(`${PATHS.API.EVENTS.LIST}?${params}`);
+    return response.data;
   },
 
   async getEventById(eventId) {
-    return axios.get(`/api/events/${eventId}/`);
+    const response = await axios.get(PATHS.API.EVENTS.DETAIL(eventId));
+    return response.data;
+  },
+
+  async createEvent(eventData) {
+    const response = await axios.post(PATHS.API.EVENTS.CREATE, eventData);
+    return response.data;
   },
 
   async registerForEvent(eventId) {
-    const tokenResponse = await axios.get('/get-csrf-token/');
-    const csrfToken = tokenResponse.data.csrfToken;
-    
-    return axios.post(`/api/events/${eventId}/register/`, {}, {
-      headers: {
-        'X-CSRFToken': csrfToken
-      }
-    });
+    const response = await axios.post(PATHS.API.EVENTS.JOIN(eventId));
+    return response.data;
   },
 
-  async getGroups() {
-    return axios.get('/api/groups/');
+  async getEventParticipants(eventId) {
+    const response = await axios.get(`${PATHS.API.EVENTS.DETAIL(eventId)}/participants`);
+    return response.data;
   },
 
-  async getGroupById(groupId) {
-    return axios.get(`/api/groups/${groupId}/`);
+  async cancelRegistration(eventId) {
+    const response = await axios.delete(PATHS.API.EVENTS.JOIN(eventId));
+    return response.data;
   },
 
-  async joinGroup(groupId) {
-    const tokenResponse = await axios.get('/get-csrf-token/');
-    const csrfToken = tokenResponse.data.csrfToken;
-    
-    return axios.post(`/api/groups/${groupId}/join/`, {}, {
-      headers: {
-        'X-CSRFToken': csrfToken
-      }
-    });
+  async getUpcomingEvents() {
+    const response = await axios.get(`${PATHS.API.EVENTS.LIST}?upcoming=true`);
+    return response.data;
+  },
+
+  async getPastEvents() {
+    const response = await axios.get(`${PATHS.API.EVENTS.LIST}?past=true`);
+    return response.data;
   }
 };

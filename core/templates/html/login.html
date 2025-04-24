@@ -11,7 +11,9 @@
   <div class="login-container">
     <div class="form-wrapper">
       <h1>Login to Elevate</h1>
-      <form method="post" action="/login/submit/">  <!-- Updated action URL -->
+      <div id="error-message" class="error-message" style="display:none;"></div>
+      <div id="success-message" class="success-message" style="display:none;"></div>
+      <form id="login-form" method="post" action="/api/auth/login/">
         {% csrf_token %}
         <div class="form-group">
           <label for="email">Email:</label>
@@ -28,5 +30,67 @@
       </div>
     </div>
   </div>
+
+  <script>
+    // Check authentication status on page load
+    fetch('/api/auth/check/')
+      .then(response => response.json())
+      .then(data => {
+        if (data.authenticated) {
+          window.location.href = '/home/';
+        }
+      })
+      .catch(error => console.error('Auth check error:', error));
+
+    document.getElementById('login-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const errorDiv = document.getElementById('error-message');
+      const successDiv = document.getElementById('success-message');
+      errorDiv.style.display = 'none';
+      successDiv.style.display = 'none';
+
+      try {
+        const formData = new FormData(this);
+        
+        // Validate required fields
+        if (!formData.get('email') || !formData.get('password')) {
+          errorDiv.textContent = 'Email and password are required';
+          errorDiv.style.display = 'block';
+          return;
+        }
+
+        const response = await fetch(this.action, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+          },
+          credentials: 'same-origin',
+          body: JSON.stringify({
+            email: formData.get('email'),
+            password: formData.get('password')
+          })
+        });
+
+        const data = await response.json();
+        
+        if (response.ok && data.success) {
+          successDiv.textContent = 'Login successful! Redirecting...';
+          successDiv.style.display = 'block';
+          setTimeout(() => {
+            window.location.href = '/home/';
+          }, 1000);
+        } else {
+          errorDiv.textContent = data.error || 'Login failed. Please check your credentials.';
+          errorDiv.style.display = 'block';
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        errorDiv.textContent = 'An error occurred. Please try again.';
+        errorDiv.style.display = 'block';
+      }
+    });
+  </script>
 </body>
 </html>

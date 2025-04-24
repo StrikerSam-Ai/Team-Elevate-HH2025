@@ -1,0 +1,74 @@
+/* Common page styles */
+.page {
+  padding: 2rem;
+}
+
+/* Form styles */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Auth pages */
+.login-page,
+.register-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 64px);
+  background-color: #f5f5f5;
+}
+
+.login-form,
+.register-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.link {
+  color: #0066cc;
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* Profile page */
+.profile-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Dashboard page */
+.dashboard-page {
+  padding: 2rem;
+}
+
+/* Community page */
+.community-page {
+  padding: 2rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .page {
+    padding: 1rem;
+  }
+  
+  .login-form,
+  .register-form {
+    margin: 1rem;
+  }
+}

@@ -20,12 +20,18 @@ from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
-from companions.views import ReactAppView
+from companions.views import ReactAppView, login_view, login_user, register_user
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('companions.urls')),  # All API routes under /api/
-    # Serve React frontend for all other routes
-    re_path(r'^$', ReactAppView.as_view(), name='react-app'),
-    re_path(r'^(?!api/)(?!admin/).*$', ReactAppView.as_view(), name='react-app-routes'),
+    
+    # Auth views
+    path('login/', login_view, name='login_page'),
+    path('register/', ReactAppView.as_view(), name='register'),
+
+    # Handle all API routes
+    path('api/', include('companions.urls')),
+    
+    # Handle non-API routes with React app
+    re_path(r'^(?!api/)(?!admin/)(?!login/)(?!register/).*$', ReactAppView.as_view(), name='react-app'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

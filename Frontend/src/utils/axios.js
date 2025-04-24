@@ -1,48 +1,45 @@
 import axios from 'axios';
+import { API_BASE_URL } from '../config/api';
 
 const instance = axios.create({
-    baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8000',
-    withCredentials: true,
-    headers: {
-        'Content-Type': 'application/json'
-    }
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true
 });
 
-// Add request interceptor for CSRF token
-instance.interceptors.request.use(function (config) {
-  // Get CSRF token from the window object (set in the Django template)
-  const csrfToken = window.CSRF_TOKEN;
-  
-  if (csrfToken) {
-    config.headers['X-CSRFToken'] = csrfToken;
+// Add auth token to requests
+instance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
-  
-  return config;
-});
+);
 
-// Add a response interceptor to handle token refresh
+// Handle response errors
 instance.interceptors.response.use(
-    response => response,
-    async error => {
-        const originalRequest = error.config;
-        
-        // If the error is 401 and we haven't already tried to refresh
-        if (error.response.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true;
-            
-            try {
-                // Try to refresh the token
-                await instance.post('/api/token/refresh/');
-                // Retry the original request
-                return instance(originalRequest);
-            } catch (refreshError) {
-                // If refresh fails, redirect to login
-                window.location.href = '/login';
-                return Promise.reject(refreshError);
-            }
-        }
-        return Promise.reject(error);
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    // Handle 401 unauthorized errors
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      
+      // Clear token and redirect to login
+      localStorage.removeItem('token');
+      window.location.href = '/login';
     }
+
+    return Promise.reject(error);
+  }
 );
 
 export default instance;

@@ -449,6 +449,20 @@ body.popup .submit-row {
     _width: 700px;
 }
 
+<<<<<<< HEAD
+.inline-group ul.tools {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.inline-group ul.tools li {
+    display: inline;
+    padding: 0 5px;
+}
+
+=======
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
 .inline-group div.add-row,
 .inline-group .tabular tr.add-row td {
     color: var(--body-quiet-color);
@@ -462,8 +476,16 @@ body.popup .submit-row {
     border-bottom: 1px solid var(--hairline-color);
 }
 
+<<<<<<< HEAD
+.inline-group ul.tools a.add,
 .inline-group div.add-row a,
 .inline-group .tabular tr.add-row td a {
+    background: url(../img/icon-addlink.svg) 0 1px no-repeat;
+    padding-left: 16px;
+=======
+.inline-group div.add-row a,
+.inline-group .tabular tr.add-row td a {
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     font-size: 0.75rem;
 }
 

@@ -1,66 +1,67 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './style.css';
-import YogaImg from './Yoga.jpg';
+import ChessImg from './Chess.jpg';  // Make sure to add a chess related image
 import Profile from './Profile';  // Add this import
 import Jaya from './Jaya.jpg';   // Add this import
 
-const Groups = () => {
+const Groups1 = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);  // Add this state
   const [messages, setMessages] = useState([
-    { id: 1, sender: 'Suresh', content: 'Good morning everyone!', type: 'text', time: '9:00 AM' },
-    { id: 2, sender: 'Geeta', content: "Today's session was great!", type: 'text', time: '9:05 AM' }
+    { id: 1, sender: 'Ramesh', content: 'Welcome to Chess Club!', type: 'text', time: '10:00 AM' },
+    { id: 2, sender: 'Priya', content: 'Looking forward to today\'s strategy session', type: 'text', time: '10:05 AM' }
   ]);
   const [newMessage, setNewMessage] = useState('');
   const chatContainerRef = useRef(null);
   const fileInputRef = useRef(null);
 
+  // Add these functions after the useEffect hook
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const scrollToBottom = () => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-    }
-  };
-
-  const handleSendMessage = (e) => {
-    e.preventDefault();
-    if (newMessage.trim()) {
-      const message = {
-        id: messages.length + 1,
-        sender: 'You',
-        content: newMessage,
-        type: 'text',
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
-      setMessages([...messages, message]);
-      setNewMessage('');
-    }
-  };
-
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
+      scrollToBottom();
+    }, [messages]);
+  
+    const scrollToBottom = () => {
+      if (chatContainerRef.current) {
+        chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+      }
+    };
+  
+    const handleSendMessage = (e) => {
+      e.preventDefault();
+      if (newMessage.trim()) {
         const message = {
           id: messages.length + 1,
           sender: 'You',
-          content: e.target.result,
-          type: 'image',
+          content: newMessage,
+          type: 'text',
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         };
         setMessages([...messages, message]);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleVoiceMessage = () => {
-    alert('Voice message feature coming soon!');
-  };
+        setNewMessage('');
+      }
+    };
+  
+    const handleImageUpload = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const message = {
+            id: messages.length + 1,
+            sender: 'You',
+            content: e.target.result,
+            type: 'image',
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          };
+          setMessages([...messages, message]);
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+  
+    const handleVoiceMessage = () => {
+      alert('Voice message feature coming soon!');
+    };
 
   return (
     <div className="group-page">
@@ -82,15 +83,15 @@ const Groups = () => {
       <div className="group-header">
         <div className="group-banner">
           <div className="group-image">
-            <img src={YogaImg} alt="Yoga Group" className="group-profile-img" />
+            <img src={ChessImg} alt="Chess Club" className="group-profile-img" />
           </div>
           <div className="group-info">
-            <h1>Yoga Group</h1>
-            <p>A community dedicated to practicing and sharing yoga experiences. Join us for daily sessions and wellness discussions.</p>
+            <h1>Chess Club</h1>
+            <p>A community of chess enthusiasts gathering to learn, play, and improve their game. Join us for regular matches and strategic discussions.</p>
             <div className="group-stats">
-              <span>Members: 25</span>
+              <span>Members: 18</span>
               <span>•</span>
-              <span>Active since: Jan 2023</span>
+              <span>Active since: Mar 2023</span>
             </div>
           </div>
         </div>
@@ -156,5 +157,4 @@ const Groups = () => {
     </div>
   );
 };
-
-export default Groups;
+export default Groups1;

@@ -5,7 +5,7 @@ export const API_ENDPOINTS = {
     LOGIN: `${API_BASE_URL}/api/auth/login`,
     REGISTER: `${API_BASE_URL}/api/auth/register`,
     LOGOUT: `${API_BASE_URL}/api/auth/logout`,
-    VERIFY: `${API_BASE_URL}/api/auth/verify`
+    CHECK: `${API_BASE_URL}/api/auth/check`
   },
   USER: {
     PROFILE: `${API_BASE_URL}/api/user/profile`,
@@ -14,20 +14,20 @@ export const API_ENDPOINTS = {
   EVENTS: {
     LIST: `${API_BASE_URL}/api/events`,
     DETAIL: (id) => `${API_BASE_URL}/api/events/${id}`,
-    CREATE: `${API_BASE_URL}/api/events/create`
-  },
-  GROUPS: {
-    LIST: `${API_BASE_URL}/api/groups`,
-    DETAIL: (id) => `${API_BASE_URL}/api/groups/${id}`,
-    JOIN: (id) => `${API_BASE_URL}/api/groups/${id}/join`
+    CREATE: `${API_BASE_URL}/api/events/create`,
+    JOIN: (id) => `${API_BASE_URL}/api/events/${id}/join`
   },
   COMMUNITY: {
-    POSTS: `${API_BASE_URL}/api/community/posts`,
-    COMMENTS: (postId) => `${API_BASE_URL}/api/community/posts/${postId}/comments`
+    LIST: `${API_BASE_URL}/api/communities`,
+    DETAIL: (id) => `${API_BASE_URL}/api/communities/${id}`,
+    CREATE: `${API_BASE_URL}/api/communities/create`,
+    JOIN: (id) => `${API_BASE_URL}/api/communities/${id}/join`,
+    POSTS: `${API_BASE_URL}/api/community/posts`
   },
   JOURNAL: {
-    ENTRIES: `${API_BASE_URL}/api/journal/entries`,
-    ENTRY: (id) => `${API_BASE_URL}/api/journal/entries/${id}`,
-    VERIFY: (hash) => `${API_BASE_URL}/api/journal/verify/${hash}`
+    LIST: `${API_BASE_URL}/api/journal`,
+    CREATE: `${API_BASE_URL}/api/journal/create`,
+    UPDATE: (id) => `${API_BASE_URL}/api/journal/${id}/update`,
+    DELETE: (id) => `${API_BASE_URL}/api/journal/${id}/delete`
   }
 };

@@ -1,16 +1,19 @@
-from django.middleware.csrf import get_token
-from django.utils.deprecation import MiddlewareMixin
+from django.middleware.csrf import CsrfViewMiddleware
 
-class CSRFMiddleware(MiddlewareMixin):
+class CSRFMiddleware(CsrfViewMiddleware):
     def process_view(self, request, callback, callback_args, callback_kwargs):
-        if request.path.startswith('/api/'):
-            # Ensure CSRF cookie is set for API requests
-            get_token(request)
-        return None
-
+        # Skip CSRF checks for specific API endpoints that require external access
+        if request.path.startswith('/api/') and request.method in ('GET', 'HEAD', 'OPTIONS', 'TRACE'):
+            return None
+            
+        # Skip CSRF checks for auth endpoints when they're API calls
+        if request.path.startswith('/api/auth/') and request.content_type == 'application/json':
+            return None
+            
+        return super().process_view(request, callback, callback_args, callback_kwargs)
+        
     def process_response(self, request, response):
-        if request.path.startswith('/api/'):
-            # Ensure proper CORS headers for API responses
-            response['Access-Control-Allow-Credentials'] = 'true'
-            response['Access-Control-Allow-Headers'] = 'content-type, x-csrftoken'
+        # Ensure CSRF cookie is set for frontend pages
+        if request.path.startswith('/') and request.method == 'GET':
+            response['X-CSRFToken'] = request.META.get('CSRF_COOKIE', '')
         return response

@@ -1,65 +1,88 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useWeb3 } from '../contexts/Web3Context';
+import { Button } from './';
+import { PATHS } from '../config/paths';
 
 const Navbar = () => {
   const location = useLocation();
   const { user, logout } = useAuth();
+  const { isConnected, address, connectWallet } = useWeb3();
+
+  const handleLogout = async () => {
+    await logout();
+  };
 
   return (
     <nav className="navbar">
-      <div className="logo">ElderHub</div>
+      <Link to={PATHS.HOME} className="logo">ElderHub</Link>
       <div className="nav-links">
-        <Link to="/" className={location.pathname === '/' ? 'active' : ''}>
-          Home
-        </Link>
         {user ? (
           <>
             <Link 
-              to="/dashboard" 
-              className={location.pathname === '/dashboard' ? 'active' : ''}
+              to={PATHS.DASHBOARD} 
+              className={location.pathname === PATHS.DASHBOARD ? 'active' : ''}
             >
               Dashboard
             </Link>
             <Link 
-              to="/community" 
-              className={location.pathname === '/community' ? 'active' : ''}
+              to={PATHS.COMMUNITY} 
+              className={location.pathname === PATHS.COMMUNITY ? 'active' : ''}
             >
               Community
             </Link>
             <Link 
-              to="/events" 
-              className={location.pathname === '/events' ? 'active' : ''}
+              to={PATHS.EVENTS} 
+              className={location.pathname === PATHS.EVENTS ? 'active' : ''}
             >
               Events
             </Link>
             <Link 
-              to="/journal" 
-              className={location.pathname === '/journal' ? 'active' : ''}
+              to={PATHS.JOURNAL} 
+              className={location.pathname === PATHS.JOURNAL ? 'active' : ''}
             >
               Journal
             </Link>
             <Link 
-              to="/profile" 
-              className={location.pathname === '/profile' ? 'active' : ''}
+              to={PATHS.PROFILE} 
+              className={location.pathname === PATHS.PROFILE ? 'active' : ''}
             >
               Profile
             </Link>
-            <button onClick={logout} className="button button-secondary">
+            {!isConnected && (
+              <Button 
+                onClick={connectWallet}
+                variant="secondary"
+                size="small"
+              >
+                Connect Wallet
+              </Button>
+            )}
+            {isConnected && (
+              <span className="wallet-address" title={address}>
+                {address?.slice(0, 6)}...{address?.slice(-4)}
+              </span>
+            )}
+            <Button 
+              onClick={handleLogout} 
+              variant="secondary"
+              size="small"
+            >
               Logout
-            </button>
+            </Button>
           </>
         ) : (
           <>
             <Link 
-              to="/login" 
-              className={location.pathname === '/login' ? 'active' : ''}
+              to={PATHS.LOGIN} 
+              className={location.pathname === PATHS.LOGIN ? 'active' : ''}
             >
               Login
             </Link>
             <Link 
-              to="/register" 
-              className={location.pathname === '/register' ? 'active' : ''}
+              to={PATHS.REGISTER} 
+              className={location.pathname === PATHS.REGISTER ? 'active' : ''}
             >
               Register
             </Link>

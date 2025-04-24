@@ -1,53 +1,42 @@
 import axios from '../utils/axios';
+import { PATHS } from '../config/paths';
 
 export const authAPI = {
-  async login(email, password) {
-    const tokenResponse = await axios.get('/get-csrf-token/');
-    const csrfToken = tokenResponse.data.csrfToken;
-    
-    return axios.post('/login/', { email, password }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrfToken
-      },
-      withCredentials: true
-    });
+  async login(credentials) {
+    const response = await axios.post(PATHS.API.AUTH.LOGIN, credentials);
+    if (response.data.token) {
+      localStorage.setItem('token', response.data.token);
+    }
+    return response.data;
   },
 
   async register(userData) {
-    const tokenResponse = await axios.get('/get-csrf-token/');
-    const csrfToken = tokenResponse.data.csrfToken;
-    
-    return axios.post('/api/register/', userData, {
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrfToken
-      }
-    });
+    const response = await axios.post(PATHS.API.AUTH.REGISTER, userData);
+    if (response.data.token) {
+      localStorage.setItem('token', response.data.token);
+    }
+    return response.data;
   },
 
   async logout() {
-    return axios.post('/logout/');
+    await axios.post(PATHS.API.AUTH.LOGOUT);
+    localStorage.removeItem('token');
   },
 
   async checkAuth() {
-    return axios.get('/api/check-auth/');
+    try {
+      const response = await axios.get(PATHS.API.AUTH.CHECK);
+      return response.data;
+    } catch (error) {
+      if (error.response?.status === 401) {
+        localStorage.removeItem('token');
+      }
+      throw error;
+    }
+  },
+
+  async refreshCSRFToken() {
+    const response = await axios.get(PATHS.API.AUTH.CSRF);
+    return response.data.csrfToken;
   }
 };
-
-function logout() {
-    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-    
-    fetch('/api/logout/', {
-        method: 'POST',
-        headers: {
-            'X-CSRFToken': csrftoken,
-            'Content-Type': 'application/json',
-        },
-    })
-    .then(response => {
-        if (response.ok) {
-            window.location.href = '/login/';
-        }
-    });
-}

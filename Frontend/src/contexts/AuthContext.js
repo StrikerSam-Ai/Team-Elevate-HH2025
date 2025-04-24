@@ -1,11 +1,13 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
-import axios from '../api/axios';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { authAPI } from '../api';
+import { useToast } from './ToastContext';
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { addToast } = useToast();
 
   useEffect(() => {
     checkAuthStatus();
@@ -13,9 +15,9 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuthStatus = async () => {
     try {
-      const response = await axios.get('/check-auth/');
-      if (response.data.authenticated) {
-        setUser(response.data);
+      const response = await authAPI.checkAuth();
+      if (response.authenticated) {
+        setUser(response.user);
       } else {
         setUser(null);
       }
@@ -27,44 +29,40 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async (email, password) => {
+  const login = async (credentials) => {
     try {
-      const response = await axios.post('/login/', { email, password });
-      
-      if (response.data.success) {
-        setUser(response.data.user);
-        return true;
-      }
-      return false;
+      const response = await authAPI.login(credentials);
+      setUser(response.user);
+      addToast('Login successful', 'success');
+      return response;
     } catch (error) {
-      console.error("Login failed:", error);
+      addToast(error.message || 'Login failed', 'error');
       throw error;
     }
   };
 
   const register = async (userData) => {
     try {
-      const response = await axios.post('/register/', userData);
-      
-      if (response.data.success) {
-        setUser(response.data.user);
-        return true;
-      }
-      return false;
+      const response = await authAPI.register(userData);
+      setUser(response.user);
+      addToast('Registration successful', 'success');
+      return response;
     } catch (error) {
-      console.error("Registration failed:", error);
+      addToast(error.message || 'Registration failed', 'error');
       throw error;
     }
   };
 
   const logout = async () => {
     try {
-      await axios.post('/logout/');
+      await authAPI.logout();
       setUser(null);
-      return true;
+      addToast('Logged out successfully', 'success');
     } catch (error) {
       console.error("Logout failed:", error);
-      return false;
+      // Still clear user data even if API call fails
+      setUser(null);
+      addToast('Logged out', 'info');
     }
   };
 

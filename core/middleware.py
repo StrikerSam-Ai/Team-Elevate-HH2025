@@ -1,3 +1,5 @@
+from django.middleware.csrf import get_token
+
 class AuthenticationMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
@@ -5,6 +7,10 @@ class AuthenticationMiddleware:
     def __call__(self, request):
         # Check if request is for API
         is_api_request = request.path.startswith('/api/')
+        
+        # Ensure CSRF cookie is set
+        if is_api_request:
+            get_token(request)
         
         response = self.get_response(request)
         

@@ -1,0 +1,49 @@
+.wallet-guide {
+  text-align: center;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.wallet-guide h3 {
+  color: var(--primary-color);
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+}
+
+.guide-steps {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.guide-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  text-align: left;
+}
+
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background-color: var(--primary-color-light);
+  color: var(--primary-color);
+  border-radius: 50%;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.guide-step p {
+  margin: 0;
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+.get-started-btn {
+  width: 100%;
+  max-width: 200px;
+  margin: 0 auto;
+}

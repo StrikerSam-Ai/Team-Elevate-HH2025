@@ -254,10 +254,13 @@ input[type="submit"], button {
         align-items: center;
     }
 
+<<<<<<< HEAD
     .selector .selector-filter label {
         margin: 0 8px 0 0;
     }
 
+=======
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     .selector .selector-filter input {
         width: 100%;
         min-height: 0;
@@ -277,6 +280,7 @@ input[type="submit"], button {
         margin-bottom: 5px;
     }
 
+<<<<<<< HEAD
     .selector ul.selector-chooser {
         width: 26px;
         height: 52px;
@@ -300,6 +304,9 @@ input[type="submit"], button {
     }
 
     a.selector-chooseall, a.selector-clearall {
+=======
+    .selector-chooseall, .selector-clearall {
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
         align-self: center;
     }
 
@@ -321,8 +328,11 @@ input[type="submit"], button {
     }
 
     .stacked ul.selector-chooser {
+<<<<<<< HEAD
         width: 52px;
         height: 26px;
+=======
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
         padding: 0 2px;
         transform: none;
     }
@@ -331,6 +341,7 @@ input[type="submit"], button {
         padding: 3px;
     }
 
+<<<<<<< HEAD
     .stacked .selector-add, .stacked .selector-remove {
         background-size: 20px auto;
     }
@@ -367,6 +378,8 @@ input[type="submit"], button {
         background-position: 0 -20px;
     }
 
+=======
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     .help-tooltip, .selector .help-icon {
         display: none;
     }
@@ -529,6 +542,13 @@ input[type="submit"], button {
         margin-left: 15px;
     }
 
+<<<<<<< HEAD
+=======
+    .object-tools:has(a.addlink) {
+        margin-top: 0px;
+    }
+
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     /* Forms */
 
     .form-row {
@@ -649,6 +669,10 @@ input[type="submit"], button {
 
     .related-widget-wrapper .selector {
         order: 1;
+<<<<<<< HEAD
+=======
+        flex: 1 0 auto;
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     }
 
     .related-widget-wrapper > a {
@@ -679,9 +703,15 @@ input[type="submit"], button {
     }
 
     .selector ul.selector-chooser {
+<<<<<<< HEAD
         display: block;
         width: 52px;
         height: 26px;
+=======
+        display: flex;
+        width: 60px;
+        height: 30px;
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
         padding: 0 2px;
         transform: none;
     }
@@ -694,6 +724,7 @@ input[type="submit"], button {
         background-position: 0 0;
     }
 
+<<<<<<< HEAD
     .active.selector-remove:focus, .active.selector-remove:hover {
         background-position: 0 -20px;
     }
@@ -704,6 +735,18 @@ input[type="submit"], button {
 
     .active.selector-add:focus, .active.selector-add:hover {
         background-position: 0 -60px;
+=======
+    :enabled.selector-remove:focus, :enabled.selector-remove:hover {
+        background-position: 0 -24px;
+    }
+
+    .selector-add  {
+        background-position: 0 -48px;
+    }
+
+    :enabled.selector-add:focus, :enabled.selector-add:hover {
+        background-position: 0 -72px;
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     }
 
     /* Inlines */

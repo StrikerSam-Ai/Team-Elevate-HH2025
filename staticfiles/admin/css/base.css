@@ -773,7 +773,10 @@ a.deletelink:focus, a.deletelink:hover {
     padding-left: 0;
     float: right;
     position: relative;
+<<<<<<< HEAD
     margin-top: -48px;
+=======
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
 }
 
 .object-tools li {
@@ -821,6 +824,13 @@ a.deletelink:focus, a.deletelink:hover {
     background-image: url(../img/tooltag-add.svg);
 }
 
+<<<<<<< HEAD
+=======
+.object-tools:has(a.addlink) {
+    margin-top: -48px;
+}
+
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
 /* OBJECT HISTORY */
 
 #change-history table {
@@ -1121,6 +1131,10 @@ a.deletelink:focus, a.deletelink:hover {
     margin: 0;
     border-top: 1px solid var(--hairline-color);
     width: 100%;
+<<<<<<< HEAD
+=======
+    box-sizing: border-box;
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
 }
 
 .paginator a:link, .paginator a:visited {

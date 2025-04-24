@@ -1,0 +1,12 @@
+{
+  "name": "team-elevate-hh2025",
+  "version": "1.0.0",
+  "description": "<<<<<<< HEAD\r # Getting Started with Create React App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

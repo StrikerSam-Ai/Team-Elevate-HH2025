@@ -1,0 +1,24 @@
+.view-toggle {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.25rem;
+  background-color: var(--gray-100);
+  border-radius: 4px;
+}
+
+.view-toggle-btn {
+  padding: 0.5rem;
+  color: var(--gray-600);
+  transition: all 0.2s ease;
+}
+
+.view-toggle-btn:hover {
+  color: var(--primary-color);
+}
+
+.view-toggle-btn.active {
+  color: var(--primary-color);
+  background-color: var(--white);
+  border-radius: 4px;
+  box-shadow: var(--shadow-sm);
+}

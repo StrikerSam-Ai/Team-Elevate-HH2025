@@ -3,6 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "axios": "^1.8.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.5.1",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^4.2.4"
+=======
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@testing-library/jest-dom": "^5.17.0",
@@ -21,6 +32,7 @@
     "date-fns": "^2.30.0",
     "jwt-decode": "^4.0.0",
     "react-query": "^3.39.3"
+>>>>>>> e3e22210e9c10f32265c8e6d4ddf218ab6bca1cf
   },
   "scripts": {
     "start": "react-scripts start",
@@ -46,9 +58,14 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/plugin-transform-private-property-in-object": "^7.25.9",
     "eslint": "^8.57.1",
+<<<<<<< HEAD
+    "eslint-config-react-app": "^7.0.1"
+  }
+=======
     "eslint-config-react-app": "^7.0.1",
     "prettier": "^3.2.5",
     "sass": "^1.71.1"
   },
   "proxy": "http://localhost:8000"
+>>>>>>> e3e22210e9c10f32265c8e6d4ddf218ab6bca1cf
 }

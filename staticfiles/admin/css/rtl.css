@@ -220,6 +220,7 @@ fieldset .fieldBox {
 }
 
 .selector-add {
+<<<<<<< HEAD
   background: url(../img/selector-icons.svg) 0 -64px no-repeat;
 }
 
@@ -248,6 +249,38 @@ a.selector-clearall {
 }
 
 a.active.selector-clearall:focus, a.active.selector-clearall:hover {
+=======
+    background: url(../img/selector-icons.svg) 0 -96px no-repeat;
+    background-size: 24px auto;
+}
+
+:enabled.selector-add:focus, :enabled.selector-add:hover {
+    background-position: 0 -120px;
+}
+
+.selector-remove {
+    background: url(../img/selector-icons.svg) 0 -144px no-repeat;
+    background-size: 24px auto;
+}
+
+:enabled.selector-remove:focus, :enabled.selector-remove:hover {
+    background-position: 0 -168px;
+}
+
+.selector-chooseall {
+    background: url(../img/selector-icons.svg) right -128px no-repeat;
+}
+
+:enabled.selector-chooseall:focus, :enabled.selector-chooseall:hover {
+    background-position: 100% -144px;
+}
+
+.selector-clearall {
+    background: url(../img/selector-icons.svg) 0 -160px no-repeat;
+}
+
+:enabled.selector-clearall:focus, :enabled.selector-clearall:hover {
+>>>>>>> e1362fbdc09c6ce4bf65c10141e865fa6659f132
     background-position: 0 -176px;
 }
 

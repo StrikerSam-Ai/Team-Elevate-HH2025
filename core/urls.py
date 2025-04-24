@@ -16,25 +16,16 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path, include
-<<<<<<< HEAD
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
- # Map root URL to app URLs
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/', include('companions.urls')),
-    path('', include('companions.urls')),
-]
-
-=======
+from django.urls import path, include, re_path
 from django.conf import settings
-from django.views.static import serve 
+from django.conf.urls.static import static
+from django.views.generic import TemplateView
+from companions.views import ReactAppView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('companions.urls')),
-    path('static/<path:path>', serve, {'document_root': settings.STATIC_ROOT_DIR}),
-]
->>>>>>> 400b421c6146e256ac674f3832dbd7278a106b7b
+    path('api/', include('companions.urls')),  # All API routes under /api/
+    # Serve React frontend for all other routes
+    re_path(r'^$', ReactAppView.as_view(), name='react-app'),
+    re_path(r'^(?!api/)(?!admin/).*$', ReactAppView.as_view(), name='react-app-routes'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

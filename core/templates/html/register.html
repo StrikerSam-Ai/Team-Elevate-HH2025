@@ -11,85 +11,115 @@
     <div class="container">
         <div class="form-wrapper">
             <h2>Create Account</h2>
-            <form id="register-form" action="/register/" method="post">  <!-- Ensured correct action URL -->
+            <div id="error-message" class="error-message" style="display:none;"></div>
+            <div id="success-message" class="success-message" style="display:none;"></div>
+            <form id="register-form" action="/api/auth/register/" method="post">
                 {% csrf_token %}
                 <div class="form-group">
-                    <input type="text" placeholder="Name" name="name" required />
-                    <input type="email" placeholder="Email" name="email" required />
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" placeholder="Full Name" name="name" required />
                 </div>
                 <div class="form-group">
-                    <input type="password" placeholder="Password" name="password" required />
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" placeholder="Email" name="email" required />
                 </div>
                 <div class="form-group">
-                    <input type="date" placeholder="Birth Date" name="birth_date" />
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" placeholder="Password" name="password" required />
                 </div>
                 <div class="form-group">
-                    <input type="text" placeholder="Phone Number" name="phone" />
+                    <label for="birth_date">Birth Date:</label>
+                    <input type="date" id="birth_date" name="birth_date" />
                 </div>
                 <div class="form-group">
-                    <input type="text" placeholder="City" name="city" />
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" placeholder="Phone Number" name="phone" />
+                </div>
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" id="city" placeholder="City" name="city" />
                 </div>
                 <button type="submit">Register</button>
+                <div class="login-link">
+                    <p>Already have an account? <a href="/login">Login</a></p>
+                </div>
             </form>
         </div>
     </div>
 
     <script>
-        // Get CSRF token from cookie
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
+        // Check authentication status on page load
+        fetch('/api/auth/check/')
+            .then(response => response.json())
+            .then(data => {
+                if (data.authenticated) {
+                    window.location.href = '/home/';
                 }
-            }
-            return cookieValue;
-        }
-        const csrftoken = getCookie('csrftoken');
+            })
+            .catch(error => console.error('Auth check error:', error));
 
         document.getElementById('register-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData.entries());
-
-            const response = await fetch(this.action, { // this.action will now correctly resolve to /register/
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken
-                },
-                body: JSON.stringify(data)
-            });
-
+            
+            const errorDiv = document.getElementById('error-message');
+            const successDiv = document.getElementById('success-message');
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            
             try {
-                const result = await response.json();
-                if (response.ok) {
-                    // Show success message before redirecting
-                    const successMessage = document.createElement('div');
-                    successMessage.className = 'success-message';
-                    successMessage.textContent = 'Registration successful! Redirecting...';
-                    this.insertBefore(successMessage, this.firstChild);
+                const formData = new FormData(this);
+                const formObject = {};
+                formData.forEach((value, key) => {
+                    if (value) {  // Only include non-empty values
+                        formObject[key] = value;
+                    }
+                });
+
+                // Validate required fields
+                const requiredFields = ['name', 'email', 'password'];
+                for (const field of requiredFields) {
+                    if (!formObject[field]) {
+                        errorDiv.textContent = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
+                        errorDiv.style.display = 'block';
+                        return;
+                    }
+                }
+
+                // Validate password length
+                if (formObject.password.length < 8) {
+                    errorDiv.textContent = 'Password must be at least 8 characters long';
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify(formObject)
+                });
+
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    successDiv.textContent = 'Registration successful! Redirecting...';
+                    successDiv.style.display = 'block';
                     
                     setTimeout(() => {
                         window.location.href = '/home/';
                     }, 1500);
                 } else {
-                    // Show specific error messages if available
-                    const errorMessage = result.error || 'Registration failed. Please try again.';
-                    const errorDiv = document.createElement('div');
-                    errorDiv.className = 'error-message';
+                    const errorMessage = data.error || 'Registration failed. Please try again.';
                     errorDiv.textContent = errorMessage;
-                    this.insertBefore(errorDiv, this.firstChild);
+                    errorDiv.style.display = 'block';
                 }
             } catch (error) {
-                console.error('Error processing response:', error);
-                alert('An unexpected error occurred. Please try again.');
+                console.error('Registration error:', error);
+                errorDiv.textContent = 'An unexpected error occurred. Please try again.';
+                errorDiv.style.display = 'block';
             }
         });
     </script>

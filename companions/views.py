@@ -1,3 +1,5 @@
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
@@ -12,6 +14,13 @@ import json
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+import json
+import requests
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -21,47 +30,80 @@ def login_view(request):
         return redirect('companions:home')
     return render(request, 'html/login.html')
 
-@csrf_exempt
-@require_http_methods(["POST"])
+@api_view(['POST'])
+@permission_classes([AllowAny])
 def login_user(request):
     """Handle login API request."""
     try:
-        data = json.loads(request.body)
+        if request.content_type == 'application/json':
+            data = json.loads(request.body)
+        else:
+            data = request.POST.dict()
+
         email = data.get('email')
         password = data.get('password')
+
+        if not email or not password:
+            return JsonResponse({
+                'success': False,
+                'error': 'Email and password are required'
+            }, status=400)
+
+        # Use authenticate with email parameter
         user = authenticate(request, email=email, password=password)
         
         if user is not None:
-            login(request, user)
-            return JsonResponse({
-                'success': True,
-                'user': {
-                    'email': user.email,
-                    'name': user.name,
-                    'id': user.id
-                }
-            })
+            if user.is_active:
+                login(request, user)
+                return JsonResponse({
+                    'success': True,
+                    'user': {
+                        'email': user.email,
+                        'name': user.name,
+                        'id': user.id
+                    }
+                })
+            else:
+                return JsonResponse({
+                    'success': False,
+                    'error': 'Account is disabled'
+                }, status=401)
+            
         return JsonResponse({
             'success': False,
-            'error': 'Invalid credentials'
+            'error': 'Invalid email or password'
         }, status=401)
     except json.JSONDecodeError:
         return JsonResponse({
             'success': False,
-            'error': 'Invalid request format'
+            'error': 'Invalid JSON format'
         }, status=400)
     except Exception as e:
+        logger.error(f"Login error: {str(e)}")
         return JsonResponse({
             'success': False,
-            'error': str(e)
+            'error': 'An error occurred during login'
         }, status=500)
 
-@csrf_exempt
-@require_http_methods(["POST"])
+@api_view(['POST'])
+@permission_classes([AllowAny])
 def register_user(request):
     """Handle user registration."""
     try:
-        data = json.loads(request.body)
+        if request.content_type == 'application/json':
+            data = json.loads(request.body)
+        else:
+            data = request.POST.dict()
+            
+        # Validate required fields
+        required_fields = ['email', 'password', 'name']
+        for field in required_fields:
+            if not data.get(field):
+                return JsonResponse({
+                    'success': False,
+                    'error': f'{field} is required'
+                }, status=400)
+            
         if CustomUser.objects.filter(email=data.get('email')).exists():
             return JsonResponse({
                 'success': False,
@@ -78,6 +120,7 @@ def register_user(request):
         )
         
         login(request, user)
+        
         return JsonResponse({
             'success': True,
             'user': {
@@ -86,12 +129,14 @@ def register_user(request):
                 'id': user.id
             }
         })
+            
     except json.JSONDecodeError:
         return JsonResponse({
             'success': False,
             'error': 'Invalid request format'
         }, status=400)
     except Exception as e:
+        logger.error(f"Registration error: {str(e)}")
         return JsonResponse({
             'success': False,
             'error': str(e)
@@ -114,6 +159,7 @@ def home_view(request):
     return render(request, 'html/home.html')
 
 # --- Profile Views ---
+
 
 @login_required
 def profile_view(request):
@@ -144,10 +190,14 @@ def profile_api(request):
 
 # --- Other Views ---
 
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
 def get_csrf_token(request):
-    """Get a CSRF token for AJAX requests."""
-    token = get_token(request)
-    return JsonResponse({'csrfToken': token})
+    """
+    Returns CSRF token for the frontend to use in subsequent requests
+    """
+    return JsonResponse({'csrfToken': get_token(request)})
 
 @ensure_csrf_cookie
 def react_app_view(request):
@@ -240,14 +290,6 @@ def community_detail(request, community_id):
             return redirect('community_detail', community_id=community_id)
     except ObjectDoesNotExist:
         return JsonResponse({"error": "Community not found"}, status=404)
-    
-from django.http import JsonResponse
-from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
-import json
-import requests
-import os
 
 @csrf_exempt
 def TextGenerationView(request):
@@ -311,8 +353,3 @@ def homeView(request):
     
 class ReactAppView(TemplateView):
     template_name = 'html/react_app.html'
-
-@ensure_csrf_cookie
-def logout_view(request):
-    # Your logout logic here
-    pass

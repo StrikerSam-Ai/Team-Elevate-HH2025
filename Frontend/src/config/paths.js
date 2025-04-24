@@ -5,6 +5,8 @@ export const PATHS = {
     DASHBOARD: '/dashboard',
     PROFILE: '/profile',
     COMMUNITY: '/community',
+    EVENTS: '/events',
+    JOURNAL: '/journal',
     API: {
         AUTH: {
             CSRF: '/api/auth/csrf/',
@@ -23,6 +25,18 @@ export const PATHS = {
             DETAIL: (id) => `/api/communities/${id}/`,
             JOIN: (id) => `/api/communities/${id}/join/`
         },
-        TEXT_GENERATION: '/api/text-generation/'
+        EVENTS: {
+            LIST: '/api/events/',
+            CREATE: '/api/events/create/',
+            DETAIL: (id) => `/api/events/${id}/`,
+            JOIN: (id) => `/api/events/${id}/join/`
+        },
+        JOURNAL: {
+            LIST: '/api/journal/',
+            CREATE: '/api/journal/create/',
+            UPDATE: (id) => `/api/journal/${id}/update/`,
+            DELETE: (id) => `/api/journal/${id}/delete/`,
+            VERIFY: (hash) => `/api/journal/verify/${hash}`
+        }
     }
 };

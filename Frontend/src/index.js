@@ -4,6 +4,12 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './styles/index.css';
 
+// Remove any legacy template-based content
+const templateContent = document.getElementById('django-content');
+if (templateContent) {
+  templateContent.remove();
+}
+
 const container = document.getElementById('root');
 const root = createRoot(container);
 

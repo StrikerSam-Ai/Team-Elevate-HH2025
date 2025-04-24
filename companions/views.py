@@ -30,18 +30,18 @@ def login_view(request):
         return redirect('companions:home')
     return render(request, 'html/login.html')
 
-@csrf_exempt
-@require_http_methods(["POST"])
+@api_view(['POST'])
+@permission_classes([AllowAny])
 def login_user(request):
     """Handle login API request."""
     try:
         if request.content_type == 'application/json':
             data = json.loads(request.body)
-            email = data.get('email')
-            password = data.get('password')
         else:
-            email = request.POST.get('email')
-            password = request.POST.get('password')
+            data = request.POST.dict()
+
+        email = data.get('email')
+        password = data.get('password')
 
         if not email or not password:
             return JsonResponse({
@@ -49,37 +49,44 @@ def login_user(request):
                 'error': 'Email and password are required'
             }, status=400)
 
-        user = authenticate(request, username=email, password=password)
+        # Use authenticate with email parameter
+        user = authenticate(request, email=email, password=password)
         
         if user is not None:
-            login(request, user)
-            if request.content_type == 'application/json':
+            if user.is_active:
+                login(request, user)
                 return JsonResponse({
                     'success': True,
                     'user': {
                         'email': user.email,
-                        'name': getattr(user, 'name', user.email),
+                        'name': user.name,
                         'id': user.id
                     }
                 })
-            return redirect('companions:home')
+            else:
+                return JsonResponse({
+                    'success': False,
+                    'error': 'Account is disabled'
+                }, status=401)
             
         return JsonResponse({
             'success': False,
-            'error': 'Invalid credentials'
+            'error': 'Invalid email or password'
         }, status=401)
     except json.JSONDecodeError:
         return JsonResponse({
             'success': False,
-            'error': 'Invalid request format'
+            'error': 'Invalid JSON format'
         }, status=400)
     except Exception as e:
+        logger.error(f"Login error: {str(e)}")
         return JsonResponse({
             'success': False,
-            'error': str(e)
+            'error': 'An error occurred during login'
         }, status=500)
 
-@require_http_methods(["POST"])
+@api_view(['POST'])
+@permission_classes([AllowAny])
 def register_user(request):
     """Handle user registration."""
     try:
@@ -87,6 +94,15 @@ def register_user(request):
             data = json.loads(request.body)
         else:
             data = request.POST.dict()
+            
+        # Validate required fields
+        required_fields = ['email', 'password', 'name']
+        for field in required_fields:
+            if not data.get(field):
+                return JsonResponse({
+                    'success': False,
+                    'error': f'{field} is required'
+                }, status=400)
             
         if CustomUser.objects.filter(email=data.get('email')).exists():
             return JsonResponse({
@@ -105,16 +121,14 @@ def register_user(request):
         
         login(request, user)
         
-        if request.content_type == 'application/json':
-            return JsonResponse({
-                'success': True,
-                'user': {
-                    'email': user.email,
-                    'name': user.name,
-                    'id': user.id
-                }
-            })
-        return redirect('companions:home')
+        return JsonResponse({
+            'success': True,
+            'user': {
+                'email': user.email,
+                'name': user.name,
+                'id': user.id
+            }
+        })
             
     except json.JSONDecodeError:
         return JsonResponse({
@@ -122,6 +136,7 @@ def register_user(request):
             'error': 'Invalid request format'
         }, status=400)
     except Exception as e:
+        logger.error(f"Registration error: {str(e)}")
         return JsonResponse({
             'success': False,
             'error': str(e)

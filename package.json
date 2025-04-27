@@ -1,12 +1,5 @@
 {
-  "name": "team-elevate-hh2025",
-  "version": "1.0.0",
-  "description": "Team Elevate's project for Hackhazard 2025",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "dependencies": {
+    "react-router-dom": "^7.5.0"
+  }
 }

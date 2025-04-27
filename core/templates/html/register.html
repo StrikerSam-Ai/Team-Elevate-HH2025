@@ -70,7 +70,8 @@
                 const formData = new FormData(this);
                 const formObject = {};
                 formData.forEach((value, key) => {
-                    if (value) {  // Only include non-empty values
+                    // Skip the CSRF token as we'll add it to headers
+                    if (key !== 'csrfmiddlewaretoken' && value) {
                         formObject[key] = value;
                     }
                 });
@@ -92,11 +93,13 @@
                     return;
                 }
 
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                
                 const response = await fetch(this.action, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        'X-CSRFToken': csrfToken
                     },
                     credentials: 'same-origin',
                     body: JSON.stringify(formObject)

@@ -6,6 +6,9 @@ import Profile from './Profile/index.jsx';
 import Community from './Community/index.jsx';
 import Journal from './Journal/index.jsx';
 import Events from './Events/index.jsx';
+import Resources from './Resources/index.jsx';
+import FamilyConnection from './FamilyConnection/index.jsx';
+import Analytics from './Analytics/index.jsx';
 
 export {
   Home,
@@ -15,5 +18,8 @@ export {
   Profile,
   Community,
   Journal,
-  Events
+  Events,
+  Resources,
+  FamilyConnection,
+  Analytics
 };

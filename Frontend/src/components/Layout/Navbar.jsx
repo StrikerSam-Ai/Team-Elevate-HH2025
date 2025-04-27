@@ -1,60 +1,154 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import styles from './Navbar.module.css';
+import { PATHS } from '../../config/paths';
+import './Navbar.css';
 
 const Navbar = () => {
+  const { isAuthenticated, user, logout } = useAuth();
   const location = useLocation();
-  const { isAuthenticated } = useAuth();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    await logout();
+    closeMobileMenu();
+  };
 
   return (
-    <nav className={styles.navbar}>
-      <div className={styles.navContent}>
-        <Link to="/" className={styles.navBrand}>
+    <nav className="navbar">
+      <div className="navbar-container">
+        <Link to={PATHS.HOME} className="logo" onClick={closeMobileMenu}>
           ElderHub
         </Link>
-        <div className={styles.navLinks}>
+
+        <div className="mobile-menu-toggle" onClick={toggleMobileMenu}>
+          <span className={`hamburger ${mobileMenuOpen ? 'open' : ''}`}></span>
+        </div>
+
+        <div className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`}>
           {isAuthenticated ? (
+            // Authenticated navigation links
             <>
-              <Link 
-                to="/dashboard" 
-                className={`${styles.navLink} ${location.pathname === '/dashboard' ? styles.active : ''}`}
+              <NavLink 
+                to={PATHS.DASHBOARD} 
+                className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+                onClick={closeMobileMenu}
               >
                 Dashboard
-              </Link>
-              <Link 
-                to="/community" 
-                className={`${styles.navLink} ${location.pathname === '/community' ? styles.active : ''}`}
+              </NavLink>
+              
+              <NavLink 
+                to={PATHS.COMMUNITY} 
+                className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+                onClick={closeMobileMenu}
               >
                 Community
-              </Link>
-              <Link 
-                to="/journal" 
-                className={`${styles.navLink} ${location.pathname === '/journal' ? styles.active : ''}`}
+              </NavLink>
+              
+              <NavLink 
+                to={PATHS.EVENTS} 
+                className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+                onClick={closeMobileMenu}
+              >
+                Events
+              </NavLink>
+              
+              <NavLink 
+                to={PATHS.JOURNAL} 
+                className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+                onClick={closeMobileMenu}
               >
                 Journal
-              </Link>
-              <Link 
-                to="/profile" 
-                className={`${styles.navLink} ${location.pathname === '/profile' ? styles.active : ''}`}
+              </NavLink>
+              
+              <NavLink 
+                to={PATHS.FAMILY_CONNECTION} 
+                className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+                onClick={closeMobileMenu}
               >
-                Profile
-              </Link>
+                Family
+              </NavLink>
+              
+              <div className="user-menu">
+                <div className="user-menu-trigger">
+                  <div className="avatar">
+                    {user?.avatar ? (
+                      <img src={user.avatar} alt={user.name} />
+                    ) : (
+                      <span>{user?.name?.charAt(0) || user?.email?.charAt(0) || 'U'}</span>
+                    )}
+                  </div>
+                  <span className="user-name">{user?.name || 'User'}</span>
+                </div>
+                
+                <div className="dropdown-menu">
+                  <NavLink 
+                    to={PATHS.PROFILE} 
+                    className="dropdown-item"
+                    onClick={closeMobileMenu}
+                  >
+                    Profile
+                  </NavLink>
+                  
+                  <NavLink 
+                    to={PATHS.RESOURCES} 
+                    className="dropdown-item"
+                    onClick={closeMobileMenu}
+                  >
+                    Resources
+                  </NavLink>
+                  
+                  <button className="dropdown-item logout-btn" onClick={handleLogout}>
+                    Logout
+                  </button>
+                </div>
+              </div>
             </>
           ) : (
+            // Public navigation links
             <>
-              <Link 
-                to="/login" 
-                className={`${styles.navLink} ${location.pathname === '/login' ? styles.active : ''}`}
+              <NavLink 
+                to={PATHS.HOME} 
+                className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+                onClick={closeMobileMenu}
               >
-                Login
-              </Link>
-              <Link 
-                to="/register" 
-                className={`${styles.navLink} ${location.pathname === '/register' ? styles.active : ''}`}
+                Home
+              </NavLink>
+              
+              <NavLink 
+                to="/about" 
+                className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+                onClick={closeMobileMenu}
               >
-                Register
-              </Link>
+                About
+              </NavLink>
+              
+              <div className="auth-buttons">
+                <Link 
+                  to={PATHS.LOGIN} 
+                  className="btn btn-outline login-btn"
+                  onClick={closeMobileMenu}
+                >
+                  Login
+                </Link>
+                
+                <Link 
+                  to={PATHS.REGISTER} 
+                  className="btn btn-primary register-btn"
+                  onClick={closeMobileMenu}
+                >
+                  Register
+                </Link>
+              </div>
             </>
           )}
         </div>

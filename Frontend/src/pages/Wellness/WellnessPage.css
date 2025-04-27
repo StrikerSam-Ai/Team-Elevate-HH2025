@@ -1,0 +1,173 @@
+.wellness-page {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.wellness-header {
+  margin-bottom: 32px;
+}
+
+.wellness-header h1 {
+  margin: 0 0 8px 0;
+  color: #2e4057;
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.wellness-header p {
+  color: #627084;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.wellness-content {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  grid-gap: 24px;
+}
+
+.main-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.coming-soon {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  text-align: center;
+}
+
+.coming-soon h2 {
+  margin: 0 0 12px 0;
+  color: #2e4057;
+  font-size: 1.5rem;
+}
+
+.coming-soon p {
+  color: #627084;
+  margin: 0;
+}
+
+.wellness-tips-card, .quick-actions-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.wellness-tips-card h3, .quick-actions-card h3 {
+  margin: 0 0 16px 0;
+  color: #2e4057;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.tip-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.tip-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.tip-text {
+  color: #627084;
+  margin: 0;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.quick-actions-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.quick-action-button {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: #f5f7fa;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.quick-action-button:hover {
+  background-color: #e5f2ff;
+}
+
+.action-icon {
+  margin-right: 12px;
+  font-size: 1.2rem;
+}
+
+.action-text {
+  color: #2e4057;
+  font-weight: 500;
+}
+
+/* Fix margin-bottom typo in HealthTracker CSS */
+.health-tracker {
+  margin-bottom: 30px;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .wellness-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .sidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .wellness-tips-card, .quick-actions-card {
+    flex: 1;
+    min-width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .wellness-page {
+    padding: 16px;
+  }
+  
+  .wellness-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .sidebar {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 576px) {
+  .wellness-header {
+    margin-bottom: 24px;
+  }
+  
+  .wellness-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .wellness-header p {
+    font-size: 1rem;
+  }
+}

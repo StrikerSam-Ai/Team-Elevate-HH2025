@@ -1,0 +1,130 @@
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: var(--z-index-toast, 2000);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 350px;
+  width: 100%;
+}
+
+.toast {
+  position: relative;
+  padding: 12px 16px;
+  border-radius: 6px;
+  box-shadow: var(--shadow, 0 4px 6px rgba(0, 0, 0, 0.1));
+  color: var(--white, #ffffff);
+  font-size: 0.875rem;
+  margin-left: auto;
+  animation: toast-slide-in 0.2s ease-out forwards;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.toast-info {
+  background-color: var(--info-color, #17a2b8);
+}
+
+.toast-success {
+  background-color: var(--success-color, #28a745);
+}
+
+.toast-warning {
+  background-color: var(--warning-color, #ffc107);
+  color: var(--text-color, #333333);
+}
+
+.toast-error {
+  background-color: var(--error-color, #dc3545);
+}
+
+.toast-icon {
+  margin-right: 10px;
+  font-size: 1rem;
+}
+
+.toast-close-btn {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: currentColor;
+  padding: 0;
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.toast-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 0 0 4px 4px;
+  animation: toast-progress var(--toast-duration, 5s) linear forwards;
+}
+
+@keyframes toast-slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes toast-progress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0;
+  }
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 576px) {
+  .toast-container {
+    top: auto;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    max-width: none;
+  }
+  
+  .toast {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+/* High contrast mode adjustments */
+[data-contrast="high"] .toast {
+  border: 2px solid black;
+}
+
+[data-contrast="high"] .toast-info {
+  background-color: navy;
+  color: white;
+}
+
+[data-contrast="high"] .toast-success {
+  background-color: darkgreen;
+  color: white;
+}
+
+[data-contrast="high"] .toast-warning {
+  background-color: #fc0;
+  color: black;
+}
+
+[data-contrast="high"] .toast-error {
+  background-color: maroon;
+  color: white;
+}

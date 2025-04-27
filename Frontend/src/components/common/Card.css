@@ -1,0 +1,109 @@
+.card {
+  background-color: var(--white, #ffffff);
+  border-radius: var(--border-radius-lg, 0.5rem);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Card variants */
+.card-default {
+  box-shadow: var(--shadow, 0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+.card-outlined {
+  border: 1px solid var(--border-color, #dddddd);
+}
+
+.card-filled {
+  background-color: var(--background-color-light, #f8f9fa);
+}
+
+/* Card elevation levels */
+.elevation-low {
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.1));
+}
+
+.elevation-medium {
+  box-shadow: var(--shadow, 0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+.elevation-high {
+  box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+}
+
+/* Hoverable cards */
+.card-hoverable {
+  cursor: pointer;
+}
+
+.card-hoverable:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md, 0 6px 10px rgba(0, 0, 0, 0.1));
+}
+
+/* Card sections */
+.card-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-color, #dddddd);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header-content {
+  flex: 1;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--text-color, #333333);
+  font-weight: 600;
+}
+
+.card-subtitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: var(--text-color-light, #666666);
+  font-weight: normal;
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+.card-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border-color, #dddddd);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .card-header,
+  .card-content,
+  .card-footer {
+    padding: 1rem;
+  }
+}
+
+/* Dark mode adjustments */
+[data-contrast="dark"] .card {
+  background-color: var(--background-color, #1e1e1e);
+  border-color: var(--border-color, #555555);
+}
+
+[data-contrast="dark"] .card-header,
+[data-contrast="dark"] .card-footer {
+  border-color: var(--border-color, #555555);
+}
+
+[data-contrast="dark"] .card-title {
+  color: var(--text-color, #f0f0f0);
+}
+
+[data-contrast="dark"] .card-subtitle {
+  color: var(--text-color-light, #bbbbbb);
+}

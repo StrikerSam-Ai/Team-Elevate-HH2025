@@ -1,27 +1,34 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { Navbar, ErrorBoundary } from '../';
-import { LoadingSpinner } from '../';
+import Navbar from './Navbar';
+import Footer from './Footer';
+import { ErrorBoundary } from '../common';
 import { useAuth } from '../../contexts/AuthContext';
-import styles from './Layout.module.css';
+import './Layout.css';
 
-const Layout = () => {
-  const { loading } = useAuth();
+const Layout = ({ children }) => {
+  const { loading } = useAuth() || { loading: false };
 
   if (loading) {
-    return <LoadingSpinner />;
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Loading...</p>
+      </div>
+    );
   }
 
   return (
-    <div className={styles.appContainer}>
+    <div className="app-container">
       <Navbar />
-      <main className={styles.mainContent}>
-        <ErrorBoundary>
-          <div className={styles.container}>
-            <Outlet />
-          </div>
-        </ErrorBoundary>
+      <main className="main-content">
+        <div className="container">
+          <ErrorBoundary>
+            {children || <Outlet />}
+          </ErrorBoundary>
+        </div>
       </main>
+      <Footer />
     </div>
   );
 };

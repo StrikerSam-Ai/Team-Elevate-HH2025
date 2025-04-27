@@ -1,112 +1,89 @@
+// Blockchain configuration for the application
+
 export const BLOCKCHAIN_CONFIG = {
-  baseNetwork: {
-    mainnet: {
-      chainId: '0x2105',
-      chainName: 'Base',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18
-      },
-      rpcUrls: ['https://mainnet.base.org'],
-      blockExplorerUrls: ['https://basescan.org']
+  // Default network configuration
+  defaultNetwork: {
+    chainId: '0x89', // Polygon Mainnet
+    chainName: 'Polygon Mainnet',
+    rpcUrls: ['https://polygon-rpc.com'],
+    nativeCurrency: {
+      name: 'MATIC',
+      symbol: 'MATIC',
+      decimals: 18
     },
-    testnet: {
-      chainId: '0x14a33',
-      chainName: 'Base Goerli',
+    blockExplorerUrls: ['https://polygonscan.com']
+  },
+  
+  // Network options
+  networks: {
+    polygon: {
+      chainId: '0x89', // Polygon Mainnet
+      chainName: 'Polygon Mainnet',
+      rpcUrls: ['https://polygon-rpc.com'],
       nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
+        name: 'MATIC',
+        symbol: 'MATIC',
         decimals: 18
       },
-      rpcUrls: ['https://goerli.base.org'],
-      blockExplorerUrls: ['https://goerli.basescan.org']
+      blockExplorerUrls: ['https://polygonscan.com']
+    },
+    mumbai: {
+      chainId: '0x13881', // Polygon Mumbai Testnet
+      chainName: 'Polygon Mumbai Testnet',
+      rpcUrls: ['https://rpc-mumbai.maticvigil.com'],
+      nativeCurrency: {
+        name: 'MATIC',
+        symbol: 'MATIC',
+        decimals: 18
+      },
+      blockExplorerUrls: ['https://mumbai.polygonscan.com']
     }
   },
+  
+  // Smart contract configurations
   contracts: {
-    JournalRegistry: {
-      address: process.env.REACT_APP_JOURNAL_CONTRACT_ADDRESS,
+    // Example user profile contract
+    UserProfile: {
+      address: '0x0000000000000000000000000000000000000000', // Replace with actual contract address
       abi: [
+        // Example ABI (replace with actual ABI)
         {
-          inputs: [],
-          stateMutability: 'nonpayable',
-          type: 'constructor'
+          "inputs": [{"internalType": "address", "name": "user", "type": "address"}],
+          "name": "getUserProfile",
+          "outputs": [{"internalType": "string", "name": "profileData", "type": "string"}],
+          "stateMutability": "view",
+          "type": "function"
         },
         {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: 'address',
-              name: 'author',
-              type: 'address'
-            },
-            {
-              indexed: true,
-              internalType: 'string',
-              name: 'ipfsHash',
-              type: 'string'
-            },
-            {
-              indexed: false,
-              internalType: 'uint256',
-              name: 'timestamp',
-              type: 'uint256'
-            }
-          ],
-          name: 'JournalEntryCreated',
-          type: 'event'
+          "inputs": [{"internalType": "string", "name": "profileData", "type": "string"}],
+          "name": "updateUserProfile",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        }
+      ]
+    },
+    
+    // Digital Journal contract for storing journal entry hashes
+    DigitalJournal: {
+      address: '0x0000000000000000000000000000000000000000', // Replace with actual contract address
+      abi: [
+        // Example ABI (replace with actual ABI)
+        {
+          "inputs": [{"internalType": "string", "name": "entryHash", "type": "string"}],
+          "name": "storeJournalEntryHash",
+          "outputs": [{"internalType": "uint256", "name": "timestamp", "type": "uint256"}],
+          "stateMutability": "nonpayable",
+          "type": "function"
         },
         {
-          inputs: [
-            {
-              internalType: 'string',
-              name: '_ipfsHash',
-              type: 'string'
-            }
-          ],
-          name: 'createJournalEntry',
-          outputs: [],
-          stateMutability: 'nonpayable',
-          type: 'function'
-        },
-        {
-          inputs: [
-            {
-              internalType: 'address',
-              name: '_author',
-              type: 'address'
-            }
-          ],
-          name: 'getJournalEntries',
-          outputs: [
-            {
-              components: [
-                {
-                  internalType: 'string',
-                  name: 'ipfsHash',
-                  type: 'string'
-                },
-                {
-                  internalType: 'uint256',
-                  name: 'timestamp',
-                  type: 'uint256'
-                }
-              ],
-              internalType: 'struct JournalRegistry.Entry[]',
-              name: '',
-              type: 'tuple[]'
-            }
-          ],
-          stateMutability: 'view',
-          type: 'function'
+          "inputs": [{"internalType": "address", "name": "user", "type": "address"}],
+          "name": "getJournalEntries",
+          "outputs": [{"internalType": "string[]", "name": "entryHashes", "type": "string[]"}],
+          "stateMutability": "view",
+          "type": "function"
         }
       ]
     }
-  },
-  ipfs: {
-    host: 'ipfs.infura.io',
-    port: 5001,
-    protocol: 'https'
   }
 };

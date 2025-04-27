@@ -1,0 +1,756 @@
+/* Health Journal Styles */
+.health-journal-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: var(--font-family);
+}
+
+.page-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.page-header p {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Journal Controls */
+.journal-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-bg-light);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.control-section {
+  margin: 0.5rem;
+}
+
+.new-entry-button {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.new-entry-button:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.add-icon {
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.view-toggle {
+  display: flex;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.view-toggle-button {
+  background-color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.view-toggle-button.active {
+  background-color: var(--color-secondary);
+  color: white;
+  font-weight: 500;
+}
+
+.view-toggle-button:not(.active):hover {
+  background-color: var(--color-bg-hover);
+}
+
+.tag-filter {
+  display: flex;
+  align-items: center;
+}
+
+.filter-label {
+  margin-right: 0.75rem;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.tag-select {
+  padding: 0.6rem;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+  font-size: 0.9rem;
+  min-width: 160px;
+}
+
+/* Loading State */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  color: var(--color-text-secondary);
+}
+
+.loading-spinner {
+  border: 4px solid rgba(0,0,0,0.1);
+  border-left-color: var(--color-primary);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Journal Entry Cards */
+.journal-entries-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.journal-entry-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.journal-entry-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem 1.5rem;
+  background-color: var(--color-bg-light);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.entry-date {
+  color: var(--color-text-secondary);
+}
+
+.date-primary {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  color: var(--color-text);
+}
+
+.date-secondary {
+  font-size: 0.85rem;
+}
+
+.entry-action-button {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.entry-action-button:hover {
+  background-color: var(--color-bg-hover);
+  border-color: var(--color-border-dark);
+}
+
+.entry-content {
+  padding: 1.5rem;
+}
+
+.entry-title {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  color: var(--color-text);
+}
+
+.mood-indicator {
+  margin-right: 0.75rem;
+  font-size: 1.5rem;
+}
+
+.pain-indicator {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.indicator-label {
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.pain-level-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.pain-level-badge.level-1 {
+  background-color: #e6f7ed;
+  color: #2d9d60;
+}
+
+.pain-level-badge.level-2 {
+  background-color: #e6f4fa;
+  color: #2985c7;
+}
+
+.pain-level-badge.level-3 {
+  background-color: #fff6e6;
+  color: #e69c25;
+}
+
+.pain-level-badge.level-4 {
+  background-color: #fff0e9;
+  color: #d9541e;
+}
+
+.pain-level-badge.level-5 {
+  background-color: #ffe6e6;
+  color: #d92e2e;
+}
+
+.symptom-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.symptom-tag {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  background-color: #f2f6fa;
+  border: 1px solid #dde4ec;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+.entry-notes {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  color: var(--color-text);
+  white-space: pre-line;
+}
+
+.entry-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.detail-icon {
+  margin-right: 0.5rem;
+}
+
+.factor-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.factor-tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background-color: #eef0f6;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.factor-tag:hover {
+  background-color: var(--color-bg-hover);
+  color: var(--color-text);
+}
+
+/* Journal Entry Form */
+.journal-entry-form {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom: 2rem;
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-border-light);
+  padding-bottom: 1rem;
+}
+
+.form-header h2 {
+  color: var(--color-primary);
+  font-size: 1.5rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.action-button {
+  padding: 0.6rem 1.25rem;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  background-color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.action-button.primary {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+}
+
+.action-button:not(.primary):hover {
+  background-color: var(--color-bg-hover);
+}
+
+.action-button.primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.form-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+}
+
+.form-control {
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.mood-selector {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.mood-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--color-border-light);
+  cursor: pointer;
+  transition: all 0.2s;
+  flex: 1;
+}
+
+.mood-option.selected {
+  background-color: #f0f8ff;
+  border-color: var(--color-primary);
+}
+
+.mood-option:not(.selected):hover {
+  background-color: var(--color-bg-hover);
+}
+
+.mood-emoji {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.mood-label {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.pain-scale {
+  width: 100%;
+}
+
+.pain-slider {
+  width: 100%;
+  margin: 0.5rem 0;
+  height: 8px;
+  border-radius: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: linear-gradient(to right, #8bc34a, #4caf50, #ff9800, #e53935);
+  outline: none;
+}
+
+.pain-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: 2px solid var(--color-primary);
+}
+
+.pain-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: 2px solid var(--color-primary);
+}
+
+.pain-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  margin-top: 0.25rem;
+}
+
+.current-pain-level {
+  text-align: center;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+.sleep-input, .water-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sleep-value, .water-value {
+  width: 3rem;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.adjust-button {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background-color: white;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.adjust-button:hover {
+  background-color: var(--color-bg-hover);
+}
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.checkbox-label {
+  margin-left: 0.5rem;
+}
+
+.tag-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.tag-option {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid var(--color-border);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tag-option.selected {
+  background-color: var(--color-secondary-light);
+  border-color: var(--color-secondary);
+  color: var(--color-secondary-dark);
+}
+
+.tag-option:not(.selected):hover {
+  background-color: var(--color-bg-hover);
+}
+
+.notes-group {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.notes-textarea {
+  resize: none;
+  flex-grow: 1;
+  min-height: 120px;
+}
+
+/* No entries state */
+.no-entries-container {
+  text-align: center;
+  padding: 3rem 1rem;
+  background-color: var(--color-bg-light);
+  border-radius: 10px;
+  margin-bottom: 2rem;
+}
+
+.no-entries-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--color-text-secondary);
+}
+
+.no-entries-container h2 {
+  margin-bottom: 0.75rem;
+  color: var(--color-text);
+}
+
+.no-entries-container p {
+  margin-bottom: 1.5rem;
+  color: var(--color-text-secondary);
+}
+
+.create-button {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.create-button:hover {
+  background-color: var(--color-primary-dark);
+}
+
+/* Journal Insights */
+.journal-insights {
+  margin: 3rem 0;
+}
+
+.journal-insights h2 {
+  font-size: 1.75rem;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.journal-insights > p {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.insights-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.insight-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.insight-card h3 {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+}
+
+.insight-icon {
+  margin-right: 0.75rem;
+  font-size: 1.3rem;
+}
+
+.insight-card p {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  color: var(--color-text-secondary);
+}
+
+.insights-list {
+  padding-left: 1.5rem;
+}
+
+.insights-list li {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
+.summary-stats {
+  display: flex;
+  justify-content: space-around;
+  margin: 1.5rem 0;
+}
+
+.summary-stat {
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--color-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.view-reports-button {
+  display: block;
+  text-align: center;
+  margin-top: 1.25rem;
+  padding: 0.75rem;
+  color: var(--color-primary);
+  text-decoration: none;
+  border: 1px solid var(--color-primary);
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.view-reports-button:hover {
+  background-color: var(--color-bg-hover);
+}
+
+/* Print Section */
+.print-section {
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--color-bg-light);
+  border-radius: 10px;
+}
+
+.print-button {
+  display: inline-flex;
+  align-items: center;
+  background-color: white;
+  border: 1px solid var(--color-border-dark);
+  border-radius: 6px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.print-button:hover {
+  background-color: var(--color-bg-hover);
+}
+
+.print-icon {
+  margin-right: 0.75rem;
+  font-size: 1.2rem;
+}
+
+.print-info {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  margin-top: 0.75rem;
+}

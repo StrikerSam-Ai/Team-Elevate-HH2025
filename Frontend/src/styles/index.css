@@ -1,5 +1,8 @@
 /* Base styles */
+@import './variables.css';
 @import './base.css';
+@import './accessibility.css';
+@import './utility.css';
 
 /* Component-specific styles */
 @import './components/layout/index.css';

@@ -1,0 +1,49 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// Layout component
+import Layout from './components/Layout';
+
+// Page components
+import Dashboard from './pages/Dashboard';
+import Companions from './pages/Companions';
+import CompanionChat from './pages/CompanionChat';
+import Events from './pages/Events';
+import NotFound from './pages/NotFound';
+
+// Context Providers
+import { AccessibilityProvider } from './contexts/AccessibilityContext';
+
+// Global styles
+import './App.css';
+
+function App() {
+  return (
+    <AccessibilityProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            {/* Dashboard - Home page */}
+            <Route index element={<Dashboard />} />
+            
+            {/* Companions routes */}
+            <Route path="companions" element={<Companions />} />
+            <Route path="companions/:companionId/preview" element={<Companions />} />
+            
+            {/* Chat routes */}
+            <Route path="chat/:companionId" element={<CompanionChat />} />
+            
+            {/* Events routes */}
+            <Route path="events" element={<Events />} />
+            <Route path="events/:eventId" element={<Events />} />
+            
+            {/* 404 Not Found */}
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </Router>
+    </AccessibilityProvider>
+  );
+}
+
+export default App;

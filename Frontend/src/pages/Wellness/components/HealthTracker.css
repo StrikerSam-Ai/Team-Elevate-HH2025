@@ -1,0 +1,473 @@
+/* Health Tracker Styles */
+.health-tracker {
+  background-color: #f7f9fc;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.tracker-header {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e1e5eb;
+  padding-bottom: 16px;
+}
+
+.tracker-header h2 {
+  font-size: 1.75rem;
+  margin-bottom: 6px;
+  color: #2e3b52;
+}
+
+.tracker-header p {
+  color: #6c757d;
+  font-size: 1rem;
+}
+
+/* Navigation for metrics */
+.metrics-navigation {
+  display: flex;
+  overflow-x: auto;
+  gap: 12px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e1e5eb;
+}
+
+.metric-nav-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #e1e5eb;
+  border-radius: 8px;
+  padding: 12px 16px;
+  min-width: 80px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.metric-nav-button:hover {
+  background-color: #f0f4f8;
+}
+
+.metric-nav-button.active {
+  background-color: #eef5ff;
+  border-color: #4a6da7;
+  color: #4a6da7;
+}
+
+.metric-icon {
+  font-size: 1.5rem;
+  margin-bottom: 6px;
+}
+
+.metric-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Metric Details Panel */
+.metric-panel {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.metric-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e1e5eb;
+}
+
+.today-metric {
+  flex: 1;
+}
+
+.today-metric h3 {
+  font-size: 1.1rem;
+  color: #4f5b68;
+  margin-bottom: 8px;
+}
+
+.metric-value {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2e3b52;
+  margin-bottom: 10px;
+}
+
+.goal-progress {
+  margin-top: 12px;
+}
+
+.progress-bar {
+  height: 8px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #4a6da7;
+  border-radius: 4px;
+}
+
+.goal-text {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.metric-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.record-button,
+.edit-goal-button,
+.view-history-button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.record-button {
+  background-color: #4a6da7;
+  color: white;
+  border: none;
+}
+
+.record-button:hover {
+  background-color: #3c5a8a;
+}
+
+.edit-goal-button,
+.view-history-button {
+  background-color: white;
+  color: #4a6da7;
+  border: 1px solid #4a6da7;
+}
+
+.edit-goal-button:hover,
+.view-history-button:hover {
+  background-color: #f0f4f8;
+}
+
+/* Weekly chart styles */
+.weekly-chart,
+.weight-history,
+.bp-readings,
+.weekly-mood {
+  padding: 20px;
+  border-bottom: 1px solid #e1e5eb;
+}
+
+.weekly-chart h3,
+.weight-history h3,
+.bp-readings h3,
+.weekly-mood h3 {
+  font-size: 1.1rem;
+  color: #4f5b68;
+  margin-bottom: 16px;
+}
+
+.chart-container {
+  position: relative;
+  height: 240px;
+  margin-top: 20px;
+}
+
+.chart-bars {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 200px;
+}
+
+.chart-bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.chart-label {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.chart-bar-wrapper {
+  width: 30px;
+  height: 160px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.chart-bar {
+  width: 100%;
+  background-color: #4a6da7;
+  border-radius: 4px 4px 0 0;
+  transition: height 0.3s ease;
+}
+
+.chart-value {
+  font-size: 0.75rem;
+  color: #6c757d;
+  margin-top: 6px;
+}
+
+.goal-line {
+  position: absolute;
+  width: 100%;
+  bottom: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.goal-line .line {
+  flex-grow: 1;
+  height: 2px;
+  background-color: #e74c3c;
+  border-radius: 1px;
+}
+
+.goal-line .label {
+  background-color: #e74c3c;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  margin-left: 10px;
+}
+
+/* Health tips section */
+.health-tips {
+  padding: 20px;
+}
+
+.health-tips h3 {
+  font-size: 1.1rem;
+  color: #4f5b68;
+  margin-bottom: 16px;
+}
+
+.tip-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.tip-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background-color: #f7f9fc;
+}
+
+.tip-icon {
+  margin-right: 10px;
+  font-size: 1.1rem;
+}
+
+.tip-text {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #495057;
+}
+
+/* Blood pressure specific styles */
+.bp-category {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin: 8px 0;
+}
+
+.bp-category .normal {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.bp-category .elevated {
+  background-color: #fff8e1;
+  color: #ff8f00;
+}
+
+.bp-category .stage-1 {
+  background-color: #ffebee;
+  color: #e53935;
+}
+
+.bp-category .stage-2 {
+  background-color: #ffcdd2;
+  color: #c62828;
+}
+
+.last-measured {
+  font-size: 0.8rem;
+  color: #6c757d;
+  margin-top: 6px;
+}
+
+.bp-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.bp-table th {
+  text-align: left;
+  padding: 10px;
+  background-color: #f7f9fc;
+  color: #4f5b68;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.bp-table td {
+  padding: 10px;
+  border-bottom: 1px solid #e1e5eb;
+  font-size: 0.9rem;
+}
+
+.bp-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Weight history chart */
+.line-chart {
+  position: relative;
+  height: 200px;
+  margin-top: 20px;
+}
+
+.chart-placeholder {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  border-bottom: 1px solid #e1e5eb;
+}
+
+.chart-line {
+  position: relative;
+  height: 100%;
+}
+
+.chart-point {
+  position: absolute;
+  transform: translate(-50%, 50%);
+}
+
+.chart-point .point {
+  width: 8px;
+  height: 8px;
+  background-color: #4a6da7;
+  border-radius: 50%;
+  margin-bottom: 4px;
+}
+
+.chart-point .point-value {
+  font-size: 0.75rem;
+  color: #6c757d;
+  transform: translateX(-50%);
+}
+
+/* Mood tracker specific styles */
+.mood-display {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.mood-emoji {
+  font-size: 3rem;
+}
+
+.mood-description {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #4f5b68;
+  margin-top: 8px;
+}
+
+.mood-week {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.day-mood {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mood-day {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-bottom: 8px;
+}
+
+.mood-indicator {
+  font-size: 1.8rem;
+}
+
+.no-mood {
+  color: #ced4da;
+  font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .metric-summary {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .metric-actions {
+    margin-top: 16px;
+    flex-direction: row;
+    width: 100%;
+  }
+  
+  .record-button,
+  .edit-goal-button,
+  .view-history-button {
+    flex: 1;
+  }
+  
+  .chart-bar-wrapper {
+    width: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .metrics-navigation {
+    justify-content: flex-start;
+    padding-bottom: 8px;
+  }
+  
+  .metric-nav-button {
+    min-width: 70px;
+    padding: 8px 12px;
+  }
+  
+  .chart-bar-wrapper {
+    width: 16px;
+  }
+  
+  .chart-value {
+    transform: rotate(-45deg);
+    font-size: 0.7rem;
+  }
+}

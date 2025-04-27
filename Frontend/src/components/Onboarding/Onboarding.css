@@ -1,0 +1,234 @@
+.onboarding-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.onboarding-container {
+  background-color: white;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 800px;
+  padding: 40px;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text-light);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.close-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.onboarding-content {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
+.onboarding-image {
+  margin-bottom: 20px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.onboarding-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.onboarding-text h2 {
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.onboarding-text p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--text-dark);
+  margin-bottom: 0;
+}
+
+.onboarding-progress {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.progress-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #ddd;
+  margin: 0 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.progress-dot.active {
+  background-color: var(--primary-color);
+  transform: scale(1.2);
+}
+
+.onboarding-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn {
+  font-size: 1.1rem;
+  padding: 12px 30px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+}
+
+.btn-secondary {
+  background-color: #f2f2f2;
+  color: var(--text-dark);
+}
+
+.btn-secondary:hover {
+  background-color: #e5e5e5;
+}
+
+.restart-button {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  margin-top: 20px;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 1rem;
+  display: block;
+  margin: 20px auto 0;
+}
+
+/* High contrast mode */
+body.high-contrast .onboarding-container {
+  background-color: black;
+  border: 3px solid white;
+}
+
+body.high-contrast .onboarding-text h2 {
+  color: yellow;
+}
+
+body.high-contrast .onboarding-text p {
+  color: white;
+}
+
+body.high-contrast .btn-primary {
+  background-color: yellow;
+  color: black;
+  border: 2px solid white;
+}
+
+body.high-contrast .btn-secondary {
+  background-color: #333;
+  color: white;
+  border: 2px solid white;
+}
+
+body.high-contrast .progress-dot {
+  background-color: #666;
+  border: 1px solid white;
+}
+
+body.high-contrast .progress-dot.active {
+  background-color: yellow;
+}
+
+body.high-contrast .close-button {
+  color: white;
+}
+
+body.high-contrast .restart-button {
+  color: yellow;
+}
+
+/* Larger text sizes for senior accessibility */
+body.large-text .onboarding-text h2 {
+  font-size: 2.3rem;
+}
+
+body.large-text .onboarding-text p {
+  font-size: 1.4rem;
+}
+
+body.large-text .btn {
+  font-size: 1.3rem;
+}
+
+/* Media queries for responsive design */
+@media (min-width: 768px) {
+  .onboarding-content {
+    flex-direction: row;
+    gap: 40px;
+  }
+  
+  .onboarding-image {
+    flex: 1;
+    margin-bottom: 0;
+  }
+  
+  .onboarding-text {
+    flex: 1;
+  }
+}
+
+@media (max-width: 767px) {
+  .onboarding-container {
+    padding: 25px;
+  }
+  
+  .onboarding-text h2 {
+    font-size: 1.8rem;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+  }
+}

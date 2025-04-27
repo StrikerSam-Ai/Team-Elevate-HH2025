@@ -47,3 +47,28 @@ export const isForbiddenError = (error) => {
 export const isNotFoundError = (error) => {
   return error.response?.status === 404;
 };
+
+// New utility function to help handle errors in UI components
+export const getErrorMessage = (error) => {
+  if (error instanceof APIError) {
+    return error.message;
+  }
+  
+  if (isNetworkError(error)) {
+    return 'Unable to connect to server. Please check your internet connection.';
+  }
+  
+  if (isAuthenticationError(error)) {
+    return 'Authentication required. Please log in to continue.';
+  }
+  
+  if (isForbiddenError(error)) {
+    return 'You do not have permission to perform this action.';
+  }
+  
+  if (isNotFoundError(error)) {
+    return 'The requested resource was not found.';
+  }
+  
+  return error?.message || 'An unexpected error occurred.';
+};

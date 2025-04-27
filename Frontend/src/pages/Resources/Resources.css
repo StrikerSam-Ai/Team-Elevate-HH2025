@@ -1,0 +1,308 @@
+.resources-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.resources-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.resources-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color, #4a6da7);
+}
+
+.resources-header p {
+  font-size: 1.2rem;
+  color: var(--text-secondary, #555);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.search-section {
+  margin-bottom: 2.5rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.categories-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.category-button {
+  background: transparent;
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 25px;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  color: var(--text-color, #333);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.category-button.active {
+  background-color: var(--primary-color, #4a6da7);
+  color: white;
+  border-color: var(--primary-color, #4a6da7);
+}
+
+.category-button:hover:not(.active) {
+  background-color: var(--hover-bg, #f5f5f5);
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.resource-card {
+  display: flex;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text-color, #333);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  padding: 1.25rem;
+}
+
+.resource-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.resource-icon {
+  font-size: 2rem;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.resource-content {
+  flex: 1;
+}
+
+.resource-content h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  color: var(--primary-color, #4a6da7);
+}
+
+.resource-content p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-secondary, #666);
+  line-height: 1.5;
+}
+
+.resource-arrow {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  color: var(--primary-color, #4a6da7);
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.resource-card:hover .resource-arrow {
+  opacity: 1;
+}
+
+.no-results {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.no-results-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.no-results h2 {
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.no-results p {
+  margin-bottom: 1.5rem;
+  color: var(--text-secondary, #666);
+}
+
+.reset-button {
+  background-color: var(--primary-color, #4a6da7);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.reset-button:hover {
+  background-color: var(--primary-dark, #395582);
+}
+
+.resources-contact {
+  margin-top: 4rem;
+  background-color: var(--bg-light, #f8f9fa);
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.resources-contact h2 {
+  margin-bottom: 0.75rem;
+  color: var(--primary-color, #4a6da7);
+}
+
+.resources-contact p {
+  margin-bottom: 1.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--text-secondary, #555);
+}
+
+.contact-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.contact-button {
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.contact-button.primary {
+  background-color: var(--primary-color, #4a6da7);
+  color: white;
+}
+
+.contact-button.primary:hover {
+  background-color: var(--primary-dark, #395582);
+}
+
+.contact-button.secondary {
+  background-color: transparent;
+  color: var(--primary-color, #4a6da7);
+  border: 1px solid var(--primary-color, #4a6da7);
+}
+
+.contact-button.secondary:hover {
+  background-color: var(--primary-light, #e8f0ff);
+}
+
+/* Loading state styles */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(74, 109, 167, 0.2);
+  border-radius: 50%;
+  border-top-color: var(--primary-color, #4a6da7);
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error state styles */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.error-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.retry-button {
+  background-color: var(--primary-color, #4a6da7);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 1rem;
+}
+
+.retry-button:hover {
+  background-color: var(--primary-dark, #395582);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .resources-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+  
+  .resources-header h1 {
+    font-size: 2rem;
+  }
+  
+  .categories-filter {
+    gap: 0.5rem;
+  }
+  
+  .category-button {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .resources-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .resources-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .contact-buttons {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}

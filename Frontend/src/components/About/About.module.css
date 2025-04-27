@@ -1,0 +1,322 @@
+/* Mission Section Styles */
+.missionSection {
+  padding: var(--spacing-xxl) 0;
+  background-color: var(--background-color);
+}
+
+.missionContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.missionText {
+  font-size: var(--font-size-lg);
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  color: var(--text-color);
+}
+
+.valuesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
+}
+
+.valueCard {
+  background-color: var(--white);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base);
+}
+
+.valueCard:hover {
+  transform: translateY(-5px);
+}
+
+.valueIcon {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-md);
+  display: block;
+}
+
+/* Team Section Styles */
+.teamSection {
+  padding: var(--spacing-xxl) 0;
+}
+
+.teamIntro {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto var(--spacing-xl);
+  color: var(--text-color);
+}
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.teamMemberCard {
+  background-color: var(--white);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.memberImage {
+  width: 100%;
+  height: 250px;
+  background-color: var(--background-color);
+}
+
+.memberInfo {
+  padding: var(--spacing-lg);
+}
+
+.memberRole {
+  color: var(--primary-color);
+  font-weight: 500;
+  display: block;
+  margin: var(--spacing-xs) 0;
+}
+
+.memberBio {
+  color: var(--text-color);
+  line-height: 1.6;
+  margin-top: var(--spacing-sm);
+}
+
+.memberSocial {
+  padding: var(--spacing-md);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.socialLink {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+}
+
+.socialLink:hover {
+  text-decoration: underline;
+}
+
+/* Impact Section Styles */
+.impactSection {
+  padding: var(--spacing-xxl) 0;
+  background-color: var(--background-color-light);
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+  max-width: 1200px;
+  margin: 0 auto var(--spacing-xxl);
+  padding: 0 var(--spacing-lg);
+}
+
+.statCard {
+  background-color: var(--white);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.statNumber {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  display: block;
+  margin-bottom: var(--spacing-xs);
+}
+
+.statLabel {
+  color: var(--text-color);
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-sm);
+}
+
+.statDescription {
+  color: var(--text-color-light);
+}
+
+.testimonialSection {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.testimonialGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+
+.testimonialCard {
+  background-color: var(--white);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.testimonialQuote {
+  font-style: italic;
+  color: var(--text-color);
+  margin-bottom: var(--spacing-md);
+  line-height: 1.6;
+}
+
+.testimonialAuthor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.authorName {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.authorLocation {
+  color: var(--text-color-light);
+  font-size: var(--font-size-sm);
+}
+
+.impactCTA {
+  text-align: center;
+  margin-top: var(--spacing-xxl);
+}
+
+.ctaButton {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: var(--spacing-md) var(--spacing-xl);
+  border: none;
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-lg);
+  cursor: pointer;
+  transition: background-color var(--transition-base);
+}
+
+.ctaButton:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 90%, black);
+}
+
+/* Contact Section Styles */
+.contactSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-xxl) var(--spacing-lg);
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.contactText {
+  color: var(--text-color);
+  line-height: 1.6;
+  font-size: var(--font-size-lg);
+}
+
+.contactMethods {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.contactMethod {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+}
+
+.methodIcon {
+  font-size: 1.5rem;
+}
+
+.contactForm {
+  background-color: var(--white);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.formGroup {
+  margin-bottom: var(--spacing-md);
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.formInput,
+.formTextarea {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-base);
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.submitButton {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: var(--spacing-sm) var(--spacing-xl);
+  border: none;
+  border-radius: var(--border-radius-full);
+  cursor: pointer;
+  transition: background-color var(--transition-base);
+  width: 100%;
+}
+
+.submitButton:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 90%, black);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .contactSection {
+    grid-template-columns: 1fr;
+  }
+
+  .valuesGrid,
+  .teamGrid,
+  .statsGrid,
+  .testimonialGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .contactMethod {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}

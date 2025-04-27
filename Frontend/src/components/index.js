@@ -1,23 +1,22 @@
-export { default as Avatar } from './Avatar';
-export { default as Badge } from './Badge';
-export { default as Button } from './Button';
-export { default as Card } from './Card';
-export { default as Chatbot } from './Chatbot';
-export { default as ErrorBoundary } from './ErrorBoundary';
-export { default as Form } from './Form';
-export { default as FormControl } from './FormControl';
-export { default as IconButton } from './IconButton';
-export { default as Input } from './Input';
-export { default as Journal } from './Journal';
-export { default as JournalErrorBoundary } from './JournalErrorBoundary';
-export { default as Layout } from './Layout';
-export { default as LoadingSpinner } from './LoadingSpinner';
-export { default as Modal } from './Modal';
-export { default as Navbar } from './Navbar';
-export { default as ProtectedRoute } from './ProtectedRoute';
-export { default as Select } from './Select';
-export { default as Skeleton } from './Skeleton';
-export { default as Tabs } from './Tabs';
-export { default as TextArea } from './TextArea';
-export { default as TextField } from './TextField';
-export { default as WalletGuide } from './WalletGuide';
+// Layout Components
+export * from './Layout';
+
+// Common Components
+export * from './common';
+
+// UI Components
+export * from './ui';
+
+// Form Components
+export * from './forms';
+
+// Feature Components
+export * from './features';
+
+// Page-specific Components
+export * from './Home';
+export * from './Dashboard';
+export * from './Community';
+export * from './Profile';
+export * from './Journal';
+export * from './Events';

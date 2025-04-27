@@ -25,13 +25,18 @@ from companions.views import ReactAppView, login_view, login_user, register_user
 urlpatterns = [
     path('admin/', admin.site.urls),
     
-    # Auth views
-    path('login/', login_view, name='login_page'),
-    path('register/', ReactAppView.as_view(), name='register'),
-
-    # Handle all API routes
+    # API routes
     path('api/', include('companions.urls')),
     
-    # Handle non-API routes with React app
-    re_path(r'^(?!api/)(?!admin/)(?!login/)(?!register/).*$', ReactAppView.as_view(), name='react-app'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # Let React handle all other routes
+    re_path(r'.*', ReactAppView.as_view(), name='react-app'),
+]
+
+# Add Django Debug Toolbar URLs in development
+if settings.DEBUG:
+    urlpatterns = [path('__debug__/', include('debug_toolbar.urls'))] + urlpatterns
+
+# Add static/media serving in development
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

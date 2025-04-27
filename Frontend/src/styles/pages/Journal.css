@@ -1,0 +1,257 @@
+.journal-page {
+  padding: 20px;
+}
+
+.journal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.journal-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.journal-create-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.journal-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.journal-search {
+  flex: 1;
+  min-width: 200px;
+}
+
+.journal-filter-group {
+  display: flex;
+  gap: 10px;
+}
+
+.journal-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.journal-sidebar {
+  flex: 1;
+  min-width: 250px;
+  max-width: 300px;
+}
+
+.journal-main {
+  flex: 3;
+  min-width: 320px;
+}
+
+/* Journal Entry Card */
+.journal-entry {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.journal-entry:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.journal-entry-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.journal-entry-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #333;
+}
+
+.journal-entry-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.journal-entry-date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.journal-entry-content {
+  padding: 20px;
+}
+
+.journal-entry-text {
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.journal-entry-footer {
+  padding: 12px 20px;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.journal-entry-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.journal-entry-tag {
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  background-color: #e9ecef;
+  color: #495057;
+  border-radius: 4px;
+}
+
+.journal-entry-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* Journal Calendar */
+.journal-calendar {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.journal-calendar-header {
+  padding: 16px 20px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #f1f1f1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.journal-calendar-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.journal-calendar-content {
+  padding: 16px;
+}
+
+/* Journal Statistics */
+.journal-stats {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.journal-stats-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.journal-stats-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.journal-stats-content {
+  padding: 20px;
+}
+
+.journal-stats-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.journal-stats-label {
+  color: #6c757d;
+}
+
+.journal-stats-value {
+  font-weight: 600;
+}
+
+/* Journal Form */
+.journal-form {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+  padding: 24px;
+}
+
+.journal-form-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 24px 0;
+}
+
+.journal-form-group {
+  margin-bottom: 20px;
+}
+
+.journal-form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.journal-form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+@media (max-width: 768px) {
+  .journal-content {
+    flex-direction: column;
+  }
+  
+  .journal-sidebar {
+    max-width: none;
+    order: 2;
+  }
+  
+  .journal-main {
+    order: 1;
+  }
+  
+  .journal-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .journal-create-button {
+    width: 100%;
+  }
+}

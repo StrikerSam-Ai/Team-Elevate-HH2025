@@ -1,42 +1,36 @@
-import { ethers } from 'ethers';
+import { BrowserProvider } from 'ethers';
 
-class BlockchainService {
-  constructor() {
-    this.provider = null;
-    this.signer = null;
-  }
-
-  async initialize() {
-    if (typeof window.ethereum === 'undefined') {
-      throw new Error('Please install MetaMask to use this feature');
-    }
-
-    // Request account access
-    await window.ethereum.request({ method: 'eth_requestAccounts' });
-
-    // Create Web3Provider and get signer
-    this.provider = new ethers.BrowserProvider(window.ethereum);
-    this.signer = await this.provider.getSigner();
-
-    return this.signer;
-  }
-
-  async verifyEntry(ipfsHash) {
+const requestAccount = async () => {
+  if (window.ethereum) {
     try {
-      // Here we would interact with our smart contract
-      // This is a placeholder for the actual verification logic
-      const isVerified = true; // Replace with actual contract call
-      return isVerified;
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts',
+      });
+      const provider = new BrowserProvider(window.ethereum);
+      return { accounts, provider };
     } catch (error) {
-      console.error('Error verifying entry:', error);
+      console.error('Error connecting to MetaMask:', error);
       throw error;
     }
   }
+  throw new Error('MetaMask not installed');
+};
 
-  async disconnect() {
-    this.provider = null;
-    this.signer = null;
+// Create the blockchainService object that's being imported elsewhere
+const blockchainService = {
+  requestAccount,
+  verifyJournalEntry: async (hash) => {
+    // Placeholder implementation
+    console.log(`Verifying journal entry with hash: ${hash}`);
+    return { verified: true, timestamp: new Date().toISOString() };
+  },
+  storeHash: async (content) => {
+    // Placeholder implementation
+    const hash = `0x${Math.random().toString(16).substr(2, 40)}`;
+    console.log(`Storing hash for content: ${content.substring(0, 20)}...`);
+    return hash;
   }
-}
+};
 
-export const blockchainService = new BlockchainService();
+export { requestAccount, blockchainService };
+export default blockchainService;

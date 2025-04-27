@@ -1,29 +1,110 @@
-.profile-page {
-  padding: 2rem;
-  max-width: 800px;
-  margin: 0 auto;
+.profile-section {
+  background-color: var(--white);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow);
+  margin-bottom: var(--spacing-lg);
 }
 
-.profile-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-top: 2rem;
+.profile-header {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
 }
 
-.profile-content h2 {
-  margin-bottom: 1.5rem;
-  color: #333;
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: var(--secondary-color);
+  overflow: hidden;
 }
 
+.profile-info {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.profile-info h2 {
+  color: var(--text-color);
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-xs);
+}
+
+.edit-button {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-base);
+}
+
+.edit-button:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 90%, black);
+}
+
+.profile-details {
+  display: grid;
+  gap: var(--spacing-md);
+}
+
+.preferences-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.accounts-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* Form styles */
+.form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.form-label {
+  display: block;
+  color: var(--text-color);
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-base);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(31, 187, 39, 0.1);
+}
+
+/* Responsive styles */
 @media (max-width: 768px) {
-  .profile-page {
-    padding: 1rem;
+  .profile-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
-  
-  .profile-content {
-    padding: 1rem;
-    margin-top: 1rem;
+
+  .profile-info {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+
+  .preferences-grid {
+    grid-template-columns: 1fr;
   }
 }

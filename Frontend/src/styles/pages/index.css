@@ -1,0 +1,52 @@
+/* Import page-specific styles */
+@import './Home.css';
+@import './Login.css';
+@import './Register.css';
+@import './Dashboard.css';
+@import './Profile.css';
+@import './Community.css';
+@import './Journal.css';
+@import './Events.css';
+
+/* Shared page styles */
+.page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+}
+
+.page-header {
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+}
+
+.page-title {
+  font-size: var(--font-size-xl);
+  color: var(--text-color);
+  margin-bottom: var(--spacing-sm);
+}
+
+.page-subtitle {
+  font-size: var(--font-size-base);
+  color: var(--text-color-light);
+}
+
+.page-content {
+  margin-top: var(--spacing-lg);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .page {
+    padding: var(--spacing-md);
+  }
+  
+  .page-header {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .page-title {
+    font-size: var(--font-size-lg);
+  }
+}

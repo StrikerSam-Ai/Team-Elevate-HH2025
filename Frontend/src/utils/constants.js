@@ -1,11 +1,12 @@
-// API Configuration
-export const API_CONFIG = {
-  BASE_URL: process.env.REACT_APP_API_URL || 'http://localhost:8000',
-  TIMEOUT: 30000,
-  IPFS_URL: process.env.REACT_APP_IPFS_URL || 'https://ipfs.infura.io:5001'
-};
+// Application-wide constants
+export const APP_NAME = 'ElderHub';
+export const APP_VERSION = '1.0.0';
 
-// Local Storage Keys
+// Authentication constants
+export const AUTH_TOKEN_KEY = 'auth_token';
+export const AUTH_USER_KEY = 'auth_user';
+
+// Storage keys
 export const STORAGE_KEYS = {
   AUTH_TOKEN: 'auth_token',
   USER_PREFERENCES: 'user_preferences',
@@ -13,61 +14,15 @@ export const STORAGE_KEYS = {
   LANGUAGE: 'language'
 };
 
-// Event Types
-export const EVENT_TYPES = {
-  IN_PERSON: 'in_person',
-  VIRTUAL: 'virtual',
-  HYBRID: 'hybrid'
-};
+// API related constants
+export const API_TIMEOUT = 30000;
+export const API_VERSION = 'v1';
 
-// Community Categories
-export const COMMUNITY_CATEGORIES = {
-  HEALTH: 'health',
-  HOBBY: 'hobby',
-  SOCIAL: 'social',
-  EDUCATION: 'education',
-  SUPPORT: 'support'
-};
-
-// User Roles
-export const USER_ROLES = {
-  USER: 'user',
-  MODERATOR: 'moderator',
-  ADMIN: 'admin'
-};
-
-// Theme Configuration
-export const THEMES = {
-  LIGHT: 'light',
-  DARK: 'dark',
-  SYSTEM: 'system'
-};
+// UI Constants
+export const TOAST_DURATION = 5000;
+export const ANIMATION_DURATION = 300;
+export const DEBOUNCE_DELAY = 300;
 
 // Pagination
-export const PAGINATION = {
-  DEFAULT_PAGE_SIZE: 10,
-  MAX_PAGE_SIZE: 50
-};
-
-// File Upload
-export const UPLOAD_CONFIG = {
-  MAX_FILE_SIZE: 5 * 1024 * 1024, // 5MB
-  ALLOWED_IMAGE_TYPES: ['image/jpeg', 'image/png', 'image/gif'],
-  ALLOWED_VIDEO_TYPES: ['video/mp4', 'video/quicktime'],
-  MAX_FILES: 5
-};
-
-// Notification Types
-export const NOTIFICATION_TYPES = {
-  SUCCESS: 'success',
-  ERROR: 'error',
-  WARNING: 'warning',
-  INFO: 'info'
-};
-
-// Animation Durations
-export const ANIMATION = {
-  FAST: 200,
-  MEDIUM: 300,
-  SLOW: 500
-};
+export const ITEMS_PER_PAGE = 10;
+export const MAX_PAGES_SHOWN = 5;

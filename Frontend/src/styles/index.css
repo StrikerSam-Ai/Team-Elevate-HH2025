@@ -2,8 +2,11 @@
 @import './base.css';
 
 /* Component-specific styles */
-@import './components/auth.css';
-@import './components/Home.css';
-@import './components/Dashboard.css';
-@import './components/Community.css';
-@import './components/Profile.css';
+@import './components/layout/index.css';
+@import './components/common/index.css';
+@import './components/ui/index.css';
+@import './components/forms/index.css';
+@import './components/features/index.css';
+
+/* Page-specific styles */
+@import './pages/index.css';

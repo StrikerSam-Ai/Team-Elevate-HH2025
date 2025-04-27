@@ -1,12 +1,12 @@
 import { PATHS } from '../config/paths';
-import { API_ENDPOINTS } from '../config/api';
+import { API_CONFIG } from '../config/api';
 
 export const validateRoutes = () => {
   const errors = [];
   
   // Check if all PATH values are strings or functions
   Object.entries(PATHS).forEach(([key, value]) => {
-    if (typeof value !== 'string' && typeof value !== 'function') {
+    if (key !== 'API' && typeof value !== 'string' && typeof value !== 'function') {
       errors.push(`Invalid path for ${key}: ${value}`);
     }
   });
@@ -15,7 +15,7 @@ export const validateRoutes = () => {
   const validateEndpoint = (endpoint) => {
     if (typeof endpoint === 'string') {
       try {
-        new URL(endpoint);
+        new URL(endpoint, API_CONFIG.BASE_URL);
       } catch {
         return false;
       }
@@ -23,7 +23,7 @@ export const validateRoutes = () => {
     }
     if (typeof endpoint === 'function') {
       try {
-        new URL(endpoint(1));
+        new URL(endpoint(1), API_CONFIG.BASE_URL);
         return true;
       } catch {
         return false;
@@ -32,7 +32,7 @@ export const validateRoutes = () => {
     return false;
   };
 
-  Object.entries(API_ENDPOINTS).forEach(([section, endpoints]) => {
+  Object.entries(API_CONFIG.ENDPOINTS).forEach(([section, endpoints]) => {
     Object.entries(endpoints).forEach(([key, endpoint]) => {
       if (!validateEndpoint(endpoint)) {
         errors.push(`Invalid API endpoint for ${section}.${key}: ${endpoint}`);

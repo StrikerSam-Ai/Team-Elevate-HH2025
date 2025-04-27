@@ -10,10 +10,19 @@ export const Web3Provider = ({ children }) => {
   const [isCorrectNetwork, setIsCorrectNetwork] = useState(false);
   const { addToast } = useToast();
 
+  // Define addWalletListeners outside useEffect so it can be referenced in the dependency array
+  const addWalletListeners = () => {
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', handleAccountsChanged);
+      window.ethereum.on('chainChanged', handleChainChanged);
+      window.ethereum.on('disconnect', handleDisconnect);
+    }
+  };
+
   useEffect(() => {
     checkConnection();
     addWalletListeners();
-  }, []);
+  }, [addWalletListeners]); // Added addWalletListeners to the dependency array
 
   const checkConnection = async () => {
     try {
@@ -23,19 +32,17 @@ export const Web3Provider = ({ children }) => {
         const address = await signer.getAddress();
         setAddress(address);
         setIsConnected(true);
+
+        // Actually use setIsCorrectNetwork by checking chain ID
+        const network = await blockchainService.provider.getNetwork();
+        // Assuming the correct networkId is what you need - adjust as needed
+        setIsCorrectNetwork(network.chainId === blockchainService.targetChainId);
       }
     } catch (error) {
       console.error('Connection check failed:', error);
       setIsConnected(false);
       setAddress(null);
-    }
-  };
-
-  const addWalletListeners = () => {
-    if (window.ethereum) {
-      window.ethereum.on('accountsChanged', handleAccountsChanged);
-      window.ethereum.on('chainChanged', handleChainChanged);
-      window.ethereum.on('disconnect', handleDisconnect);
+      setIsCorrectNetwork(false);
     }
   };
 
@@ -68,12 +75,18 @@ export const Web3Provider = ({ children }) => {
       const address = await signer.getAddress();
       setAddress(address);
       setIsConnected(true);
+      
+      // Check if we're on the correct network
+      const network = await blockchainService.provider.getNetwork();
+      setIsCorrectNetwork(network.chainId === blockchainService.targetChainId);
+      
       addToast('Wallet connected successfully', 'success');
     } catch (error) {
       console.error('Connection failed:', error);
       addToast('Failed to connect wallet', 'error');
       setIsConnected(false);
       setAddress(null);
+      setIsCorrectNetwork(false);
     }
   };
 

@@ -1,0 +1,38 @@
+/* Common component styles */
+@import './button.css';
+@import './Card.css';
+@import './LoadingSpinner.css';
+@import './ErrorBoundary.css';
+
+/* Shared utility classes */
+.loading-spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid var(--secondary-color);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-container {
+  text-align: center;
+  padding: 2rem;
+  color: var(--error-color);
+}
+
+.card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}

@@ -24,9 +24,18 @@ export const useAuth = () => {
     verifyAuth();
   }, []);
 
-  const login = async (email, password) => {
+  // Updated login function to handle both object and separate parameters
+  const login = async (emailOrCredentials, password) => {
     try {
-      const { data } = await authAPI.login(email, password);
+      // If emailOrCredentials is an object (from form submission)
+      let credentials = emailOrCredentials;
+      
+      // If called with separate parameters
+      if (typeof emailOrCredentials === 'string') {
+        credentials = { email: emailOrCredentials, password };
+      }
+      
+      const data = await authAPI.login(credentials);
       setUser(data.user);
       return data;
     } catch (error) {
@@ -36,7 +45,7 @@ export const useAuth = () => {
 
   const register = async (userData) => {
     try {
-      const { data } = await authAPI.register(userData);
+      const data = await authAPI.register(userData);
       setUser(data.user);
       return data;
     } catch (error) {

@@ -1,0 +1,47 @@
+/* Feature component styles */
+@import './Chatbot.css';
+@import './journal.css';
+@import './profile.css';
+@import './EntryMemo.css';
+@import './MediaPreview.css';
+@import './WalletGuide.css';
+
+/* Shared feature styles */
+.feature-card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem;
+}
+
+.feature-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.feature-title {
+  font-size: 1.25rem;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.feature-content {
+  color: var(--text-color-light);
+  line-height: 1.5;
+}
+
+.media-preview {
+  margin: 1rem 0;
+  max-width: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.media-preview img,
+.media-preview video {
+  max-width: 100%;
+  height: auto;
+}

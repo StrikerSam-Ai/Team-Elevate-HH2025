@@ -2,48 +2,42 @@ import { useState, useCallback } from 'react';
 import { useToast } from '../contexts/ToastContext';
 
 export const useApi = (apiFunction, options = {}) => {
-  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { addToast } = useToast();
+  const { 
+    showSuccessToast = false, 
+    showErrorToast = true,
+    successMessage,
+    transformResponse
+  } = options;
 
-  const execute = useCallback(async (...params) => {
+  const execute = useCallback(async (...args) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await apiFunction(...params);
-      setData(response);
-
-      if (options.successMessage) {
-        addToast(options.successMessage, 'success');
+      const response = await apiFunction(...args);
+      const data = transformResponse ? transformResponse(response) : response.data;
+      
+      if (showSuccessToast) {
+        addToast(successMessage || 'Operation successful', 'success');
       }
       
-      return response;
+      return data;
     } catch (err) {
-      const errorMessage = err.response?.data?.message || err.message || 'An error occurred';
-      setError(errorMessage);
-      
-      if (options.showErrorToast !== false) {
-        addToast(errorMessage, 'error');
+      setError(err);
+      if (showErrorToast) {
+        addToast(err.message || 'An error occurred', 'error');
       }
-      
       throw err;
     } finally {
       setLoading(false);
     }
-  }, [apiFunction, options.successMessage, options.showErrorToast, addToast]);
-
-  const reset = useCallback(() => {
-    setData(null);
-    setError(null);
-    setLoading(false);
-  }, []);
+  }, [apiFunction, showSuccessToast, showErrorToast, successMessage, transformResponse, addToast]);
 
   return {
-    data,
     loading,
     error,
-    execute,
-    reset
+    execute
   };
 };

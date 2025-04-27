@@ -1,0 +1,140 @@
+.sidebar {
+  width: 250px;
+  height: 100%;
+  background-color: #ffffff;
+  border-right: 1px solid #e0e0e0;
+  transition: width 0.3s ease;
+  overflow-x: hidden;
+}
+
+.sidebar-collapsed {
+  width: 70px;
+}
+
+.sidebar-header {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-logo img {
+  height: 32px;
+  width: auto;
+}
+
+.sidebar-logo-text {
+  margin-left: 12px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar-collapsed .sidebar-logo-text {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+.sidebar-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6c757d;
+  transition: color 0.2s ease;
+}
+
+.sidebar-toggle:hover {
+  color: #343a40;
+}
+
+.sidebar-content {
+  padding: 16px 0;
+  height: calc(100% - 65px);
+  overflow-y: auto;
+}
+
+.sidebar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav-item {
+  margin-bottom: 4px;
+}
+
+.sidebar-nav-link {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  color: #6c757d;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+}
+
+.sidebar-nav-link:hover {
+  background-color: #f8f9fa;
+  color: #343a40;
+}
+
+.sidebar-nav-link.active {
+  background-color: #f0f6ff;
+  color: #0d6efd;
+  border-left-color: #0d6efd;
+}
+
+.sidebar-nav-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+  transition: margin 0.3s ease;
+}
+
+.sidebar-collapsed .sidebar-nav-icon {
+  margin-right: 0;
+}
+
+.sidebar-nav-text {
+  transition: opacity 0.3s ease;
+}
+
+.sidebar-collapsed .sidebar-nav-text {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+.sidebar-footer {
+  padding: 16px;
+  border-top: 1px solid #e0e0e0;
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+/* Section dividers */
+.sidebar-divider {
+  height: 1px;
+  margin: 16px 16px;
+  background-color: #e0e0e0;
+}
+
+.sidebar-section-title {
+  padding: 8px 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6c757d;
+}
+
+.sidebar-collapsed .sidebar-section-title {
+  opacity: 0;
+}

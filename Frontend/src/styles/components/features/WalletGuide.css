@@ -1,0 +1,99 @@
+.wallet-guide {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.wallet-guide-steps {
+  margin-top: 20px;
+  counter-reset: step-counter;
+}
+
+.wallet-guide-step {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  position: relative;
+}
+
+.wallet-guide-step::before {
+  content: counter(step-counter);
+  counter-increment: step-counter;
+  position: absolute;
+  left: -10px;
+  top: -10px;
+  width: 30px;
+  height: 30px;
+  background-color: #4a90e2;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.wallet-guide h2 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.wallet-guide-icon {
+  margin-right: 10px;
+  width: 24px;
+  height: 24px;
+}
+
+.wallet-guide-button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 15px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.wallet-guide-button:hover {
+  background-color: #3a7bc8;
+}
+
+.wallet-guide-note {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #fff3cd;
+  border-left: 4px solid #ffc107;
+  color: #856404;
+}
+
+.wallet-status {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.wallet-status.connected {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.wallet-status.disconnected {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.wallet-address {
+  font-family: monospace;
+  word-break: break-all;
+  padding: 5px 10px;
+  background-color: rgba(0,0,0,0.05);
+  border-radius: 3px;
+  margin-top: 5px;
+}

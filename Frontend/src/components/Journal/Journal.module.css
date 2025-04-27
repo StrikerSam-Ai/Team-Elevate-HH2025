@@ -1,0 +1,357 @@
+/* Entry Form Styles */
+.entryForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background-color: var(--white);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow);
+}
+
+.formGroup {
+  margin-bottom: var(--spacing-md);
+}
+
+.formLabel {
+  display: block;
+  color: var(--text-color);
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+}
+
+.formInput,
+.formTextarea {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-base);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.formInput:focus,
+.formTextarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(31, 187, 39, 0.1);
+}
+
+.formTextarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.moodSelector {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.moodButton {
+  flex: 1;
+  padding: var(--spacing-sm);
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-full);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.moodButton.active {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border-color: var(--primary-color);
+}
+
+.formActions {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+.submitButton,
+.cancelButton {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--border-radius-full);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.submitButton {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+}
+
+.submitButton:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 90%, black);
+}
+
+.cancelButton {
+  background-color: var(--white);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.cancelButton:hover {
+  background-color: var(--background-color);
+}
+
+/* Entry List Styles */
+.entryList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.listControls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.viewToggle {
+  display: flex;
+  gap: var(--spacing-xs);
+  background-color: var(--background-color);
+  padding: 4px;
+  border-radius: var(--border-radius-full);
+}
+
+.viewButton {
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: none;
+  border-radius: var(--border-radius-full);
+  background: none;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.viewButton.active {
+  background-color: var(--white);
+  color: var(--primary-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.sortSelect {
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-full);
+  background-color: var(--white);
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.entriesContainer {
+  display: grid;
+  gap: var(--spacing-md);
+}
+
+.entriesContainer.grid {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.entriesContainer.list {
+  grid-template-columns: 1fr;
+}
+
+.emptyState {
+  text-align: center;
+  padding: var(--spacing-xl);
+  color: var(--text-color-light);
+}
+
+/* Entry Card Styles */
+.entryCard {
+  background-color: var(--white);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.entryCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.entryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-xs);
+}
+
+.entryTitle {
+  font-size: var(--font-size-lg);
+  color: var(--text-color);
+  margin: 0;
+}
+
+.entryMood {
+  font-size: var(--font-size-xl);
+}
+
+.entryDate {
+  color: var(--text-color-light);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.entryContent {
+  color: var(--text-color);
+  margin-bottom: var(--spacing-md);
+  line-height: 1.5;
+}
+
+.entryImages {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.imagePreview {
+  aspect-ratio: 1;
+  background-color: var(--background-color);
+  border-radius: var(--border-radius-sm);
+}
+
+.entryActions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.editButton,
+.deleteButton {
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.editButton {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+}
+
+.editButton:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 90%, black);
+}
+
+.deleteButton {
+  background-color: var(--white);
+  color: var(--danger-color);
+  border: 1px solid var(--danger-color);
+}
+
+.deleteButton:hover {
+  background-color: var(--danger-color);
+  color: var(--white);
+}
+
+/* Stats Card Styles */
+.statsCard {
+  background-color: var(--white);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow);
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.statItem {
+  text-align: center;
+}
+
+.statValue {
+  display: block;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-color);
+}
+
+.statLabel {
+  font-size: var(--font-size-sm);
+  color: var(--text-color-light);
+}
+
+.moodDistribution {
+  margin-top: var(--spacing-lg);
+}
+
+.moodDistribution h3 {
+  font-size: var(--font-size-lg);
+  color: var(--text-color);
+  margin-bottom: var(--spacing-md);
+}
+
+.moodBars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.moodBar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.moodLabel {
+  font-size: var(--font-size-lg);
+  width: 24px;
+}
+
+.barContainer {
+  flex: 1;
+  height: 8px;
+  background-color: var(--background-color);
+  border-radius: var(--border-radius-full);
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius-full);
+  transition: width var(--transition-base);
+}
+
+.moodPercentage {
+  font-size: var(--font-size-sm);
+  color: var(--text-color-light);
+  min-width: 40px;
+  text-align: right;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .listControls {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    align-items: stretch;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .moodSelector {
+    flex-direction: column;
+  }
+
+  .formActions {
+    flex-direction: column;
+  }
+}

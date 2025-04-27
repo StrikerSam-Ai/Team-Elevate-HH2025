@@ -1,0 +1,140 @@
+.register-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+.register-container {
+  width: 100%;
+  max-width: 480px;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.register-title {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #333;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.register-subtitle {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #666;
+  font-size: 1rem;
+}
+
+.register-form {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.register-footer {
+  text-align: center;
+  margin-top: 20px;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.register-footer a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.register-footer a:hover {
+  text-decoration: underline;
+}
+
+.register-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 10px;
+}
+
+.register-button:hover {
+  background-color: #0069d9;
+}
+
+.register-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.register-separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+  color: #6c757d;
+}
+
+.register-separator::before,
+.register-separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.register-separator::before {
+  margin-right: 10px;
+}
+
+.register-separator::after {
+  margin-left: 10px;
+}
+
+.social-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.social-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.social-button:hover {
+  background-color: #f8f9fa;
+}
+
+.social-icon {
+  margin-right: 8px;
+}
+
+@media (max-width: 576px) {
+  .register-container {
+    padding: 20px;
+  }
+  
+  .register-title {
+    font-size: 1.5rem;
+  }
+}

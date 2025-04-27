@@ -1,0 +1,366 @@
+/* Common Settings Styles */
+.settingsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.settingSection {
+  background-color: var(--white);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-lg);
+  color: var(--text-color);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Security Settings Styles */
+.securitySettings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.passwordSection,
+.twoFactorSection,
+.devicesSection {
+  background-color: var(--white);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow);
+}
+
+.passwordForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.formGroup {
+  margin-bottom: var(--spacing-md);
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.formInput {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-base);
+}
+
+.twoFactorToggle {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.toggleSwitch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.toggleSwitch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggleSlider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--border-color);
+  transition: var(--transition-base);
+  border-radius: 34px;
+}
+
+.toggleSlider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--white);
+  transition: var(--transition-base);
+  border-radius: 50%;
+}
+
+.toggleSwitch input:checked + .toggleSlider {
+  background-color: var(--primary-color);
+}
+
+.toggleSwitch input:checked + .toggleSlider:before {
+  transform: translateX(26px);
+}
+
+.twoFactorInfo {
+  color: var(--text-color-light);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-sm);
+}
+
+.devicesSectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.devicesList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.deviceItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--background-color);
+}
+
+.deviceInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.deviceName {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.deviceLastActive {
+  font-size: var(--font-size-sm);
+  color: var(--text-color-light);
+}
+
+/* Notification Settings Styles */
+.notificationSettings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.notificationSection {
+  background-color: var(--white);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow);
+}
+
+.notificationOptions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.notificationOption {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm);
+  cursor: pointer;
+}
+
+.notificationOption input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+.frequencySelect {
+  margin-top: var(--spacing-sm);
+}
+
+.select {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-base);
+  color: var(--text-color);
+  background-color: var(--white);
+}
+
+/* Privacy Settings Styles */
+.privacySettings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.privacySection {
+  background-color: var(--white);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow);
+}
+
+.settingGroup {
+  margin-bottom: var(--spacing-md);
+}
+
+.settingLabel {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.checkboxOptions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.checkboxOption {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm);
+  cursor: pointer;
+}
+
+.blockedUsers {
+  margin-top: var(--spacing-md);
+}
+
+.blockList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.blockedUser {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm);
+  background-color: var(--background-color);
+  border-radius: var(--border-radius-sm);
+}
+
+.noBlocked {
+  color: var(--text-color-light);
+  text-align: center;
+  padding: var(--spacing-md);
+}
+
+/* Button Styles */
+.saveButton,
+.blockUserButton {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  border-radius: var(--border-radius-full);
+  cursor: pointer;
+  transition: background-color var(--transition-base);
+}
+
+.saveButton:hover,
+.blockUserButton:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 90%, black);
+}
+
+.unblockButton {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--white);
+  color: var(--danger-color);
+  border: 1px solid var(--danger-color);
+  border-radius: var(--border-radius-full);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.unblockButton:hover {
+  background-color: var(--danger-color);
+  color: var(--white);
+}
+
+.toggleDevices {
+  color: var(--primary-color);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+}
+
+.toggleDevices:hover {
+  text-decoration: underline;
+}
+
+.saveButtonContainer {
+  margin-top: var(--spacing-lg);
+}
+
+.revokeButton {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--white);
+  color: var(--danger-color);
+  border: 1px solid var(--danger-color);
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.revokeButton:hover {
+  background-color: var(--danger-color);
+  color: var(--white);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .deviceItem {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    align-items: flex-start;
+  }
+
+  .deviceInfo {
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .revokeButton {
+    width: 100%;
+  }
+
+  .blockedUser {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .unblockButton {
+    width: 100%;
+  }
+
+  .saveButtonContainer {
+    padding: 0 var(--spacing-md);
+  }
+
+  .saveButton {
+    width: 100%;
+  }
+}

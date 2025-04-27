@@ -1,0 +1,308 @@
+/* GroupCard Styles */
+.groupCard {
+  display: flex;
+  background-color: var(--white);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base);
+  margin-bottom: var(--spacing-lg);
+}
+
+.groupCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.groupImageContainer {
+  position: relative;
+  width: 200px;
+  min-width: 200px;
+}
+
+.groupImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.categoryBadge {
+  position: absolute;
+  top: var(--spacing-sm);
+  left: var(--spacing-sm);
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-sm);
+}
+
+.groupContent {
+  padding: var(--spacing-lg);
+  flex-grow: 1;
+}
+
+.groupName {
+  margin: 0 0 var(--spacing-sm);
+}
+
+.groupName a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.groupName a:hover {
+  color: var(--primary-color);
+}
+
+.groupMetadata {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  color: var(--text-color-light);
+  font-size: var(--font-size-sm);
+}
+
+.groupMetadata span {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.groupDescription {
+  color: var(--text-color);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-lg);
+}
+
+.groupActions {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.joinButton,
+.memberButton,
+.chatButton,
+.moreInfoButton {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-decoration: none;
+}
+
+.joinButton {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+}
+
+.joinButton:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 90%, black);
+}
+
+.memberButton {
+  background-color: var(--success-color-light);
+  color: var(--success-color);
+  border: none;
+  cursor: default;
+}
+
+.chatButton {
+  background-color: var(--white);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.chatButton:hover {
+  background-color: var(--primary-color-light);
+}
+
+.moreInfoButton {
+  background-color: var(--white);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.moreInfoButton:hover {
+  background-color: var(--background-color);
+}
+
+/* GroupFilters Styles */
+.filtersContainer {
+  background-color: var(--white);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  margin-bottom: var(--spacing-xl);
+  box-shadow: var(--shadow-sm);
+}
+
+.searchBar {
+  margin-bottom: var(--spacing-lg);
+}
+
+.searchInput {
+  width: 100%;
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-lg);
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-color-light);
+}
+
+.filterOptions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.filterGroup label {
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.filterSelect {
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--white);
+  font-size: var(--font-size-base);
+}
+
+.filterSelect:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-color-light);
+}
+
+.activeFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.filterTag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  background-color: var(--primary-color-light);
+  color: var(--primary-color);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-sm);
+}
+
+.removeFilter {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  cursor: pointer;
+  font-size: var(--font-size-lg);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.removeFilter:hover {
+  color: var(--danger-color);
+}
+
+/* GroupList Styles */
+.groupList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.loadingContainer,
+.errorContainer,
+.emptyContainer {
+  text-align: center;
+  padding: var(--spacing-xxl) 0;
+  color: var(--text-color);
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--primary-color-light);
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  margin: 0 auto var(--spacing-md);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.errorMessage {
+  color: var(--danger-color);
+  margin-bottom: var(--spacing-md);
+}
+
+.retryButton {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-xl);
+  border-radius: var(--border-radius-full);
+  cursor: pointer;
+  transition: background-color var(--transition-base);
+}
+
+.retryButton:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 90%, black);
+}
+
+.emptyIcon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .groupCard {
+    flex-direction: column;
+  }
+
+  .groupImageContainer {
+    width: 100%;
+    height: 200px;
+  }
+
+  .filterOptions {
+    grid-template-columns: 1fr;
+  }
+
+  .groupMetadata {
+    flex-wrap: wrap;
+  }
+
+  .groupActions {
+    flex-direction: column;
+  }
+
+  .joinButton,
+  .memberButton,
+  .chatButton,
+  .moreInfoButton {
+    width: 100%;
+    text-align: center;
+  }
+}

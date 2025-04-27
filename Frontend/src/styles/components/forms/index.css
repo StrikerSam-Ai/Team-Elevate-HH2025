@@ -1,0 +1,46 @@
+/* Form component styles */
+@import './form.css';
+@import './FormControl.css';
+@import './input.css';
+@import './Select.css';
+@import './TextArea.css';
+@import './TextField.css';
+
+/* Shared form styles */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(31, 187, 39, 0.1);
+}
+
+.form-error {
+  color: var(--error-color);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.form-helper {
+  color: var(--text-color-light);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}

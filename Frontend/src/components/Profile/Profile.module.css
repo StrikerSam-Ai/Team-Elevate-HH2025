@@ -1,0 +1,325 @@
+/* User Info Styles */
+.userInfo {
+  background-color: var(--white);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow);
+}
+
+.userHeader {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--spacing-md);
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.userAvatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: var(--background-color);
+}
+
+.userMeta {
+  overflow: hidden;
+}
+
+.userName {
+  font-size: var(--font-size-xl);
+  color: var(--text-color);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userStatus {
+  display: block;
+  color: var(--text-color-light);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-xs);
+}
+
+.editButton {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  border-radius: var(--border-radius-full);
+  cursor: pointer;
+  transition: background-color var(--transition-base);
+}
+
+.editButton:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 90%, black);
+}
+
+.editForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.formGroup {
+  margin-bottom: var(--spacing-md);
+}
+
+.formLabel {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.editInput,
+.formInput {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-base);
+}
+
+.formTextarea {
+  width: 100%;
+  min-height: 100px;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-base);
+  resize: vertical;
+}
+
+.saveButton {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  border-radius: var(--border-radius-full);
+  cursor: pointer;
+  transition: background-color var(--transition-base);
+  align-self: flex-start;
+}
+
+.saveButton:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 90%, black);
+}
+
+.userDetails {
+  color: var(--text-color);
+}
+
+.userBio {
+  margin-bottom: var(--spacing-md);
+  line-height: 1.6;
+}
+
+.userLocation {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
+  color: var(--text-color-light);
+}
+
+.userInterests {
+  margin-top: var(--spacing-lg);
+}
+
+.userInterests h3 {
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-lg);
+}
+
+.interestTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.interestTag {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--background-color);
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-sm);
+}
+
+/* Activity Feed Styles */
+.activityFeed {
+  background-color: var(--white);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow);
+  margin-top: var(--spacing-lg);
+}
+
+.feedTitle {
+  margin-bottom: var(--spacing-lg);
+  font-size: var(--font-size-lg);
+  color: var(--text-color);
+}
+
+.activityList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.activityItem {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--spacing-md);
+  align-items: center;
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  transition: background-color var(--transition-base);
+}
+
+.activityItem:hover {
+  background-color: var(--background-color);
+}
+
+.activityIcon {
+  font-size: var(--font-size-xl);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background-color);
+  border-radius: var(--border-radius-sm);
+}
+
+.activityContent {
+  overflow: hidden;
+}
+
+.activityText {
+  margin: 0;
+  color: var(--text-color);
+  font-size: var(--font-size-base);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activityDate {
+  display: block;
+  color: var(--text-color-light);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-xs);
+}
+
+.activityLink {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+}
+
+.activityLink:hover {
+  text-decoration: underline;
+}
+
+.emptyFeed {
+  text-align: center;
+  padding: var(--spacing-xl);
+  color: var(--text-color-light);
+}
+
+/* Preferences Panel Styles */
+.preferencesPanel {
+  background-color: var(--white);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow);
+  margin-top: var(--spacing-lg);
+}
+
+.panelTitle {
+  margin-bottom: var(--spacing-lg);
+  font-size: var(--font-size-lg);
+  color: var(--text-color);
+}
+
+.preferencesForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.preferencesSection {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--spacing-lg);
+}
+
+.preferencesSection:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.preferencesSection h4 {
+  margin-bottom: var(--spacing-md);
+  color: var(--text-color);
+  font-size: var(--font-size-base);
+}
+
+.checkboxGroup {
+  margin-bottom: var(--spacing-sm);
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.checkboxLabel input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+.selectGroup {
+  margin-bottom: var(--spacing-md);
+}
+
+.selectLabel {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.selectInput {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--white);
+  font-size: var(--font-size-base);
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .userHeader {
+    grid-template-columns: auto 1fr;
+  }
+
+  .editButton {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .activityItem {
+    grid-template-columns: auto 1fr;
+  }
+
+  .activityLink {
+    grid-column: 2;
+    justify-self: start;
+  }
+}

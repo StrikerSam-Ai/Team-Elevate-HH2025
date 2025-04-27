@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Navbar, ErrorBoundary } from '../';
 import { LoadingSpinner } from '../';
 import { useAuth } from '../../contexts/AuthContext';
-import './Layout.css';
+import styles from './Layout.module.css';
 
 const Layout = () => {
   const { loading } = useAuth();
@@ -13,11 +13,11 @@ const Layout = () => {
   }
 
   return (
-    <div className="app-container">
+    <div className={styles.appContainer}>
       <Navbar />
-      <main className="main-content">
+      <main className={styles.mainContent}>
         <ErrorBoundary>
-          <div className="container">
+          <div className={styles.container}>
             <Outlet />
           </div>
         </ErrorBoundary>

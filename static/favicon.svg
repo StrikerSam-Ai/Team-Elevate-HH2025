@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Background Circle -->
+  <circle cx="32" cy="32" r="32" fill="#4a90e2" />
+  
+  <!-- "E" for Elevate -->
+  <path d="M20 18h24v6H26v6h16v6H26v6h24v6H20z" fill="#ffffff" />
+</svg>

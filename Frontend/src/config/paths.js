@@ -34,7 +34,10 @@ export const PATHS = {
       REGISTER: '/api/auth/register/',
       LOGOUT: '/api/auth/logout/',
       CHECK: '/api/auth/check/',
-      REFRESH: '/api/auth/token/refresh/'
+      REFRESH: '/api/auth/token/refresh/',
+      CSRF: '/api/auth/csrf/',
+      PASSWORD_RESET: '/api/auth/password-reset/',
+      PASSWORD_RESET_CONFIRM: '/api/auth/password-reset/confirm/'
     },
     USER: {
       PROFILE: '/api/users/profile/',
@@ -42,25 +45,25 @@ export const PATHS = {
     },
     COMMUNITY: {
       LIST: '/api/community/',
-      DETAILS: '/api/community/:id/',
-      JOIN: '/api/community/:id/join/',
-      LEAVE: '/api/community/:id/leave/'
+      DETAILS: (id) => `/api/community/${id}/`,
+      JOIN: (id) => `/api/community/${id}/join/`,
+      LEAVE: (id) => `/api/community/${id}/leave/`
     },
     EVENTS: {
       LIST: '/api/events/',
-      DETAILS: '/api/events/:id/',
-      REGISTER: '/api/events/:id/register/',
-      CANCEL: '/api/events/:id/cancel/'
+      DETAILS: (id) => `/api/events/${id}/`,
+      REGISTER: (id) => `/api/events/${id}/register/`,
+      CANCEL: (id) => `/api/events/${id}/cancel/`
     },
     JOURNAL: {
       LIST: '/api/journal/',
-      ENTRY: '/api/journal/:id/',
+      ENTRY: (id) => `/api/journal/${id}/`,
       CREATE: '/api/journal/create/'
     },
     FAMILY: {
       LIST: '/api/family/',
       CONNECT: '/api/family/connect/',
-      DISCONNECT: '/api/family/:id/disconnect/'
+      DISCONNECT: (id) => `/api/family/${id}/disconnect/`
     }
   }
 };

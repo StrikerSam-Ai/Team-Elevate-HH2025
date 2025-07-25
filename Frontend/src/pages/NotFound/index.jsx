@@ -1,40 +1,61 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import './NotFound.css';
+import { Container, Box, Typography, Button, Paper } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { SentimentDissatisfied as SadIcon } from '@mui/icons-material';
 
 const NotFound = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="not-found-page">
-      <div className="not-found-content">
-        <div className="not-found-icon">404</div>
-        <h1>Page Not Found</h1>
-        <p>We couldn't find the page you were looking for. It might have been moved or no longer exists.</p>
-        
-        <div className="not-found-actions">
-          <Link to="/" className="primary-button">
-            Return to Dashboard
-          </Link>
-          <Link to="/companions" className="secondary-button">
-            Chat with Companions
-          </Link>
-        </div>
-        
-        <div className="help-section">
-          <h2>Need Help?</h2>
-          <p>If you're having trouble finding what you need, our AI companions can assist you.</p>
-          <div className="help-options">
-            <Link to="/chat/tech-helper" className="help-option">
-              <span className="help-icon">👨‍💻</span>
-              <span>Tech Helper</span>
-            </Link>
-            <Link to="/help" className="help-option">
-              <span className="help-icon">📞</span>
-              <span>Contact Support</span>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Container maxWidth="sm">
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '80vh',
+          textAlign: 'center',
+        }}
+      >
+        <Paper
+          elevation={3}
+          sx={{
+            p: 4,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 2,
+          }}
+        >
+          <SadIcon sx={{ fontSize: 64, color: 'text.secondary' }} />
+          <Typography variant="h3" component="h1" gutterBottom>
+            404
+          </Typography>
+          <Typography variant="h5" component="h2" gutterBottom>
+            Page Not Found
+          </Typography>
+          <Typography variant="body1" color="text.secondary" paragraph>
+            The page you are looking for might have been removed, had its name changed,
+            or is temporarily unavailable.
+          </Typography>
+          <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
+            <Button
+              variant="contained"
+              onClick={() => navigate(-1)}
+            >
+              Go Back
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={() => navigate('/')}
+            >
+              Go to Home
+            </Button>
+          </Box>
+        </Paper>
+      </Box>
+    </Container>
   );
 };
 

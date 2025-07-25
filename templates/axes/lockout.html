@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Account Locked{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Account Temporarily Locked</h4>
+                </div>
+                <div class="card-body">
+                    <p class="lead">Your account has been temporarily locked due to too many failed login attempts.</p>
+                    <p>This is a security measure to protect your account from unauthorized access.</p>
+                    <p>Please try again in {{ cooloff_time }} hour(s) or contact support if you need immediate assistance.</p>
+                    
+                    <div class="mt-4">
+                        <h5>What you can do:</h5>
+                        <ul>
+                            <li>Wait for the lockout period to expire</li>
+                            <li>Contact support for assistance</li>
+                            <li>Use the password reset feature if you've forgotten your password</li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-4">
+                        <a href="{% url 'password_reset' %}" class="btn btn-primary">Reset Password</a>
+                        <a href="{% url 'contact_support' %}" class="btn btn-secondary">Contact Support</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

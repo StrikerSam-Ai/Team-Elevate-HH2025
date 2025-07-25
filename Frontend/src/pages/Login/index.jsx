@@ -1,147 +1,143 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { getCSRFToken } from '../../utils/csrf';
 import './Login.css';
+import {
+  Container,
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Link as MuiLink,
+  Paper,
+  Alert,
+  CircularProgress,
+} from '@mui/material';
 
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login } = useAuth();
+  const { login, error } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     rememberMe: false
   });
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   
   // Get redirect path from location state or default to dashboard
   const from = location.state?.from?.pathname || '/dashboard';
+  
+  // Fetch CSRF token on component mount
+  useEffect(() => {
+    const fetchCSRFToken = async () => {
+      try {
+        await getCSRFToken();
+      } catch (err) {
+        console.error('Failed to fetch CSRF token:', err);
+        error('Failed to establish secure connection. Please try again.');
+      }
+    };
+    
+    fetchCSRFToken();
+  }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setIsLoading(true);
-    
+    setLoading(true);
     try {
-      await login(formData);
-      // Redirect to the page they tried to visit or dashboard
-      navigate(from, { replace: true });
+      await login(formData.email, formData.password);
     } catch (error) {
-      setError('Invalid email or password. Please try again.');
-      console.error('Login failed:', error);
+      // Error is handled by AuthContext
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-container">
-        <div className="auth-content">
-          <div className="auth-header">
-            <h1>Welcome Back</h1>
-            <p>Sign in to continue your journey with ElderHub</p>
-          </div>
-          
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Paper
+          elevation={3}
+          sx={{
+            padding: 4,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '100%',
+          }}
+        >
+          <Typography component="h1" variant="h5">
+            Sign in to Elevate
+          </Typography>
+
           {error && (
-            <div className="auth-error">
-              <p>{error}</p>
-            </div>
+            <Alert severity="error" sx={{ mt: 2, width: '100%' }}>
+              {error}
+            </Alert>
           )}
-          
-          <form onSubmit={handleSubmit} className="auth-form">
-            <div className="form-group">
-              <label htmlFor="email">Email Address</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="Enter your email"
-                required
-              />
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                placeholder="Enter your password"
-                required
-              />
-            </div>
-            
-            <div className="form-options">
-              <label className="remember-me">
-                <input
-                  type="checkbox"
-                  name="rememberMe"
-                  checked={formData.rememberMe}
-                  onChange={handleInputChange}
-                />
-                <span>Remember me</span>
-              </label>
-              
-              <Link to="/forgot-password" className="forgot-password">
-                Forgot Password?
-              </Link>
-            </div>
-            
-            <button 
-              type="submit" 
-              className="auth-button"
-              disabled={isLoading}
+
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, width: '100%' }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={formData.email}
+              onChange={handleChange}
+              disabled={loading}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={formData.password}
+              onChange={handleChange}
+              disabled={loading}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              disabled={loading}
             >
-              {isLoading ? 'Signing In...' : 'Sign In'}
-            </button>
-          </form>
-          
-          <div className="auth-divider">
-            <span>OR</span>
-          </div>
-          
-          <div className="social-login">
-            <button type="button" className="social-button google">
-              <span className="icon">G</span>
-              Continue with Google
-            </button>
-            <button type="button" className="social-button facebook">
-              <span className="icon">f</span>
-              Continue with Facebook
-            </button>
-          </div>
-          
-          <div className="auth-footer">
-            <p>Don't have an account? <Link to="/register">Sign Up</Link></p>
-          </div>
-        </div>
-        
-        <div className="auth-image">
-          <div className="image-overlay">
-            <h2>Connect with Your Community</h2>
-            <p>Access your groups, events, and personal journal all in one place.</p>
-          </div>
-        </div>
-      </div>
-      
-      <div className="auth-help">
-        <p>Need help? <a href="tel:1-800-ELDER-HUB">Call Support at 1-800-ELDER-HUB</a></p>
-      </div>
-    </div>
+              {loading ? <CircularProgress size={24} /> : 'Sign In'}
+            </Button>
+            <Box sx={{ textAlign: 'center' }}>
+              <MuiLink component={Link} to="/register" variant="body2">
+                {"Don't have an account? Sign Up"}
+              </MuiLink>
+            </Box>
+          </Box>
+        </Paper>
+      </Box>
+    </Container>
   );
 };
 

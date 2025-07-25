@@ -1,112 +1,149 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import './Home.css';
+import {
+  Container,
+  Grid,
+  Paper,
+  Typography,
+  Box,
+  Card,
+  CardContent,
+  CardActions,
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Divider,
+} from '@mui/material';
+import {
+  Event as EventIcon,
+  Group as GroupIcon,
+  LocalHospital as HealthIcon,
+  Book as JournalIcon,
+  Notifications as NotificationIcon,
+} from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+import { useNotifications } from '../../contexts/NotificationContext';
 
 const Home = () => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const { notifications } = useNotifications();
+
+  const quickActions = [
+    {
+      title: 'Communities',
+      description: 'Join and interact with support communities',
+      icon: <GroupIcon />,
+      path: '/communities',
+    },
+    {
+      title: 'Events',
+      description: 'View and register for upcoming events',
+      icon: <EventIcon />,
+      path: '/events',
+    },
+    {
+      title: 'Health',
+      description: 'Track your health metrics and medications',
+      icon: <HealthIcon />,
+      path: '/health',
+    },
+    {
+      title: 'Journal',
+      description: 'Record your thoughts and progress',
+      icon: <JournalIcon />,
+      path: '/journal',
+    },
+  ];
+
   return (
-    <div className="page home-page">
-      {/* Hero Section */}
-      <section className="hero-section">
-        <div className="hero-content">
-          <h1 className="hero-title">Welcome to ElderHub</h1>
-          <p className="hero-subtitle">Your community for active and connected senior living</p>
-          <p className="hero-description">Join a vibrant community of seniors who are embracing technology to stay connected, 
-             share experiences, and maintain an active lifestyle.</p>
-          <div className="hero-actions">
-            <Link to="/register" className="cta-button">Join Now</Link>
-            <Link to="/community" className="secondary-button">Explore Community</Link>
-          </div>
-        </div>
-        <div className="hero-image">
-          {/* This will be filled with an appropriate image */}
-        </div>
-      </section>
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      <Grid container spacing={3}>
+        {/* Welcome Section */}
+        <Grid item xs={12}>
+          <Paper sx={{ p: 3, display: 'flex', flexDirection: 'column' }}>
+            <Typography variant="h4" gutterBottom>
+              Welcome back, {user?.name || 'User'}!
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              Here's what's happening today
+            </Typography>
+          </Paper>
+        </Grid>
 
-      {/* Features Section */}
-      <section className="features-section">
-        <h2 className="section-title">What We Offer</h2>
-        <div className="features-grid">
-          <div className="feature-card">
-            <div className="feature-icon">👥</div>
-            <h3>Community Groups</h3>
-            <p>Join groups based on your interests and connect with like-minded seniors</p>
-          </div>
-          <div className="feature-card">
-            <div className="feature-icon">🎉</div>
-            <h3>Local Events</h3>
-            <p>Discover and participate in events happening in your area</p>
-          </div>
-          <div className="feature-card">
-            <div className="feature-icon">📝</div>
-            <h3>Digital Journal</h3>
-            <p>Document your experiences and memories in your personal digital journal</p>
-          </div>
-          <div className="feature-card">
-            <div className="feature-icon">💪</div>
-            <h3>Health & Wellness</h3>
-            <p>Access resources and connect with others focused on healthy living</p>
-          </div>
-        </div>
-      </section>
+        {/* Quick Actions */}
+        <Grid item xs={12} md={8}>
+          <Paper sx={{ p: 3 }}>
+            <Typography variant="h6" gutterBottom>
+              Quick Actions
+            </Typography>
+            <Grid container spacing={2}>
+              {quickActions.map((action) => (
+                <Grid item xs={12} sm={6} key={action.title}>
+                  <Card>
+                    <CardContent>
+                      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                        {action.icon}
+                        <Typography variant="h6" sx={{ ml: 1 }}>
+                          {action.title}
+                        </Typography>
+                      </Box>
+                      <Typography variant="body2" color="text.secondary">
+                        {action.description}
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button
+                        size="small"
+                        onClick={() => navigate(action.path)}
+                      >
+                        Go to {action.title}
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Paper>
+        </Grid>
 
-      {/* Community Highlights */}
-      <section className="community-section">
-        <h2 className="section-title">Community Highlights</h2>
-        <div className="highlights-grid">
-          <div className="highlight-card">
-            <div className="highlight-image"></div>
-            <div className="highlight-content">
-              <h3>Book Club</h3>
-              <p>Join weekly discussions on bestsellers and classics</p>
-              <Link to="/community" className="highlight-link">Learn More</Link>
-            </div>
-          </div>
-          <div className="highlight-card">
-            <div className="highlight-image"></div>
-            <div className="highlight-content">
-              <h3>Walking Group</h3>
-              <p>Stay active with our community walks in local parks</p>
-              <Link to="/community" className="highlight-link">Learn More</Link>
-            </div>
-          </div>
-          <div className="highlight-card">
-            <div className="highlight-image"></div>
-            <div className="highlight-content">
-              <h3>Tech Workshops</h3>
-              <p>Learn new technology skills with hands-on guidance</p>
-              <Link to="/community" className="highlight-link">Learn More</Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Get Started */}
-      <section className="get-started-section">
-        <h2 className="section-title">Ready to Get Started?</h2>
-        <p>Join our community today and start connecting with others!</p>
-        <div className="benefits-grid">
-          <div className="benefit-item">
-            <span className="benefit-icon">🤝</span>
-            <h3>Connect</h3>
-            <p>Join a welcoming community of active seniors</p>
-          </div>
-          <div className="benefit-item">
-            <span className="benefit-icon">🌟</span>
-            <h3>Share</h3>
-            <p>Share your experiences and learn from others</p>
-          </div>
-          <div className="benefit-item">
-            <span className="benefit-icon">🎯</span>
-            <h3>Grow</h3>
-            <p>Discover new interests and expand your horizons</p>
-          </div>
-        </div>
-        <div className="cta-buttons">
-          <Link to="/register" className="cta-button">Create Account</Link>
-          <Link to="/about" className="text-button">Learn More</Link>
-        </div>
-      </section>
-    </div>
+        {/* Notifications */}
+        <Grid item xs={12} md={4}>
+          <Paper sx={{ p: 3 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+              <NotificationIcon />
+              <Typography variant="h6" sx={{ ml: 1 }}>
+                Recent Notifications
+              </Typography>
+            </Box>
+            <List>
+              {notifications?.length > 0 ? (
+                notifications.slice(0, 5).map((notification, index) => (
+                  <React.Fragment key={notification.id}>
+                    <ListItem>
+                      <ListItemText
+                        primary={notification.title}
+                        secondary={notification.message}
+                      />
+                    </ListItem>
+                    {index < notifications.length - 1 && <Divider />}
+                  </React.Fragment>
+                ))
+              ) : (
+                <ListItem>
+                  <ListItemText
+                    primary="No new notifications"
+                    secondary="You're all caught up!"
+                  />
+                </ListItem>
+              )}
+            </List>
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 

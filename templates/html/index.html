@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevate - HackHazard 2025</title>
+    <link rel="icon" href="/static/favicon.svg">
+    {% load static %}
+    <!-- Meta tags for SEO and social sharing -->
+    <meta name="description" content="Elevate - A platform for the HackHazard 2025 hackathon">
+    <meta name="theme-color" content="#000000">
+</head>
+<body>
+    <div id="root">
+        <!-- This div will be replaced by the React app -->
+        <!-- If you're seeing this message, the React app hasn't loaded yet -->
+        <div style="display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column;">
+            <h1>Welcome to Elevate</h1>
+            <p>The application is loading...</p>
+            <p>If this message persists, please make sure the React development server is running.</p>
+            <p>Try running: <code>cd react-website && npm start</code></p>
+        </div>
+    </div>    <!-- App configuration -->
+    <script>
+        window.DJANGO_SETTINGS = {
+            API_URL: '/api/',
+            MEDIA_URL: '{{ MEDIA_URL }}',
+            DEBUG: {{ debug|yesno:"true,false" }},
+            CSRF_TOKEN: '{{ csrf_token }}'
+        };
+    </script>
+    
+    <!-- In development mode, React is served from localhost:3000 -->
+    <!-- In production, it would be served from static files -->
+    {% if debug %}
+    <script>
+        // In development, load from React dev server
+        document.write('<script src="http://localhost:3000/static/js/bundle.js"><\/script>');
+    </script>
+    {% else %}
+    <!-- Production React bundle -->
+    <script src="{% static 'frontend/main.js' %}" defer></script>
+    {% endif %}
+</body>
+</html>

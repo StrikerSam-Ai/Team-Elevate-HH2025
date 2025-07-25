@@ -1,6 +1,7 @@
 import apiService from './apiService';
 import { PATHS } from '../config/paths';
 import { STORAGE_KEYS } from '../utils/constants';
+import { getCSRFToken, getCsrfCookieValue } from '../utils/csrf';
 
 export const authService = {
   /**
@@ -10,12 +11,23 @@ export const authService = {
    */
   login: async (credentials) => {
     try {
-      const response = await apiService.post(PATHS.API.AUTH.LOGIN, credentials);
+      // Ensure we have fresh CSRF token before login attempt
+      await getCSRFToken();
+      
+      // Make login request with proper CSRF protection
+      const response = await apiService.post(PATHS.API.AUTH.LOGIN, credentials, {
+        headers: {
+          'X-CSRFToken': getCsrfCookieValue()
+        },
+        withCredentials: true
+      });
+      
       if (response.token) {
         localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, response.token);
       }
       return response;
     } catch (error) {
+      console.error('Login error:', error);
       throw error;
     }
   },
@@ -27,12 +39,23 @@ export const authService = {
    */
   register: async (userData) => {
     try {
-      const response = await apiService.post(PATHS.API.AUTH.REGISTER, userData);
+      // Ensure we have fresh CSRF token before registration attempt
+      await getCSRFToken();
+      
+      // Make registration request with proper CSRF protection
+      const response = await apiService.post(PATHS.API.AUTH.REGISTER, userData, {
+        headers: {
+          'X-CSRFToken': getCsrfCookieValue()
+        },
+        withCredentials: true
+      });
+      
       if (response.token) {
         localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, response.token);
       }
       return response;
     } catch (error) {
+      console.error('Registration error:', error);
       throw error;
     }
   },
@@ -43,7 +66,15 @@ export const authService = {
    */
   logout: async () => {
     try {
-      await apiService.post(PATHS.API.AUTH.LOGOUT);
+      // Ensure CSRF token is included in logout request
+      await getCSRFToken();
+      
+      await apiService.post(PATHS.API.AUTH.LOGOUT, {}, {
+        headers: {
+          'X-CSRFToken': getCsrfCookieValue()
+        },
+        withCredentials: true
+      });
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
@@ -57,7 +88,9 @@ export const authService = {
    */
   checkAuth: async () => {
     try {
-      const response = await apiService.get(PATHS.API.AUTH.CHECK);
+      const response = await apiService.get(PATHS.API.AUTH.CHECK, {}, {
+        withCredentials: true
+      });
       return response;
     } catch (error) {
       if (error.response?.status === 401) {
@@ -74,7 +107,13 @@ export const authService = {
    */
   requestPasswordReset: async (data) => {
     try {
-      return await apiService.post('/api/auth/password-reset/', data);
+      await getCSRFToken();
+      return await apiService.post(PATHS.API.AUTH.PASSWORD_RESET, data, {
+        headers: {
+          'X-CSRFToken': getCsrfCookieValue()
+        },
+        withCredentials: true
+      });
     } catch (error) {
       throw error;
     }
@@ -87,7 +126,13 @@ export const authService = {
    */
   confirmPasswordReset: async (data) => {
     try {
-      return await apiService.post('/api/auth/password-reset/confirm/', data);
+      await getCSRFToken();
+      return await apiService.post(PATHS.API.AUTH.PASSWORD_RESET_CONFIRM, data, {
+        headers: {
+          'X-CSRFToken': getCsrfCookieValue()
+        },
+        withCredentials: true
+      });
     } catch (error) {
       throw error;
     }

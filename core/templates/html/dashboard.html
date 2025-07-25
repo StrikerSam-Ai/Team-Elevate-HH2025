@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevate | Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta http-equiv="refresh" content="0;url=/" />
+    <script>
+        // Redirect to the React app with dashboard path
+        window.location.href = '/#/dashboard';
+    </script>
+</head>
+<body>
+    <div class="loading-container">
+        <h1>Loading Dashboard...</h1>
+        <p>If you are not redirected automatically, <a href="/#/dashboard">click here</a>.</p>
+    </div>
+</body>
+</html>

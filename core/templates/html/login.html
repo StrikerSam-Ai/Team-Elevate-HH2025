@@ -1,96 +1,111 @@
+{% extends "html/base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login | Elevate</title>
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-  <div class="login-container">
-    <div class="form-wrapper">
-      <h1>Login to Elevate</h1>
-      <div id="error-message" class="error-message" style="display:none;"></div>
-      <div id="success-message" class="success-message" style="display:none;"></div>
-      <form id="login-form" method="post" action="/api/auth/login/">
-        {% csrf_token %}
-        <div class="form-group">
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" required>
-        </div>
-        <div class="form-group">
-          <label for="password">Password:</label>
-          <input type="password" id="password" name="password" required>
-        </div>
-        <button type="submit" class="submit-button">Login</button>
-      </form>
-      <div class="register-link">
-        <p>Don't have an account? <a href="/register">Register</a></p>
+
+{% block title %}Login | {{ app_name }}{% endblock %}
+
+{% block content %}
+<div class="login-container">
+  <div class="form-wrapper">
+    <h1>Login to {{ app_name }}</h1>
+    <div id="error-message" class="error-message" style="display:none;"></div>
+    <div id="success-message" class="success-message" style="display:none;"></div>
+    <form id="login-form" method="post" action="/api/auth/login/">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
       </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit" class="submit-button">Login</button>
+    </form>
+    <div class="register-link">
+      <p>Don't have an account? <a href="/register">Register</a></p>
     </div>
   </div>
+</div>
+{% endblock %}
 
-  <script>
-    // Check authentication status on page load
-    fetch('/api/auth/check/')
-      .then(response => response.json())
-      .then(data => {
-        if (data.authenticated) {
-          window.location.href = '/home/';
-        }
-      })
-      .catch(error => console.error('Auth check error:', error));
+{% block scripts %}
+<script>
+  // Check authentication status on page load
+  fetch('/api/auth/check/')
+    .then(response => response.json())
+    .then(data => {
+      if (data.authenticated) {
+        window.location.href = '/home/';
+      }
+    })
+    .catch(error => console.error('Auth check error:', error));
 
-    document.getElementById('login-form').addEventListener('submit', async function(e) {
-      e.preventDefault();
+  document.getElementById('login-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const errorDiv = document.getElementById('error-message');
+    const successDiv = document.getElementById('success-message');
+    errorDiv.style.display = 'none';
+    successDiv.style.display = 'none';
+
+    try {
+      const formData = new FormData(this);
       
-      const errorDiv = document.getElementById('error-message');
-      const successDiv = document.getElementById('success-message');
-      errorDiv.style.display = 'none';
-      successDiv.style.display = 'none';
+      // Validate required fields
+      if (!formData.get('email') || !formData.get('password')) {
+        errorDiv.textContent = 'Email and password are required';
+        errorDiv.style.display = 'block';
+        return;
+      }
 
-      try {
-        const formData = new FormData(this);
-        
-        // Validate required fields
-        if (!formData.get('email') || !formData.get('password')) {
-          errorDiv.textContent = 'Email and password are required';
-          errorDiv.style.display = 'block';
-          return;
+      // Get the CSRF token from the cookie instead of the form
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
         }
+        return cookieValue;
+      }
+      
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value || getCookie('csrftoken');
 
-        const response = await fetch(this.action, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-          },
-          credentials: 'same-origin',
-          body: JSON.stringify({
-            email: formData.get('email'),
-            password: formData.get('password')
-          })
-        });
+      const response = await fetch(this.action, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken
+        },
+        credentials: 'same-origin',
+        body: JSON.stringify({
+          email: formData.get('email'),
+          password: formData.get('password')
+        })
+      });
 
-        const data = await response.json();
-        
-        if (response.ok && data.success) {
-          successDiv.textContent = 'Login successful! Redirecting...';
-          successDiv.style.display = 'block';
-          setTimeout(() => {
-            window.location.href = '/home/';
-          }, 1000);
-        } else {
-          errorDiv.textContent = data.error || 'Login failed. Please check your credentials.';
-          errorDiv.style.display = 'block';
-        }
-      } catch (error) {
-        console.error('Login error:', error);
-        errorDiv.textContent = 'An error occurred. Please try again.';
+      const data = await response.json();
+      
+      if (response.ok && data.success) {
+        successDiv.textContent = 'Login successful! Redirecting...';
+        successDiv.style.display = 'block';
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1000);
+      } else {
+        errorDiv.textContent = data.error || 'Login failed. Please check your credentials.';
         errorDiv.style.display = 'block';
       }
-    });
-  </script>
-</body>
-</html>
+    } catch (error) {
+      console.error('Login error:', error);
+      errorDiv.textContent = 'An error occurred. Please try again.';
+      errorDiv.style.display = 'block';
+    }
+  });
+</script>
+{% endblock %}

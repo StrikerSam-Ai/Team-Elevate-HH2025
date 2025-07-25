@@ -1,0 +1,24 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}Welcome to Elevate!{% endblock %}
+
+{% block content %}
+<h2>Welcome to Elevate!</h2>
+<p>Dear {{ user.first_name }},</p>
+<p>Thank you for joining Elevate! We're excited to have you as part of our community of seniors who are embracing technology and staying connected.</p>
+
+<h3>Getting Started</h3>
+<p>Here are a few things you can do to get started:</p>
+<ul>
+    <li>Complete your profile</li>
+    <li>Join a community</li>
+    <li>Explore upcoming events</li>
+    <li>Start your journal</li>
+</ul>
+
+<a href="{{ site_url }}/profile" class="button">Complete Your Profile</a>
+
+<p>If you have any questions or need assistance, our support team is here to help!</p>
+
+<p>Best regards,<br>The Elevate Team</p>
+{% endblock %} 

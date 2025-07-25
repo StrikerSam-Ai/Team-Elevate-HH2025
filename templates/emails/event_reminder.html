@@ -1,0 +1,24 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}Event Reminder: {{ event.title }}{% endblock %}
+
+{% block content %}
+<h2>Event Reminder</h2>
+<p>Dear {{ user.first_name }},</p>
+
+<p>This is a friendly reminder about the upcoming event:</p>
+
+<div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 20px 0;">
+    <h3 style="margin-top: 0;">{{ event.title }}</h3>
+    <p><strong>Date:</strong> {{ event.start_time|date:"F j, Y" }}</p>
+    <p><strong>Time:</strong> {{ event.start_time|time:"g:i A" }}</p>
+    <p><strong>Location:</strong> {{ event.location }}</p>
+    <p>{{ event.description }}</p>
+</div>
+
+<a href="{{ site_url }}/events/{{ event.id }}" class="button">View Event Details</a>
+
+<p>We look forward to seeing you there!</p>
+
+<p>Best regards,<br>The Elevate Team</p>
+{% endblock %} 

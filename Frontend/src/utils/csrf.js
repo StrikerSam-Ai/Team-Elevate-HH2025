@@ -1,47 +1,42 @@
-/**
- * CSRF protection utilities
- */
+import axios from 'axios';
+import { PATHS } from '../config/paths';
 
 /**
- * Gets the CSRF token from cookies
- * Django sets a csrftoken cookie that we need to include in our requests
- * @returns {string|null} CSRF token or null if not found
+ * Get CSRF token from the server and store it in a cookie
+ * This should be called before any API request that requires CSRF protection
  */
-export const getCSRFToken = () => {
-  const name = 'csrftoken=';
-  const decodedCookie = decodeURIComponent(document.cookie);
-  const cookieArray = decodedCookie.split(';');
-  
-  for (let i = 0; i < cookieArray.length; i++) {
-    let cookie = cookieArray[i].trim();
-    if (cookie.indexOf(name) === 0) {
-      return cookie.substring(name.length, cookie.length);
+export const getCSRFToken = async () => {
+  try {
+    // Request CSRF token from Django backend
+    const response = await axios.get(PATHS.API.AUTH.CSRF, {
+      withCredentials: true
+    });
+    
+    if (!response.data) {
+      throw new Error('Failed to retrieve CSRF token');
     }
+    
+    // Extract token from response and set in cookies or headers if needed
+    // Note: Django should set the CSRF cookie automatically
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching CSRF token:', error);
+    throw error;
   }
-  
-  return null;
 };
 
 /**
- * Refreshes the CSRF token by making a request to the server
- * Useful when the token has expired or is missing
- * @returns {Promise<string|null>} New CSRF token or null if request fails
+ * Extract CSRF token from cookies
  */
-export const refreshCSRFToken = async () => {
-  try {
-    // Make a GET request to a django view that will set a new CSRF cookie
-    const response = await fetch('/api/csrf-refresh/', {
-      method: 'GET',
-      credentials: 'include',
-    });
-    
-    if (response.ok) {
-      return getCSRFToken();
+export const getCsrfCookieValue = () => {
+  const cookieName = 'csrftoken';
+  const cookies = document.cookie.split(';');
+  for (let cookie of cookies) {
+    const [name, value] = cookie.trim().split('=');
+    if (name === cookieName) {
+      return value;
     }
-    
-    return null;
-  } catch (error) {
-    console.error('Error refreshing CSRF token:', error);
-    return null;
   }
+  return null;
 };

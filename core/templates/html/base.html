@@ -1,33 +1,99 @@
-\html\base.html -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Team Elevate | HackHazard 2025{% endblock %}</title>
+    <title>{% block title %}{{ app_name|default:"Elevate" }}{% endblock %}</title>
+    <link rel="icon" href="{% static 'favicon.svg' %}" type="image/svg+xml">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% block extra_css %}{% endblock %}
+    
+    {# Use a separate approach for JavaScript data via data attributes #}
+    <script type="application/json" id="app-config-data">
+        {
+            "appName": "{{ app_name|default:'Elevate'|escapejs }}",
+            "version": "{{ app_version|default:'1.0.0'|escapejs }}",
+            "debug": {% if debug %}true{% else %}false{% endif %},
+            "apiUrl": "/api/",
+            "userInfo": {
+                "isAuthenticated": {% if user.is_authenticated %}true{% else %}false{% endif %}{% if user.is_authenticated %},
+                "id": {{ user.id|default:"null" }},
+                "name": "{{ user_info.name|default:user.name|default:'User'|escapejs }}",
+                "email": "{{ user_info.email|default:user.email|default:''|escapejs }}"
+                {% endif %}
+            },
+            "csrfToken": "{{ csrf_token|escapejs }}"
+        }
+    </script>
+    
+    {# Script to load the configuration #}
+    <script>
+        try {
+            // Get the data from the JSON element and parse it
+            const configElement = document.getElementById('app-config-data');
+            const configText = configElement ? configElement.textContent : '{}';
+            window.APP_CONFIG = JSON.parse(configText);
+        } catch (error) {
+            console.error('Failed to parse app configuration:', error);
+            window.APP_CONFIG = {
+                appName: 'Elevate',
+                version: '1.0.0',
+                debug: false,
+                apiUrl: '/api/',
+                userInfo: { isAuthenticated: false },
+                csrfToken: ''
+            };
+        }
+    </script>
 </head>
 <body>
-    {% block navbar %}
-    {% if user.is_authenticated %}
-    <nav class="navbar">
-        <div class="logo">Elevate</div>
-        <div class="nav-links">
-            <a href="/home/">Home</a>
-            <a href="/profile/">Profile</a>
-            <a href="/logout/">Logout</a>
-        </div>
-    </nav>
-    {% endif %}
-    {% endblock %}
-
-    <div class="container">
-        {% block content %}{% endblock %}
+    <div id="app-container">
+        <header class="site-header">
+            {% block header %}
+            <div class="container header-container">
+                <div class="logo">
+                    <a href="/">{{ app_name|default:"Elevate" }}</a>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        {% if user.is_authenticated %}
+                        <li><a href="/dashboard">Dashboard</a></li>
+                        <li><a href="/communities">Communities</a></li>
+                        <li><a href="/chat">Chat</a></li>
+                        <li><a href="/profile">Profile</a></li>
+                        <li>
+                            <form id="logout-form" action="/api/auth/logout/" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="logout-button">Logout</button>
+                            </form>
+                        </li>
+                        {% else %}
+                        <li><a href="/login">Login</a></li>
+                        <li><a href="/register">Register</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+            {% endblock %}
+        </header>
+        
+        <main class="site-content">
+            <div class="container">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+        
+        <footer class="site-footer">
+            {% block footer %}
+            <div class="container">
+                <p>&copy; {% now "Y" %} {{ app_name|default:"Elevate" }} v{{ app_version|default:"1.0.0" }} | All rights reserved</p>
+            </div>
+            {% endblock %}
+        </footer>
     </div>
-
-    <script src="{% static 'js/main.js' %}"></script>
-    {% block extra_js %}{% endblock %}
+    
+    {% block scripts %}{% endblock %}
 </body>
 </html>

@@ -3,6 +3,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
+from datetime import timedelta
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -34,6 +35,29 @@ class CustomUser(AbstractUser):
     blood_group = models.CharField(max_length=5, blank=True)
     preferred_hospital = models.CharField(max_length=255, blank=True)
     insurance_info = models.CharField(max_length=255, blank=True)
+    
+    # 2FA fields
+    two_factor_enabled = models.BooleanField(default=False)
+    two_factor_secret = models.CharField(max_length=32, null=True, blank=True)
+    backup_codes = models.JSONField(null=True, blank=True)
+    
+    # Security fields
+    failed_login_attempts = models.IntegerField(default=0)
+    last_failed_login = models.DateTimeField(null=True, blank=True)
+    account_locked = models.BooleanField(default=False)
+    account_locked_until = models.DateTimeField(null=True, blank=True)
+    
+    # Profile fields
+    bio = models.TextField(max_length=500, blank=True)
+    profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
+    date_joined = models.DateTimeField(auto_now_add=True)
+    last_login = models.DateTimeField(null=True, blank=True)
+    
+    # Preferences
+    email_notifications = models.BooleanField(default=True)
+    push_notifications = models.BooleanField(default=True)
+    theme_preference = models.CharField(max_length=20, default='light')
+    
     groups = models.ManyToManyField(
         'auth.Group',
         related_name='custom_users',
@@ -56,6 +80,47 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+
+    def is_account_locked(self):
+        if not self.account_locked:
+            return False
+        
+        if self.account_locked_until and timezone.now() > self.account_locked_until:
+            self.reset_failed_login()
+            return False
+        
+        return True
+
+    def increment_failed_login(self):
+        self.failed_login_attempts += 1
+        self.last_failed_login = timezone.now()
+        
+        if self.failed_login_attempts >= 5:
+            self.account_locked = True
+            self.account_locked_until = timezone.now() + timezone.timedelta(minutes=30)
+        
+        self.save()
+
+    def reset_failed_login(self):
+        self.failed_login_attempts = 0
+        self.last_failed_login = None
+        self.account_locked = False
+        self.account_locked_until = None
+        self.save()
+
+    def get_remaining_lock_time(self):
+        if not self.account_locked or not self.account_locked_until:
+            return 0
+        
+        remaining = self.account_locked_until - timezone.now()
+        return max(0, remaining.total_seconds())
+
+    def generate_backup_codes(self):
+        import secrets
+        codes = [secrets.token_hex(4) for _ in range(10)]
+        self.backup_codes = codes
+        self.save()
+        return codes
 
 class Community(models.Model):
     name = models.CharField(max_length=255)
@@ -223,3 +288,125 @@ class SocialActivity(models.Model):
 
     def __str__(self):
         return f"{self.title} - {self.date_time}"
+
+class Event(models.Model):
+    EVENT_TYPES = [
+        ('community', 'Community'),
+        ('wellness', 'Wellness'),
+        ('education', 'Education'),
+        ('social', 'Social'),
+        ('family', 'Family')
+    ]
+    
+    STATUS_CHOICES = [
+        ('upcoming', 'Upcoming'),
+        ('ongoing', 'Ongoing'),
+        ('completed', 'Completed'),
+        ('cancelled', 'Cancelled')
+    ]
+    
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    event_type = models.CharField(max_length=20, choices=EVENT_TYPES)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='upcoming')
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    location = models.CharField(max_length=255)
+    is_virtual = models.BooleanField(default=False)
+    meeting_link = models.URLField(blank=True)
+    max_participants = models.PositiveIntegerField(null=True, blank=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_events')
+    participants = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='participated_events')
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['-start_time']
+        
+    def __str__(self):
+        return f"{self.title} - {self.start_time}"
+        
+    @property
+    def is_upcoming(self):
+        return self.start_time > timezone.now()
+        
+    @property
+    def is_ongoing(self):
+        now = timezone.now()
+        return self.start_time <= now <= self.end_time
+        
+    @property
+    def is_completed(self):
+        return self.end_time < timezone.now()
+        
+    @property
+    def participant_count(self):
+        return self.participants.count()
+        
+    def can_join(self, user):
+        if self.max_participants and self.participant_count >= self.max_participants:
+            return False
+        return user not in self.participants.all()
+        
+    def join(self, user):
+        if self.can_join(user):
+            self.participants.add(user)
+            return True
+        return False
+        
+    def leave(self, user):
+        if user in self.participants.all():
+            self.participants.remove(user)
+            return True
+        return False
+
+class Journal(models.Model):
+    """Model for user journal entries."""
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='journal_entries')
+    mood = models.CharField(max_length=50, blank=True)
+    tags = models.JSONField(default=list, blank=True)
+    is_public = models.BooleanField(default=False)
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
+    media_urls = models.JSONField(default=list, blank=True)
+
+    class Meta:
+        ordering = ['-date_created']
+        indexes = [
+            models.Index(fields=['user', 'date_created']),
+            models.Index(fields=['title']),
+        ]
+
+    def __str__(self):
+        return f"{self.title} by {self.user.email}"
+
+    @property
+    def is_recent(self):
+        """Check if the entry was created in the last 24 hours."""
+        return (timezone.now() - self.date_created).days < 1
+
+    def add_tag(self, tag):
+        """Add a tag to the entry if it doesn't exist."""
+        if tag not in self.tags:
+            self.tags.append(tag)
+            self.save()
+
+    def remove_tag(self, tag):
+        """Remove a tag from the entry."""
+        if tag in self.tags:
+            self.tags.remove(tag)
+            self.save()
+
+    def add_media(self, url):
+        """Add a media URL to the entry."""
+        if url not in self.media_urls:
+            self.media_urls.append(url)
+            self.save()
+
+    def remove_media(self, url):
+        """Remove a media URL from the entry."""
+        if url in self.media_urls:
+            self.media_urls.remove(url)
+            self.save()

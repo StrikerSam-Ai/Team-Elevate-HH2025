@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_CONFIG, API_ERRORS } from '../config/api';
-import { getCSRFToken } from '../utils/csrf';
+import { getCSRFToken, getCsrfCookieValue } from '../utils/csrf';
 import { STORAGE_KEYS } from '../utils/constants';
 
 // Create axios instance with default config
@@ -13,7 +13,7 @@ const apiClient = axios.create({
 
 // Request interceptor
 apiClient.interceptors.request.use(
-  (config) => {
+  async (config) => {
     // Add authorization token if exists
     const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
     if (token) {
@@ -22,7 +22,19 @@ apiClient.interceptors.request.use(
     
     // Add CSRF token for non-GET requests
     if (config.method !== 'get') {
-      const csrfToken = getCSRFToken();
+      // Try to get token from cookies first
+      let csrfToken = getCsrfCookieValue();
+      
+      // If no token in cookies, fetch a new one
+      if (!csrfToken) {
+        try {
+          await getCSRFToken();
+          csrfToken = getCsrfCookieValue();
+        } catch (error) {
+          console.error('Failed to get CSRF token:', error);
+        }
+      }
+      
       if (csrfToken) {
         config.headers['X-CSRFToken'] = csrfToken;
       }

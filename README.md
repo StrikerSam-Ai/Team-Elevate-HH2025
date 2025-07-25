@@ -1,9 +1,9 @@
-# 🚀 Elevate - Digital Companion Platform for Seniors
+# 🚀 ElderHub - Digital Companion Platform for Seniors
 *HackHazard 2025 Submission by Team Elevate*
 
 <div align="center">
 
-![Elevate Logo](static/favicon.svg)
+![ElderHub Logo](static/favicon.svg)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.13](https://img.shields.io/badge/python-3.13-blue.svg)](https://www.python.org/downloads/release/python-3130/)
@@ -13,9 +13,9 @@
 
 </div>
 
-## 🌟 About Elevate
+## 🌟 About ElderHub
 
-**Elevate** is a comprehensive digital companion platform specifically designed for senior citizens to combat social isolation, promote healthy aging, and enhance quality of life through technology. Built for **HackHazard 2025**, this platform bridges the digital divide by providing an intuitive, accessible interface that empowers seniors to:
+**ElderHub** is a comprehensive digital companion platform specifically designed for senior citizens to combat social isolation, promote healthy aging, and enhance quality of life through technology. Built for **HackHazard 2025**, this platform bridges the digital divide by providing an intuitive, accessible interface that empowers seniors to:
 
 - 🤝 **Connect** with their local community
 - 💬 **Communicate** through real-time chat and messaging

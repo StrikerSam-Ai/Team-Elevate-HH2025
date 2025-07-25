@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
+import { ToastProvider } from './contexts/ToastContext';
 import { AuthProvider } from './contexts/AuthContext';
 import { NotificationProvider } from './contexts/NotificationContext';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -12,15 +13,17 @@ const App = () => {
   return (
     <ErrorBoundary>
       <ThemeProvider theme={theme}>
-        <AuthProvider>
-          <NotificationProvider>
-            <BrowserRouter>
-              <Layout>
-                <Routes />
-              </Layout>
-            </BrowserRouter>
-          </NotificationProvider>
-        </AuthProvider>
+        <ToastProvider>
+          <BrowserRouter>
+            <AuthProvider>
+              <NotificationProvider>
+                <Layout>
+                  <Routes />
+                </Layout>
+              </NotificationProvider>
+            </AuthProvider>
+          </BrowserRouter>
+        </ToastProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );
